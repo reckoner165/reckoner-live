@@ -1,0 +1,37 @@
+
+
+setcps(85/60/2)
+
+  d1 $ stack[
+  sound "[tbd:1? tbd:1? ~ 808:1 tbd:1?][sn:3 ~ ~ 808:1 ~]" # lpf 200,
+  sound "~ 808sd:4?" |+| pan 0.3 |+| end 0.7 |*| lpf 1000,
+  sound "808:1 808:1"
+  ] |+| crush 9 |+| gain 1.3 # lpf (1000 + 200 * rand)
+
+  d1 $ silence
+
+  d3 $ sometimes (|+| n "12") $ degradeBy 0.4 $ sometimes (striate 3) $ striate 2
+  $ n "<2 7 0 0>"
+  |+| n "-24" |+| s "supersquare" |+| lpf 300 |+| sustain 0.5 |+| cut 2
+
+d2 $ sometimes(|*| crush 2)
+  $ jux (|*| nudge 0.02) $ stut 2 0.3 0.25 $ rarely (chop 2) $ stack [
+  n "<2 7 0 0>",
+  sometimes (rev) $ n "<5 11 4? 4>",
+  degrade $ n "<14 21 14 12?>",
+  n "<16 17 11? 11>" |+| gain 0.5
+]
+-- |+| s "superhammond"
+|+| s "superpiano"
+|+| lpf 800 |+| hpf 300 |+| sustain 2 |+| room 0.5 |+| size 0.5 |+| crush 8
+|+| voice (sin 3 + 1.2 * sin 1)
+|*| gain 0.8
+
+d2 $ silence
+
+
+d4 $ whenmod 4 2 (|*| gain 0) $ sometimes (|*| speed (-1)) $ randslice 8 $ sound "mazurka"
+|+| speed 2 |*| speed 1 |+| cut 1
+|+| pan 1 |+| lpf 6000 |+| crush 12 |+| gain 1.4
+
+hush

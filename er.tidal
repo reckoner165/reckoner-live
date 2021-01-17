@@ -1,0 +1,9 @@
+
+
+bps (60/60)
+
+d1 $ every 2 (stut 4 0.3 0.25) $ slow 64 $ chop 2 $ sound (samples "subway*4" (run 7))
+
+
+
+hush

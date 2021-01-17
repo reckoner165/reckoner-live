@@ -1,0 +1,14 @@
+
+
+
+bps(92/60)
+
+
+d1 $ stack[
+sound "tbd:4*2" |+| lpf 400,
+degradeBy 0.2 $ every 3 (shuffle 4) $ sound "~ hh*2 ~ hh" |+| pan 0.3 |+| gain 0.7,
+degradeBy 0.4 $ every 2 (shuffle 8) $ sound " ~ wind:2" |+| pan 0.8
+]
+
+
+hush

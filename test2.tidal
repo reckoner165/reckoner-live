@@ -1,0 +1,6 @@
+pat = whenmod 10 7 (degradeBy 0.3) $ slow 2 $ choose [0.3,0.4..4]
+
+
+d1 $ sound "808:2*4" |+| speed (pat)
+
+hush

@@ -1,0 +1,45 @@
+setcps(155/60/2)
+
+
+hihats = do {
+  d2 $ fast 2
+     $ sound "kr:6 kr:6 kr:5 ~" |+| pan 0.2 |+| speed 1.05 |+| hpf 500
+}
+
+d1 $ slow 3.5 $ stack [
+sound "kr [kr:1 kr] [~ kr] [kr:1 kr] [~ kr] [kr:1 kr] [~ kr:1?]",
+sound "kr:6*7" |+| pan 0.7
+]
+
+
+let play_beat = do {
+  d1 $ slow 3.5 $ stack [
+  sound "kr [kr:1 kr] [~ kr] [kr:1 kr] [~ kr] [kr:1 kr] [~ kr:1?]",
+  sound "kr:6*7" |+| pan 0.7
+  ]
+}
+
+hihats
+
+hush
+
+d2 $ silence
+
+bps(100/60)
+
+d1 $ stack [
+sound "sn:2(4,11)",
+sound "bd*2"
+]
+
+d1 $ sometimes (0.125<~) $ stack [
+  sound "[bd ~ ~ ~ bd] [~ ~ ~ ~ ~]",
+  sound "[~ ~ ~ ~ ~] [sn:2 ~ ~ ~ ~]",
+  sound "[hh ~ hh ~ hh] [~ hh ~ hh ~]"
+]
+
+play_beat
+
+do {
+
+}

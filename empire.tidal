@@ -1,0 +1,15 @@
+
+
+bps(86/60)
+
+
+
+
+d1 $ stack [
+degradeBy 0.1 $ slow 2 $ sound "[[kicklinn kicklinn?] ~ ]*4" |+| lpf 400,
+-- sound "jazz:4" lol massive attack
+slow 2 $ sound "ride*8" |+| gain (1.1 + 0.2*sine),
+chop 2 $ sound "tambourine"
+]
+
+hush

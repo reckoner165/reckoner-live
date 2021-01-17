@@ -1,0 +1,23 @@
+
+
+d1 $ every 4 (rev) $ degradeBy 0.3 $ sound "[bd:2 bd:2] [~ cp] [hh? bd:2] [hh cp]"
+  |+| lpf 2000
+
+d1 $ brak $ degradeBy 0.3 $ sound "808:2*8" |+| crush 4 |+| lpf 1000
+
+
+d2 $ stack [
+  degradeBy 0.4 $ sound "thh:3*8" |+| gain 0.7 |+| pan 0.7
+  -- slow 2 $ stut' 3 0.5 ((|*| speed 0.5).(|+| room 0.5).(|*| gain 0.6).(|+| lpf 4000))
+         -- $ sound "808:2" |+| crush 3
+] # orbit 2
+
+d3 $ slow 8 $ degradeBy 0.2 $ chop "32 64"
+   $ sound "sheffield" |+| speed (2 + rand) |+| hpf 1000 |+| gain 0.7 |+| pan 0.4
+
+d3 $ silence
+
+d4 $ every 16 (fast 2) $ every 4 (|*| speed 1.2) $ every 2 (const $ sound "bass:2(3,8)")
+   $ sound "bass(3,8)" |+| gain 0.9 |+| lpf 1000
+
+hush

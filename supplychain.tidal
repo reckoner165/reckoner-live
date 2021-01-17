@@ -1,0 +1,31 @@
+
+
+setcps(112/60/2)
+just_hihats = d1 $ silence
+
+main = "~ kr kr:1 [kr? kr:1]"
+kick = "kr kr kr:1 [kr? kr:1]"
+eighth =  "kr kr  ~ kr:1"
+
+testfun = do
+  d1 $ every 16 (const $ sound eighth) $ every 4 (const $ sound kick) $ sound "~ kr kr:1 [kr? kr:1]"
+  d2 $ slow 2 $ sound "kr:5 kr:6 kr:6 kr:6" # gain 1.2 |+| pan 0.3
+
+just_hihats
+
+testf
+-- Outro
+
+
+d1 $ stack [
+    sound "[~ kr:1] [kr kr] kr:1 [~ <~ kr:1?>]" |+| gain "1 [1 0.8] [1 0.8?] 0.8",
+    degradeB=y 0.7 $ sound "~ ~ [~ kr:1?] ~" |+| gain 0.7 |+| nudge (rand * 0.02)
+]
+
+  d2 $ slow 2 $ sound "kr:5 kr:6 kr:6 kr:6" # gain 1.2
+
+hush
+
+
+
+d1 $ every 4 (chop 16) $ sound "[~ kr:1] [kr kr] kr:1 [ ~ kr:1?]"

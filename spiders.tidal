@@ -1,0 +1,34 @@
+
+let traffic = "0 0 ~ -2 ~ ~ 0 -2 ~ <-5 -7> ~ ~ ~ ~ ~ ~"
+
+let clav = struct "t(3,8)"
+
+setcps(82/60/4)
+
+
+resetCycles
+
+d2 $ fast 2 $ (0.125<~) $ stack [
+ clav $ n "<0 0 -2 -2 -4 -4 -2 -2>",
+ clav $ n "<4 4 5 5 7 7 5 5>"
+] |+| n "-8" |+| s "superpiano" |+| sustain 1 |+| release 1
+|+| room 0.9 |+| size 0.8 |+| lpf (1500 + 400 * sin 2 )|*| gain 0.4
+|+| crush "7 6 5 4"
+# orbit 3
+
+d1 $ slow 2
+ $ rev
+ $ linger "<0.0625 0.0625 0.125>"
+ -- $ every 8 (|*| speed (-1))
+ $ shuffle 4 $ chop 4
+ $ n (run 8) |+| s "spider" |+| gain 1.2 |+| cut 1
+
+ d1 $ silence
+
+d3 $ (0.125~>)
+$ stutWith 4 0.125 ((|+| room 0.3).(|*| gain 0.8).(|*| pan 0.1).(|+| crush 3))
+$  n traffic |+| n "<4 16>" |+| s "supervibe"  |+| sustain 0.3
+|*| gain "<0.8 0>" |+| pan 0.8
+|+| room 0.5 |+| size 0.5 # orbit 2
+
+hush

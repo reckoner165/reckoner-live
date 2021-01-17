@@ -1,0 +1,16 @@
+
+hush
+
+d1 $ stack [
+sound "bass:2 bd:2 [~ bd:2] ~" |+| gain 1.1 |+| lpf 300,
+degradeBy 0.3 $ sound "808bd*8"
+-- degradeBy 0.8 $ stut 2 0.5 0.125 $ sound "hh*8" |+| crush 5 |*| gain 0.6,
+-- fast 2 $ sound "808sd" |+| speed (0.9 + 0.2*rand) |+| pan 0.8,
+-- trunc "<1 0.5 0 0.25>" $ sound "808:2*4" |+| speed (rand) |+| gain 0
+] |+| gain 1.1
+
+d2 $ fast 2 $ stut' 2 0.25 ((|*| room 0.9) . (|*| pan 0) . (|*| gain 0.9))
+   $  sound "~ tsn:4 ~ ~ " |+| pan 0.7 |+| lpf 1000 # orbit 2
+d2 $ silence
+d3 $ sound "[~ cp:2?] ~ [cp:2 cp:2?] ~" |+| speed 0.95 |+| gain 1.1
+d3 $ silence

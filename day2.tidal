@@ -1,0 +1,25 @@
+
+
+let bps = cps (x/2)
+
+bps (130/60)
+
+d1 $ stack[
+sound "~ hh [~ ~ hh] hh",
+-- slow 2 $ struct "t [~ t] ~ ~ t ~ ~ ~" $ sound "vk:3" |+| lpf 3000,
+sound "~ [~ bottle?] [~ ~ rsn] cp?" |+| end 0.4 |+| room 0.2 # orbit 2
+-- degrade $ sound "tbd:2*2"
+]
+
+d1 $ silence
+
+d2 $ slow 8 $ n "0 3 -2 1" |+| n "-24" |+| s "supersaw" |+| lpf 500 |+| gain 1.1
+
+d3 $ fast 2 $ n "7 3 2 0" |+| s "superpwm" |+| gain 0.7 |+| sustain 0.1
+
+d4 $ slow 4 $ stut 16 0.5 0.125 $ degradeBy 0.3 $ rarely ((|+| speed 2).(|*| gain 0.8))
+   $ randslice 64 $ sound "cap"
+    |+| room 0.8 |+| gain 0.9 # orbit 3
+
+
+hush

@@ -1,0 +1,88 @@
+setcps(75/60/2)
+
+let swinger1 = struct "[[t ~ ~] [t ~ <~ t>]]*2"
+
+d1 $ stack [
+-- swinger1 $ sound "tbd:1" |+| lpf 400,
+sound "~ tsn:4" |+| gain 1.3,
+-- sound "~ sn:2?" |*| gain 1 |+| pan 0.8,
+rarely (|*| speed (-1)) $ sound "thh*4" |*| gain 0.8
+-- (0.75~>) $ slow 2 $ sound "printer" |*| gain 0.8 |+| pan 0.3
+-- rarely (fast 3) $ stut 1 0.5 0.33 $ sound "print" |+| n "0 1 2 3" # pan (0.2 + 0.3*rand)
+] |*| gain 1.8
+
+d2 $ slow 2 $ rarely ((|+| n "12").(|+| crush 3)) $ struct "t*4"
+$ n "<0 -1>" |+|
+stack[
+n "-24"
+]|+| sound "supersaw" |+| sustain 0.5 |+| lpf 300 |+| gain 1.5
+
+d3 $ slow 4
+sometimesBy 0.8 (chop 3) $ struct "t [t <t ~>]" |+|
+stack[
+n "7 6",
+n "0 -1"
+]|+| sound "superhammond" |+| cut 2
+
+d3 $ silence
+
+--
+
+setcps(130/60/2)
+
+d1 $ stack [
+sound "~ hh ~ hh",
+slow 2 $ sound "vk:3 [~ vk:3] ~ ~ vk:3 ~ ~ ~" |+| lpf 400,
+degradeBy 0.4 $
+  sound " ~ bottle [~ ~ rsn] cp?" |+| end 0.5 |+| room 0.4 |+| size 0.8 |+| orbit 1,
+slow 2 $ n (run 8) |+| sound "brlsamp" |+| gain 0.8,
+sound "tbd:2*2" |*| gain 1.8
+] |*| gain 1.8
+
+d1 $ silence
+
+d2 $ slow 8 $ n "0 3 -2 1" |+| n "-24" |+| s "supersaw" |+| lpf 300 |+| gain 1.5
+
+d3 $ fast 2 $ n "7 3 2 0" |+| s "superpwm" |+| gain 1 # pan (0.3 + 0.4*rand)
+
+d4 $ slow 4 $ stut 8 0.8 1 $ randslice 64 $ sound "cap"
+|+| room 0.3 |+| size 0.8 |+| orbit 2 |*| gain 1.4
+
+do
+  d3 $ silence
+  d4 $ silence
+
+let traffic = "0 0 ~ -2 ~ ~ 0 -2 ~ <-5 -7> ~ ~ ~ ~ ~ ~"
+
+let clav = struct "t(3,8)"
+
+setcps(82/60/4)
+
+
+resetCycles
+
+d2 $ fast 2 $ (0.125<~) $ stack [
+ clav $ n "<0 0 -2 -2 -4 -4 -2 -2>",
+ clav $ n "<4 4 5 5 7 7 5 5>"
+] |+| n "-8" |+| s "superpiano" |+| sustain 1 |+| release 1
+|+| room 0.9 |+| size 0.8 |+| lpf (1500 + 400 * sin 2 )|*| gain 1.2
+|+| crush "2"
+# orbit 3
+
+d1 $ slow 2
+    -- $ iter 4
+ $ rev
+ $ linger "<0.0625 0.0625 0.125>"
+ $ every 8 (|*| speed (-1))
+ $ shuffle 4 $ chop 4
+ $ n (run 8) |+| s "spider" |+| gain 1.8 |+| cut 1 |+| crush "<4 5 16>"
+
+ d1 $ silence
+
+d3 $ (0.125~>)
+$ stutWith 4 0.125 ((|+| room 0.3).(|*| gain 0.8).(|*| pan 0.1).(|+| crush 3))
+$  n traffic |+| n "<4 16>" |+| s "supervibe"  |+| sustain 0.3
+|*| gain "<1.3 0>" |+| pan 0.8 |+| crush 5
+|+| room 0.5 |+| size 0.5 # orbit 2
+
+hush

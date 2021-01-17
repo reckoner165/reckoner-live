@@ -1,0 +1,19 @@
+
+import Sound.Tidal.MIDI.Context
+devices <- midiDevices
+
+m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+
+bps(104.62/60)
+
+m1 $ silence
+
+m1 $ slow 4 $ stack [
+fast 2 $ note "6 6 6 6 6 6 6 6 6",
+fast 2 $ note "10 [0 0] [2 0] ~ [0 ] [0 0] [2 0] ~ [0 ~]"
+] |+| note "-24"
+
+
+
+bps
+d1 $ sound "hh hh hh hh"

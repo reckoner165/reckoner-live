@@ -1,0 +1,16 @@
+
+
+-- Alice Coltrane - Isis and Osiris cover
+pentatonic = "0 2 5 7 11"
+
+setcps(90/60/2)
+
+d1 $ jux (0.25<~) $ whenmod 5 3 (slow "2? 4 8") $ fast "3 5" $ rev
+   $ n "0 3 5 7 10 12" |+| n "<-12 0 12 24>"
+   # s "supermandolin" |+| sustain 1.1 |+| room 0.8 |+| size 0.8 # orbit 2
+
+d2 $ stack [
+  sound "~ <kr:6 808:4> ~ kr:6",
+  sound "[~ 808sd:1?] [808:1? ~ bd:2] bd:2 [~ bd:2?]",
+  sound "kr:3*4" |*| gain 1.2 |+| speed 1.1 |+| hpf 2500
+  ] # gain 1.2

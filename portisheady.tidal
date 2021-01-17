@@ -1,0 +1,24 @@
+-- Portisheady
+
+setcps(140/60/4)
+
+let swinger1 = struct "[[t ~ ~] [t ~ <~ t>]]*2"
+
+d1 $ stack [
+swinger1 $ sound "tbd:2" |+| lpf 500,
+stut 2 0.5 0.125 $ sound "~ cp?" |+| lpf 1000 |+| room 0.2 # orbit 2 |*| gain 0.5,
+sound "thh thh thh ~"
+] |+| gain 1.2
+
+d1 $ silence
+
+d3 $ brak $ whenmod 4 2 (|*| speed 1.2) $ every 4 (rev) $ stut 4 0.5 0.33
+   $ rarely (linger 0.5) $ n ((run 4)) |+| sound "trump" |+| lpf 7000 |+| cut 1 |*| speed 0.5
+
+d2 $ stack[
+  sound "kr kr kr:1 ~",
+  sound "kr:3*4" |+| pan 1
+] |+| lpf 4000 |+| hpf 1000
+
+
+hush

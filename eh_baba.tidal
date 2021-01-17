@@ -1,0 +1,33 @@
+--- eh baba
+setcps(170/60/4)
+
+hush
+
+do
+  -- resetCycles
+
+  d1 $ rarely (stut' 2 0.25 ((|*| pan 0.2).(|*| gain 0.7).(|+| room 0.5)))
+     $ stack [
+        n "~ ~ ~ ~ 12 9 7 ~ ~ ~",
+        whenmod 8 4 (|+| n "-2") $ n "2 ~ ~ 2 ~ ~ ~ ~ ~ ~",
+        n "~ ~ ~ ~ ~ ~ ~ 9? ~ ~"
+      ]# s "supervibe"
+      -- |+| room 0.4 |+| size 0.6 # orbit 2
+
+  d2 $ note "-5 ~ ~ -5 2 5 7 ~ ~ ~" |+| n "-12" # s "supervibe" |+| pan 0.4
+
+  d3 $ stack [
+    degradeBy 0.4 $ slow 2 $ sound "808bd:3(7,5)",
+    slow 2 $ sound "thh:3*5" |+| gain 0.8,
+    stut 2 0.5 0.25 $ degradeBy 0.8 $ sound "cp ~*4" |+| crush 3,
+    degradeBy 0.7 $ sound "808:2(3,5)" |+| speed (0.15 * rand) |+| pan rand,
+    trunc "<0.75 1 0.6>"
+          $ every 4 (fast 2) $ every 3 (fast 2)
+          $ whenmod 8 4 (const $ sound "808:2*5" |+| speed 0.3) $ sound "808:4*5"
+    ]
+
+  d4 $ slow 4 $ whenmod 2 1 (|+| n "-2") $ n "-5 -10 ~ ~ ~ ~ ~ ~ ~ ~" |+| s "superhammond"
+  |+| sustain 2 |+| gain 0.8 |+| cut 1 |+| room 0.8 |+| size 0.9 # orbit 3
+
+
+hush

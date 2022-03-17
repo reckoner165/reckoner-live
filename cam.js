@@ -48,3 +48,25 @@ osc(10,0.1, ({time}) => Math.sin(time/10) * 1 ) // offset
   .add(noise(3,10))
   .out(o3)
 render(o3)
+
+
+
+
+vid = document.createElement('img')
+// vid.autoplay = true
+// vid.loop = true
+// get path to video using getPaths() representing current directory in atom
+vid.src = '/Users/Srinivasan/Downloads/livecodenyclogo.svg'
+
+// use video within hydra
+s0.init({src: vid})
+src(s0)
+  .rotate(0, 0.2)
+  // .repeat(5, 3, 0.5)
+  .saturate(0.8)
+//  .color(1.0, 0.7, -1)
+  .scrollX(0, -0.1)
+  .diff(osc(10, 1, 3))
+//  .kaleid(3)
+  .diff(src(s0).saturate(0).hue(0.5))
+  .out()

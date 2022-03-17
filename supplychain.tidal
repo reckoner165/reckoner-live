@@ -7,22 +7,31 @@ main = "~ kr kr:1 [kr? kr:1]"
 kick = "kr kr kr:1 [kr? kr:1]"
 eighth =  "kr kr  ~ kr:1"
 
-testfun = do
-  d1 $ every 16 (const $ sound eighth) $ every 4 (const $ sound kick) $ sound "~ kr kr:1 [kr? kr:1]"
-  d2 $ slow 2 $ sound "kr:5 kr:6 kr:6 kr:6" # gain 1.2 |+| pan 0.3
+main = "~ jk:1 ssn:5 [kr? kr:1]"
+kick = "jk:1 jk:2 ssn:5 [kr? kr:1]"
+eighth =  "jk:1 jk:8  ~ kr:1"
+
+setcps(112/60/2)
+
+do
+  -- resetCycles
+  jumpMod 1 8 $ every 16 (const $ sound eighth) $ every 4 (const $ sound kick)
+     $ sound "[~ kr:1?] jk:2 [ssn:1 <~ ~ ~ kr:1?>] <[kr? kr:1] [kr? kr:1] [kr? kr:1] [kr:8 kr:9]>" # nudge 0.01
+  jumpMod 2 8 $ slow 2 $ sound "kr:5 kr:6 kr:6 <kr:6 kr:6 kr:3>" # gain 1.4 |+| pan 0.3 # crush 12 # nudge 0.01
 
 just_hihats
 
-testf
+testfun
 -- Outro
 
-
-d1 $ stack [
-    sound "[~ kr:1] [kr kr] kr:1 [~ <~ kr:1?>]" |+| gain "1 [1 0.8] [1 0.8?] 0.8",
-    degradeB=y 0.7 $ sound "~ ~ [~ kr:1?] ~" |+| gain 0.7 |+| nudge (rand * 0.02)
-]
-
-  d2 $ slow 2 $ sound "kr:5 kr:6 kr:6 kr:6" # gain 1.2
+do
+  d1 $ stack [
+      sound "[<jk:8 ~ ~ ~> jsn:4] [jk:1 vk:1] [ssn:1 kr:1?] <[~ jsn:16] ~ [~ jsn:11?] [kr:7 kr:8]>"
+      |+| gain "[1 0.8] [1 0.8] [1 0.7?] <0.8 0.8 0.8 1>"
+      -- degradeBy 0.7 $ sound "~ ~ [~ kr:1?] ~" |+| gain 0.7
+      # nudge (rand * 0.01)
+      ]
+  d2 $ slow 2 $ sound "<kr:3 kr:4 kr:4 kr:4> kr:6 kr:6 kr:6" # gain 1.4 |+| pan 0.3 # crush 12
 
 hush
 

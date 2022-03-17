@@ -1,0 +1,56 @@
+
+-- Beat 1
+do
+  setcps(115/60/2)
+  d1 $ stack [
+      slow 2 $ every 8 (const $ sound "ssk:2*4")
+      $ whenmod 16 15 (|*| speed (-1)) $ struct "t [t ~ ~ t] [~ t] ~" $ sound "ssk:2" # gain 1.2,
+      slow 2 $ sound "[ ~ [ssk ~ tbd:2]] ~ ~ ~ " # gain 0.8,
+      sound "~ <brlsamp:1 brlsamp:1 brlsamp:1 ssn:2>" # crush 7 # room 0.7 # size 0.8
+      # lpf 3000
+      # gain 0.9 # orbit 4,
+      -- every sound "~ brlsamp:2" # crush 7 # room 0.7 # size 0.8 # lpf 1000 # gain 0.9 # orbit 4,
+      slow 2 $ every 8 (const $ sound "brlsamp:4 brl:7 ~ [~ <brlsamp:2 brlsamp:7>]") $ sound "[~ brl:4]*4"
+        # lpf 5000 # gain 0.9 # pan 0.4,
+      slow 2 $ degradeBy 0.7 $ sound "[[~ ~ brl:6] ~ ]*4" # gain 0.8 # lpf 3000 # pan 0.1
+    ]
+  d2 $ stack [
+    slow 2 $ degrade $ sound "b115"
+      # nudge 0.025
+      # hpf 800 # room 0.5 # size 0.7
+      # lpf 3000 # gain 0.7 # cut 1 # orbit 2 # pan (rand),
+    -- slow 2 $ every 2 (|*| speed (-1)) $ sound "b115:1"
+    --   # crush 6 # lpf 3000 # room 0.9 # size 0.9 # gain 0.7 # orbit 5 # pan 0.3,
+    -- voice
+    slow 2 $ whenmod 4 1 (const $ sound "~")
+    $ stutWith 8 0.25 ((|*| room 0.5).(|*| size 0.8).(|*| gain 0.8)) $ striate 2 $ sound "bv"
+    # gain 0.9 # speed 0.88 # orbit 5 # pan 0.3,
+    slow 2 $ whenmod 4 2 (const $ sound "~") $ degrade
+    $ stutWith 4 0.25 ((|*| room 0.7).(|*| size 0.8).(|*| gain 0.8)) $ striate 4 $ sound "~ ~ ~ bv:1"
+    # gain 0.8 # speed (1.5*0.88) # orbit 5 # pan 0.8
+    ]
+  -- bass
+  d3 $ stack [
+    slow 4 $ n "[~ 7] ~ ~ ~" |+| n "-24" # s "supersaw"
+      # lpf 200 # sustain 0.6 # attack 0.7 # voice 0.8 # room 0.8 # orbit 3,
+    slow 8 $ degradeBy 0.2 $ n "a'min9 e'min9" # s "superpwm"
+      # lpf (100 + (300 * (slow 2 isaw))) # room 0.9 # size 0.9 # orbit 6
+    ]
+  once $ sound "rain:7" # gain 0.7 # lpf 2000 # cut 1
+
+
+  -- beat 2
+
+  do
+    setcps(115/60/4)
+    d1 $ stack [
+        sound "ssk:2*4" # lpf 400,
+        whenmod 4 1 (const $ sound "~") $ fast 2 $ sound "[~ ~ tbd:4] tbd:4 ~ ~" # lpf 200,
+        fast 4 $ sound "[~ 808:1]" # pan 0.4,
+        degradeBy 0.3 $ sound "[[~ ~ brlsamp:9] ~]" # room 0.5 # size 0.5 # lpf 7000 # orbit 1,
+        whenmod 2 1 (|*| gain 0) $ fast 2 $ (0.25~>) $ trunc 0.5 $ sound "[~ ~ brl:7]*4"
+        # gain 0.8 # lpf 800 # pan 0.7
+      ]
+    d2 $ slow 4 $ sound "b115:4" # cut 1
+    -- d2 $ stutWith 4 0.25 ((|*| room 0.8).(|*| size 0.8).(|*| lpf 4000).(|*| gain 0.6))
+    --   $ slow 2 $ sound "~ b115:3 ~ ~" # orbit 2 # speed (1.2)

@@ -1,0 +1,95 @@
+
+- VENMO - @wondervillenyc ---
+- RECKONER+=MATTHEW // haute rod
+
+main = "~ jk:1 ssn:5 [kr? kr:1]"
+kick = "jk:1 jk:2 ssn:5 [kr? kr:1]"
+eighth =  "jk:1 jk:8  ~ kr:1"
+
+just_hihats = d1 $ silence
+
+setcps(112/60/2)
+
+setcps(400/60/2)
+
+do
+  -- resetCycles
+  jumpMod 1 8 $ every 16 (const $ sound eighth) $ every 4 (const $ sound kick)
+     $ sound "[~ kr:1?] jk:2 [ssn:1 <~ ~ ~ kr:1?>] <[kr? kr:1] [kr? kr:1] [kr? kr:1] [kr:8 kr:9]>" # nudge 0.02
+  jumpMod 2 8 $ sound "kr:5 kr:6 kr:6 <kr:6 kr:6 kr:3>" # gain 2 |+| pan 0.3 # crush 12 # nudge 0.02
+
+just_hihats
+
+testfun
+-- Outro
+
+do
+  d1 $ stack [
+      sound "[<jk:8 ~ ~ ~> jsn:4] [jk:1 vk:1] [ssn:1 kr:1?] <[~ jsn:16] ~ [~ jsn:11?] [kr:7 kr:8]>"
+      |+| gain "[1 0.8] [1 0.8] [1 0.7?] <0.8 0.8 0.8 1>"
+      -- degradeBy 0.7 $ sound "~ ~ [~ kr:1?] ~" |+| gain 0.7
+      # nudge (rand * 0.01)
+      ]
+  d2 $ slow 2 $ sound "<kr:3 kr:4 kr:4 kr:4> kr:6 kr:6 kr:6" # gain 1.4 |+| pan 0.3 # crush 12
+
+hush
+
+
+-- Kangaroo Communique
+do
+  setcps(120/60/4)
+  d1 $ stack[
+      stutWith 2 0.33 ((|*| gain 0.6)) $
+      ("0 0 0.05 0"<~) $ sound "[~ thh]*4"
+      -- linger "<0.25 1 0.75>" $ sometimes (rev) $
+      -- slow 2 $ sound "tbd:2 tsn:4 [~ tbd:3] tsn:4" # gain 1.2
+      -- sound "tbd:2" # end 0.5
+      -- whenmod 4 3 (const $ sound "~") $ stutWith 4 0.2 ((|*| room 0.5).(|*| size 0.5).(|*| gain 0.4)) $ n "<3 ~> ~ <~ 0> -5" |+| n "16" # s "superpiano" # orbit 2
+      ]
+  -- d2 $ slow 4 $ n "0 3 -2 1" |+| n "-20" # s "supersaw"
+  -- d3 $ slow 4 $ sound "<sheep sheep:1>"
+  -- d3 $ stutWith 2 0.25 ((|*| room 0.5).(|*| size 0.5).(|*| gain 0.6))
+     -- $ striate 4 $ chop 8 $ slow 4
+     -- $ sound "sheep:2" # orbit 4
+  d3 $ slow 4 $ stack [
+    sound "sheep:3",
+    sound "sheep:4" # gain 0.9
+    ]
+  -- d3 $ silence
+
+d3 $ silence
+
+-- winter fingers
+do
+  setcps(101/60/4)
+  d1 $ stack [
+    -- degradeBy 0.4 $ sometimes(rev) $
+    -- degrade $ fast 2 $
+    -- sometimes(stutWith 2 0.25 ((|*| speed (-1)).(|*| room 0.5).(|*| size 0.5).(|*| hpf 1000))) $
+    -- sound "[vk:2 [vk:3*2]?] ssn:3 [vk:2 ~ ~ vk:3] [<ssn:3 tsn:4> ~ ~ <vsn:2 vk:3 ~>]" # orbit 3,
+    fast 2 $ every 4 ((striate 2).(chop 2)) $ sometimes (rev) $ sound "[tsn:4*2] vk:2 ssn:3 ~",
+    -- sometimes (fast 4) $
+    sound "hh*8" # gain "[0.7 0.8 1.2 0.9]*2",
+    -- slow 4 $ sound "wf:5 wf:6" # cut 1 # gain 1.4 # lpf 5000,
+    -- striate "8 16" $ chop 8 $
+    slow 4 $ sound "wf:4" # speed 1 # cut 1 # crush 8 # gain 1.5
+    ]
+  -- GUITAR
+  -- d2 $ slow 4 $ n (run 4) |+| sound "wf" # cut 1 # gain 1.6 # hpf 900
+
+d2 $ silence
+
+-- Born under punches
+
+do
+  setcps(110/60/4)
+  -- d1 $ sound "[808bd:2 kr:6]*4" # nudge 0.03
+  d1 $ stack [
+      fast 2 $ whenmod 8 7 (const $ fast 2 $ sound "sn:2 <kr:6 kr:6 kr:6 <kr:5 kr:8>>")
+        $ sound "808bd:2 <kr:6*2 kr:5> [sn:2 808:5?] <kr:6*2 kr:5>" # gain "1 1 1 1.3"
+      , degrade $ chop 4 $ sound "insect:1*4" # pan (rand)
+      , fast 2 $ degrade $ iter 4 $ n (run 8) # sound "~ ~ 808lc*2 808mc*2" # pan (rand) # hpf 300
+    ] # nudge 0.03
+  -- d3 $ fast 4 $ stut 3 0.8 1 $ (0.5~>) $ every' 16 12 (|+| gain 1) $ n "[2 1] 0" |+| n "19" # s "supermandolin" |+| lpf 3000 # gain 0 # sustain 0.4
+
+hush

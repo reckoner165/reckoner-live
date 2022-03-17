@@ -1,0 +1,108 @@
+
+
+-- Galaxy brain
+do
+  let pentatonic = "0 2 5 7 11"
+  -- setcps(90/60/2)
+  setcps(120/60/2)
+  d1 $ degradeBy 0.2 $ jux (0.25<~) $ whenmod 5 3 (slow "2? 4 8") $ fast "3 5" $ rev
+     $ n "0 3 5 7 10 12" |+| n "<-12 0 12 24>"
+     # s "supermandolin" |+| sustain 1.1 |+| room 0.8 |+| size 0.8 # orbit 2
+  d2 $ stack [
+    sound "~ <kr:6 808:4> ~ kr:6",
+    sound "[~ ~ < ~ 808sd:1?>] [808:1? ~ 808bd:2] 808bd:2 [~ 808bd:2?]",
+    sound "kr:3*4"|+| speed 1.1 # pan (0.6 + 0.1*rand) # gain (0.8 + 0.2*rand) # room 0.3 # size 0.3 # orbit 2 |+| hpf 2800
+    ] |*| gain 1.2
+
+m1 $ slow 4 $ n "d4(3, 16)" # s "blof" # midichan 0
+m2 $ degrade $ n "g4 d4" # s "blof" # midichan 1
+m3 $ slow 4 $ n "g2 ~ ~ ~" # amp 0.2 # s "blof" # midichan 4
+
+m1 $ n "g7(9, 16)" # s "blof" # midichan 0
+m2 $ fast 4 $ n "<d2(3, 8) [d2*2 d3]>" # s "blof" # amp "0.8 0.5 0.3 0.5" # midichan 1
+m3 $ fast 4 $ n "~ <e5 e5*2>" # legato 0.5 # s "blof" # midichan 2
+m3 $ silence
+
+m2 $ silence
+
+m4 $ slow 2 $ n "<[g4, f5] [e4, d5]>" # amp 0.4 # s "blof" # midichan 3
+m5 $ n "[[e5 f5]*3 [g5 f5]]" # legato 0.7 # amp 0.4 # s "blof" # midichan 4
+
+hush
+
+m1 $ struct "t*2" $ slow 16 $ n "b3 fs3" # legato 0.5 # s "blof"
+
+m1 $ fast 4 $ n "b3 a3 fs3" # midichan 0 # s "blof"
+
+m2 $ struct "t*16?" $ n "b5 <df6 a5>" # legato 0.2 # midichan 2 # s "blof"
+
+m3 $ n "[b4, <df5 ef5>](3, 4)" # legato 0.8 # midichan 2 # s "blof"
+
+m2 $ silence
+
+m2 $ n "b5" # midichan 2 # s "blof"
+
+m1 $ silence
+
+  hush
+
+  -- Doomscroll
+
+  do
+    setcps (100/60/4)
+    -- resetCycles
+    d1 $ stack[
+      -- slow 4 $ sometimes (|*| speed 2) $ striateBy 32 "[0.006 0.002]*8" $ jux (0.125~>) $
+      slow 4 $ sometimes (rev) $ sometimes (|*| speed "[0.5|2|4|16]") $ rarely (# smear 1) $ striateBy 64 0.08 $
+      struct "t" $ sound "<lowtest:0 lowtest:1>" # cut 1 # crush 8
+      , sound "bd*8" |+| lpf 2000 |+| gain 0.8
+      ]
+    d2 $ stack[
+        slow 2 $ striateBy 128 0.03 $ sound "ssk" # end 0.125
+        ,stutWith 8 0.0625 ((|*| speed 1.5).(|*| room 0.8).(|*| size 0.8).(|*| gain 0.9))
+        $ fast (8/5) $ n "9 11 13 6 ~"
+        # s "supervibe" # gain 0.6 # pan (rand) # orbit 2
+        , slow 8 $ sound "lowtest:2" # cut 1
+      ]
+    -- d3 $ slow 8 $ n "6 11" |+| n "-24" # s "midi"
+
+
+    d3 $ slow 16 $ n "9 10 9 6 9 10 11 4" |+| n "-24" # s "midi"
+
+
+  do
+    d1 $ stack[
+      slow 4 $ sometimes ((|*| speed 2).(# distort (0.5 * rand)).(|*| gain 1.2)) $ (striateBy 16 0.6 $ n "<6 11>" |+| n "-12" # s "superhammond") # gain 0.6 # lpf (5000 + 3000*sin(20))
+      ,slow 4 $ sometimes (|*| speed 2) $ striateBy 32 "[0.006 0.002]*8" $ jux (0.125~>) $ struct "t" $ sound "<lowtest:0 lowtest:1>" # cut 1 # crush 8
+      ]
+    d2 $ fast 4 $ striateBy 16 0.1
+       $ sound "[ssk]*4"
+       # crush 10
+    d3 $ stack [
+        slow 8 $ n "[e7][[ds7 cs7 ~ ~ ][b6 a6 ~ ~][gs6 fs6 ~ ~][e6 ds6 ~ ~]][[cs6 b5 ~ ~ ][a5 gs5 ~ ~][fs5 e5 ~ ~][ds5 cs5 ~ a4]][b4]",
+        slow 8 $ n "[fs7][[e7 ds7 ~ ~ ][cs6 b6 ~ ~][a6 gs6 ~ ~][fs6 e6 ~ ~]][[ds6 cs5 ~ ~ ][b5 a5 ~ ~][gs5 fs5 ~ ~][e5 ds5 ~ gs4]][a4]"  |+| n "12"
+      ] # s "microkorg" # nudge (-0.3)
+
+
+do
+  d1 $ fast 2 $ stack[
+    -- sound "808bd [808bd? 808bd] cp ~"
+    -- ,
+    sound "[~ thh:2]*2" # gain 0.8
+    -- , sound "[808:2*4] ~ " # speed (rand*0.5)
+    , sometimes (striate 4) $ sound "vk vsn"
+    ]
+  d3 $ stack [
+      slow 8 $ n "[e7][[ds7 cs7 ~ ~ ][b6 a6 ~ ~][gs6 fs6 ~ ~][e6 ds6 ~ ~]][[cs6 b5 ~ ~ ][a5 gs5 ~ ~][fs5 e5 ~ ~][ds5 cs5 ~ a4]][b4]",
+      slow 8 $ n "[fs7][[e7 ds7 ~ ~ ][cs6 b6 ~ ~][a6 gs6 ~ ~][fs6 e6 ~ ~]][[ds6 cs5 ~ ~ ][b5 a5 ~ ~][gs5 fs5 ~ ~][e5 ds5 ~ gs4]][a4]"  |+| n "12"
+    ] # s "microkorg" # nudge (-0.3)
+
+
+
+do
+  setcps(90/60/4)
+  d1 $ sound "ssk*4"
+  d2 $ stack[
+    slow 4 $ striateBy 64 0.08 $ sound "[~ ~ 808:2 ~]*2"
+    , slow 16 $ striate 32 $ sound "[~ 808bd ~ ~] *4"
+    ]

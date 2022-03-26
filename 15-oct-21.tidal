@@ -9,10 +9,10 @@ do
     # cut 1 # crush 8 # gain 1.0
  d2 $ stack[
      slow 2 $ striateBy 128 0.03 $ sound "ssk" # end 0.125 # gain 1.5
-     -- ,stutWith 8 0.0625 ((|*| speed 1.5).(|*| room 0.8).(|*| size 0.8).(|*| gain 0.9))
-     -- $ fast (8/5) $ n "9 11 13 6 ~"
-     -- # s "supervibe" # gain 0.6 # pan (rand) # orbit 2
-     -- , slow 8 $ sound "lowtest:2" # cut 1 # gain 1.1 # pan 0.3
+     ,stutWith 8 0.0625 ((|*| speed 1.5).(|*| room 0.8).(|*| size 0.8).(|*| gain 0.9))
+     $ fast (8/5) $ n "9 11 13 6 ~"
+     # s "supervibe" # gain 0.6 # pan (rand) # orbit 2
+     , slow 8 $ sound "lowtest:2" # cut 1 # gain 1.1 # pan 0.3
    ]
  d3 $ slow 8 $ n "6 11" |+| n "-24" # s "midi"
 
@@ -89,21 +89,21 @@ do
  setcps(94/60/4)
  d1 $ sound "ssk:1*4"
  d3 $ silence
- d2 $ slow 2 $ (striateBy 4 "<0.4 0.4 0.4 [0.2 0.1 0.05 0.025]>" $ sound "<heaven [heaven:1 heaven] heaven [heaven:2 heaven]>")
+ d2 $ slow 2 $ (striateBy 4 "<0.4 0.4 0.4 [0.2 <0.1 0.005> 0.05 <0.07 0.025>]>" $ sound "<heaven [heaven:1 heaven] heaven [heaven:2 heaven]>")
      |*| speed (-1)
-     # cut 1 # gain 5
+     # cut 1 # gain 1.5
 
 do
  d1 $ stack [
-   sound "ssk:1*4" # gain 3,
-   striate 32 $ sound "ssk:1" # distort 0.3 # gain 1.2,
-   fast 2 $ (striateBy 128 "0.0015" $ sound "[~ ssk]*4") |+| speed "1 1.5 2 1.5" |+| speed "3 5 7 4"
+   sound "ssk:1*4" # gain 1.5
+   -- striate 32 $ sound "ssk:1" # distort 0.3 # gain 1.2,
+   -- fast 2 $ (striateBy 128 "0.0015" $ sound "[~ ssk]*4") |+| speed "1 1.5 2 1.5" |+| speed "3 5 7 4"
    ]
- d2 $ jux (|*| speed 2) $ sometimes (|*| speed (-1))
+ d2 $ jux ((|*| speed 2).(|*| smear "0.2 0")) $ sometimes (|*| speed (-1))
     $ sometimesBy 0.2 ((|*| lpf 1000).(|*| squiz 0.7))
     $ striateBy 4 0.5 $ n "<3 3 4 5>" # sound "heaven"
-     |+| smear 0.5
-     |+| gain 1.2
+     -- |+| smear 0.5
+     |+| gain 1.5
  -- d3 $ n "<f3 f3 a2 e3>" |+| n "2" # s "midi"
 
  d2 $ silence

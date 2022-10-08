@@ -1,0 +1,69 @@
+d4 $ degrade $ n "{e5 b4 a5}%16" |+ n 24 |+ n 2
+   # amp 1 # legato 0.5 # midichan 0 # s "blofeld"
+
+d6 $ n "[e5, e6, a6](7, 16)" |+ n 2 # legato 0.5 # amp (range 0.6 0.9 $ rand) # midichan 2 # s "blofeld"
+d7 $ ccv "80 90 100" # ccn 69 # midichan 2 # s "blofeld"
+d8 $ fast 2 $ n "e6*8" # legato (range 0.2 0.9 $ sine) |+ n 2 # midichan 1 # s "blofeld"
+
+d4 $ silence
+
+d5 $ off 0.125 (|+ n 4) $ n "fs6*16" |+ n (choose [0, 12, 24]) # legato 0.8 # midichan 4 # s "blofeld"
+d6 $ degrade $ slow 2 $ n "fs5" |+ n "<7 0>" # midichan 6 # "blofeld"
+d7 $ jux (# nudge 0.125) $ n "{fs4 gs4 a4}%4" # midichan 7 # "blofeld"
+d7 $ silence
+d7 $ n "fs3(5, 16)" |- n (choose [0, -2]) # midichan 3 # "blofeld"
+d8 $ fastcat [n "fs5!3 <e5 ds5>?" # amp 1, n "[~ [cs6, fs7]]*16"] # midichan 1 # s "blofeld"
+
+d5 $ fast 2 $ sometimes (|+ n 4) $ n "fs5(8, 12)" # amp sine # midichan 4 # s "blofeld"
+
+d8 $ slow 4 $ sometimes rev $ fast 2 $ n "fs5!3 e5 fs5 gs5 a5 cs7" # amp 0.9 # midichan 1 # s "blofeld"
+
+d5 $ n "fs5*8" # legato 0.8 # midichan (range 0 8 $ saw) # s "blofeld"
+d6 $ silence --n "fs5"
+
+d8 $ silence
+
+hush
+
+do
+  setcps (100/60/4)
+  -- d1 $ stack[
+  --   slow 4 $ sometimes (|*| speed 2)
+  --   $ sometimesBy 0.4 (density 2)
+  --   $ degrade
+  --   $ sometimes (|*| speed "[2|4|8|16]")
+  --   $ striateBy 32 "[0.006 0.002 0.05]*4"
+  --   $ jux (0.125~>)
+  --   $ struct "t" $ sound "<lowtest:0 lowtest:1>" # legato 1 # crush 8 # gain 1.1
+  --   ] |*| gain 0.9
+  d1 $ silence
+  d2 $ stack[
+    -- slow 2 $
+    -- fast 4 $ striateBy 16 0.1 $ sound "ssk(3,8)" # lpf 200 # gain 1.1
+    -- slow 4 $ striateBy 128 0.03 $ sound "ssk" # end 0.125
+     -- # crush 10 # distort 0.2
+    -- ,degrade $ sound "kr:3*8" # gain (0.7 + rand*0.2)
+    -- , degradeBy 0.8 $ fast 2 $ sometimesBy 0.2 (linger "[0.5|0.25]") $ sound "[jk:1?,[jhh:7 jhh:3]] [[jhh:4|jhh:3]? 808bd:1] [[jsn:1?,jhh] jsn:1?] [jhh:9|tsn:4]"
+      -- # lpf 7000 # gain 0.8
+    (0.25<~) $ fast 2 $ sound "808:2(3,8)" # speed (0.8) # gain 1.1 # pan 0.2
+    -- ,slow 8 $ degradeBy 0.2 $ every 2 (# speed 2) $ slice 16 (run 16) $ sound "lowtest:2"
+      -- # pan 0.5 # gain 0.8 # legato 1 # lpf (2000 * (range 0.6 0.9 $ rand))
+    -- ,fast 2 $ degradeBy 0.3 $ sound "thh:3*4 [tsn:4? [brl:4|brlsamp:5|brlsamp:9]]" # gain 0.9
+    ,fast 2 $ sound "808:2(3,8)" # speed "[0.8 1]" # lpf 2000 # room 0.9 # size 0.9 # gain 0.7 # pan 0.9 # orbit 2
+    -- ,every 2 (const $ fast 2 $ sound "ssk:2*4 808:3") $ sound "ssk:2*4" # triode 0.9 # squiz 0.5 # gain 1.0
+      ]
+  -- d4 $ fast 2 $ sometimes (|+| n "24") $ struct "t(3,8)" $ n "[e4|fs4|a4|b4]" # s "supersaw"
+  --   # voice "1" # sustain 0.4 # gain 0.5 # pan 0
+  --   # lpf 1500
+
+  -- d3 $ stack [
+  --     slow 8 $ n "[e7][[ds7 cs7 ~ ~ ][b6 a6 ~ ~][gs6 fs6 ~ ~][e6 ds6 ~ ~]][[cs6 b5 ~ ~ ][a5 gs5 ~ ~][fs5 e5 ~ ~][ds5 cs5 ~ a4]][b4]" # pan 0.7,
+  --     slow 8 $ ((1/500)~>) $  n "[cs7][[b6 a6 ~ ~ ][gs6 fs6 ~ ~][e6 ds6 ~ ~][cs6 b5 ~ ~ ]][[a5 gs5 ~ ~][fs5 e5 ~ ~][ds5 cs5 ~ ~][b4 a4 ~ gs4]][fs4]"  |+| n "12" # pan 0.3
+  --   ]
+  --   # s "blofeld" # nudge (-0.25)
+  --   # s "superpwm" # voice "5 3 4" # lpf (rand*10000)
+  --   -- # nudge (-0.65)
+
+d4 $ silence
+
+hush

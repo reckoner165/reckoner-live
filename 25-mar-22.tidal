@@ -15,10 +15,10 @@ do
 do
   setcps(135/60/7)
   d1 $ stack[
-    sound "ssk:1*7" # room 0.2 # lpf 600 # gain 1.55 # orbit 0,
+    sound "ssk:1*7" # room 0.2 # lpf 600 # gain 1.55 # orbit 0
     -- sound "tsn:4",
-    slow 4 $ stutWith 4 0.5 ((|*| room 0.8).(|*| size 0.5).(|*| gain 0.9)) $ sound "monke"
-    # gain 1.2 # cut 1 # hpf 900 # orbit 2 # pan 0.3
+    -- slow 4 $ stutWith 4 0.5 ((|*| room 0.8).(|*| size 0.5).(|*| gain 0.9)) $ sound "monke"
+    -- # gain 1.2 # cut 1 # hpf 900 # orbit 2 # pan 0.3
     -- sound "~ snap ~ snap ~ snap ~"
     -- sound "ssk:2" # gain 1.5
     ]
@@ -29,7 +29,7 @@ do
   -- -- -- d3 $ n "<[f5,as5] [f5,g5]>" |+| n "-12"
   -- -- --   # s "microkorg"
   -- -- --   # nudge (-0.3)
-  -- -- -- d3 $ n "[d3 ~ ~ ~ ]*7" # s "microkorg" # nudge (0.22) # gain 0.6
+  -- -- -- -- d3 $ n "[d3 ~ ~ ~ ]*7" # s "microkorg" # nudge (0.22) # gain 0.6
   d3
     $ jux(# crush 12) $ n "<[f5,as5] [f5,g5]>" |+| n "-12"
     # s "superhammond" # voice 5 # lpf (5000 * slow 4 saw) # gain "[0.8|0.9]"
@@ -44,7 +44,7 @@ do
     $ n "<[a3] ~ ~ [~ ~ f4 ds4 cs4 c4 as3 ]>" |+| n "24" # s "superfm"  # voice 0 # detune 200 # room 0.9 # size 0.9 # hpf 1000 # orbit 4
     # gain 0.8
 
-  d2 $ silence
+  d4 $ silence
 
 hush
 
@@ -79,32 +79,35 @@ do
   --   # s "superpwm" # voice "5 3 4" # lpf (rand*10000)
   --   -- # nudge (-0.65)
 
-d1 $ silence
+d3 $ silence
 
 hush
 
-rec :: Note -> IO ()
-rec i = do
-          t <- (cyclePos . toTime) <$> getnow
-          once $ rotR (1 - t) $ s "looper" # n (pure i)
+rec :: Note -> Int -> IO ()
+rec i c = do
+            t <- (cyclePos . toTime) <$> getnow
+            once $ rotR (1 - t) $ s "looper" # n (pure i) # (pI "linput" $ pure c)
 
-rec 2
+rec 3 0
 
-d6 $ s "loop" # n 0 # amp 1.5
+d6 $ s "loop" # n 0 # amp 0.4
 
-d7  $ sometimes(|*| speed (-1)) $ slice 7 "[5(8, 14), [~ 6](6, 14)]" $ s "loop" # n 0 # amp 1
+d10 $ s "loop" # n 5 # amp 0.5
 
-d6 $ jux (# nudge "<0.1 0.2>")
+d7  $ sometimes(|*| speed (-1)) $ slice 7 "[5(8, 14), [~ 6](6, 14)]" $ s "loop" # n 2 # amp 0.4
+
+d6 $ fast 2 $ jux ((# nudge "<0.1 0.2>").(# amp 0.7))
+   -- $ sometimes (density "[0.5]")
    $ nudge "<0.05 -0.05 0.02>"
-   # s "loop" # n 2 # amp 1
+   # s "loop" # n 0 # amp 0.5 # legato 1
    -- # room 0.8 # sz 0.9
 
 d9 $ fast "2 4" $ stutWith 4 (1/14) ((|*| speed "[2|0.5]").(# pan (rand)).(|*| room 0.9).(|*| gain 0.8))
-   $ degradeBy 0.8 $ stut 4 0.5 0.5 $ chop 14 $ s "loop" # n "<2 3>" # amp 0.9
+   $ degradeBy 0.8 $ stut 4 0.5 0.5 $ chop 14 $ s "loop" # n "<2 3>" # amp 0.6 # legato 1
 
-d7 $ (chop "7 14" $ s "loop" # n 1)
+d7 $ (chop "7 14 21" $ s "loop" # n 3)
       # begin (range 0 0.5 $ slow 2 saw)
-      # cut 1 # gain 1.3
+      # cut 1 # amp 0.9 # legato 1
 
 -- d9 $ silence
 
@@ -117,7 +120,7 @@ d6
    $ fast 4 $ n "fs4 gs4 b4 cs5"
    # legato 0.6 # s "blofeld"
 
-rec 0
+rec 3
 
 d8 $ silence
 d6 $ s "loop" # amp 1.2
@@ -148,3 +151,53 @@ d4 $ slow 4 $ n "<[f3, bf3, f4] [f3, c4, f4]>" # s "blofeld"
 
 
 hush
+
+
+
+
+
+
+
+
+do
+  setcps(70/60/2)
+  -- d1 $ slow 32  $ $ brak $ sometimes (|*| speed ("[2|4|8|0.5|-1]")) $ striateBy 256 0.001 $ sound "subway"
+  --    # cut 1 # gain 1.3 # begin 0.7
+  -- d1 $ (striate 128 $ sound "monke" # legato 1) |+| up ("-2 -2 12 2")
+  -- d1
+  --   $ (# begin (slow 8 perlin))
+  --   $ fast 8
+  --   $ "subway"
+  --   # legato 1
+  --   # gain 1.3
+  d1
+    -- $ (# speed (range 0.99 1.01)))
+    $ stut 4 0.8 (1/8)
+    $ (# legato (range (3/8) (4/8) perlin))
+    $ (# begin (slow 8 (range 0 1 saw)))
+    $ fast "<4 8>/4"
+    $ "monke"
+    # gain 1.3
+
+-- juicy bits here
+d1
+  $ (# legato 0.5)
+  $ (# begin (slow 8 saw))
+  $ fast "16"
+  $ "subway"
+  -- # begin (slow 1024 saw)
+
+-- juicy bits here
+d1
+  $ (# legato 0.5)
+  $ (# begin (slow 8 saw))
+  $ fast "16"
+  $ "subway"
+
+-- break beats
+d1
+  $ ("0 <0.25 0.5 0.75>" <~)
+  $ (# legato 1)
+  $ (# begin (slow 2 saw))
+  $ fast "32"
+  $ "breaks125"

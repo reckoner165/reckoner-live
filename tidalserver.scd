@@ -26,6 +26,11 @@ Server.default.options.inDevice_("ZEDi10")
 Server.default.options.outDevice_("ZEDi10")
 
 
+
+// HDMI
+Server.default.options.outDevice_("HDMI")
+
+
 Server.default.options.inDevice_("Built-in Microph");
 
 Server.default.options.outDevice
@@ -41,6 +46,7 @@ s.stopRecording
 
 
 ~dirt.loadSoundFiles("/Users/Srinivasan/Music/samples/*");
+
 //
 // dirt.loadSoundFiles("/Users/Srinivasan/Music/Samples/TS-UndergroundVinylVol1/");
 //
@@ -60,6 +66,13 @@ MIDIClient.init;
 ~blofeld = MIDIOut.newByName("Blofeld", "");
 ~dirt.soundLibrary.addMIDI(\microkorg, ~microkorg);
 ~dirt.soundLibrary.addMIDI(\blofeld, ~blofeld);
+
+
+// TEMP JAM
+~blofeld = MIDIOut.newByName("UM-ONE", "UM-ONE");
+~dirt.soundLibrary.addMIDI(\blofeld, ~blofeld);
+
+~blofeld.latency = 0
 
 ~microkorg.latency = -0.65;
 
@@ -81,7 +94,10 @@ OSCFunc.new({|msg, time, addr, recvport| msg.postln},'/play2')
 
 Quarks.install("https://github.com/thgrund/tidal-looper.git")
 
-~dirt = SuperDirt(2, s);
+s.start
+// ~dirt = SuperDirt(2, s);
 ~looper = TidalLooper(~dirt);
+~dirt.start
 
 { SoundIn.ar([0, 0]) }.play;
+{ SoundIn.ar([1, 1]) }.play;

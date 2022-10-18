@@ -13,16 +13,15 @@ do
 -- Monkey On Your back
 do
   setcps(135/60/7)
-  -- setcps(30/60/7)
   d1 $ stack[
-    sound "ssk:1*7" # room 0.2 # lpf 600 # gain 1.55 # orbit 0,
+    sound "ssk:1*7" # lpf 600 # gain 1.55 # orbit 1,
+    -- # room 0.2,
     -- sound "tsn:4",
     slow 4 $ stutWith 4 0.5 ((|*| room 0.8).(|*| size 0.5).(|*| gain 0.9)) $ sound "monke"
     # gain 1.2 # cut 1 # hpf 900 # orbit 2 # pan 0.3
     -- sound "~ snap ~ snap ~ snap ~"
     -- sound "ssk:2" # gain 1.5
     ]
-  -- d2 $ sound "hh*7"
   d2 $ (n "f2 [~ f2] [~ ds2] [~ c2] [~ c2] [~ c2] [~ as1]"
     |+| stack [n"0", n "12"]
     # sound "supersaw"
@@ -31,21 +30,21 @@ do
   -- --   # s "microkorg"
   -- --   # nudge (-0.3)
   -- -- d3 $ n "[d3 ~ ~ ~ ]*7" # s "microkorg" # nudge (0.22) # gain 0.6
-  d3
-    $ jux(# crush 12) $ n "<[f5,as5] [f5,g5]>" |+| n "-12"
-    # s "superhammond" # voice 5 # lpf (5000 * slow 4 saw) # gain "[1.1|0.9]"
-  d4
-  -- $ stutWith 2 0.25 ((|+| n "12").(|*| room 0.4).(|-| pan 0.25))
-    $ n "[~ ~ f4 ds4 f4 as3 c4]*2" |+| n "[0,12]"
-    # s "superpwm" # sustain 0.5 # gain 1 # lpf (8000 * slow 4 saw) # attack 0.05 # pan 0.25 # distort 0.04
-  d5
-    -- $ every' 4 1 (|+| gain 1)
-    -- $ (1<~)
-    $ fast 2 $ stutWith 8 0.25 ((|*| pan 0.2). (|*| gain 0.9))
-    $ n "<[a3] ~ ~ [~ ~ f4 ds4 cs4 c4 as3 ]>" |+| n "24" # s "superfm"  # voice 0 # detune 200 # room 0.9 # size 0.9 # hpf 1000 # orbit 4
-    # gain 0.7
+  -- d3
+  --   $ jux(# crush 12) $ n "<[f5,as5] [f5,g5]>" |+| n "-12"
+  --   # s "superhammond" # voice 5 # lpf (5000 * slow 4 saw) # gain "[1.1|0.9]"
+  -- d4
+  -- -- $ stutWith 2 0.25 ((|+| n "12").(|*| room 0.4).(|-| pan 0.25))
+  --   $ n "[~ ~ f4 ds4 f4 as3 c4]*2" |+| n "[0,12]"
+  --   # s "superpwm" # sustain 0.5 # gain 1 # lpf (8000 * slow 4 saw) # attack 0.05 # pan 0.25 # distort 0.04
+  -- d5
+  --   -- $ every' 4 1 (|+| gain 1)
+  --   -- $ (1<~)
+  --   $ fast 2 $ stutWith 8 0.25 ((|*| pan 0.2). (|*| gain 0.9))
+  --   $ n "<[a3] ~ ~ [~ ~ f4 ds4 cs4 c4 as3 ]>" |+| n "24" # s "superfm"  # voice 0 # detune 200 # room 0.9 # size 0.9 # hpf 1000 # orbit 4
+  --   # gain 0.7
 
-  d3 $ silence
+  d5 $ silence
 
 hush
 

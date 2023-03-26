@@ -1,0 +1,191 @@
+d1 $ jux rev $ fast 2 $ "ssk:1 sn:1"
+
+
+
+hush
+
+
+let int_to_pitch = [(0, 1),
+                    (1, 1.059),
+                    (2, 1.122),
+                    (3, 1.189),
+                    (4, 1.26),
+                    (5, 1.334),
+                    (6, 1.4142),
+                    (7, 1.498),
+                    (8, 1.587),
+                    (9, 1.682),
+                    (10, 1.7818),
+                    (11, 1.887),
+                    (12, 2),
+                    (-1, 0.943),
+                    (-2, 0.8909),
+                    (-3, 0.84),
+                    (-4, 0.7937),
+                    (-5, 0.749),
+                    (-6, 0.707),
+                    (-7, 0.667),
+                    (-8, 0.63),
+                    (-9, 0.595),
+                    (-10, 0.561),
+                    (-11, 0.530)]
+
+ival :: Pattern Int -> Pattern Double
+ival = fmap $ (\i -> maybe (0 :: Double) id (lookup i int_to_pitch))
+
+rec :: Note -> Time -> IO ()
+rec i len = p 99 $ qtrigger 99
+                 $ playFor 0 len
+                 $ slow (pure len) $ s "looper" # n (pure i)
+
+-- Speak For Yourself
+d6 $ slow 4 $ s "input" # dry 0.3 # room 0.5 # size 0.8  # gain 0.9-- # ampbus 0 (fast 4 $ "0.2 0.8")
+
+d8 $ slow 4
+   $ n (scale "dorian" $ run 8)
+   |+ n "e2" # s "supersaw" # voice 0 # amp 0.2
+   # lpf 200 # legato 0.4 # room 0.2 # release "0.9"
+
+do
+  setcps(156/60/2)
+  d1 $ slow 8 $ slice 8 (run 8) $ sound "lady156:0"
+  d2 $ slow 4 $ stack [
+      sometimes (within (0, 0.25) (stut 2 0.25 0.5))
+      $ degradeBy 1
+      $ sound "[808bd:1 ssk:2?] [[jsn:3 ~ ][~ ssk:2|[808bd:1*2]]] [~ ssn:3 808bd:3? ssk:2] ~"
+      # dry 0.5 # room 0.4 # size 0.5 # orbit 1,
+      slow 2 $ sound "808bd:1" # triode 0.8 # lpf 200,
+      sound "~ ~ ~ [~ [jsn|jsn:3|jsn:7]*[6|7]]" # gain (slow 4 $ range 0.4 0.6 tri) # squiz 1,
+      within (0, (1/2)) (density 2) $ sound "808:7*4" # legato 1
+    ] # gain 0.97
+
+d2 $ silence
+
+hush
+
+rec 0 4
+
+d7 $ slow 2 $ slice 2 "0*4" $ s "loop" # amp 0.1 # room 0.6
+
+d7 $ slice 4 "1*4" $ slow 4 $ s "loop:1" # room 0.4
+
+d7 $ degrade $ slow 4 $ slice 16 (run 16) $ s "loop" # amp (range 0.1 0.3 rand) # room 0.8 # bpf 1000 # speed (ival "[0, 4?, <7 10>]") # legato "0.1"
+
+d7 $ slow 4 $ jux (degradeBy 0.8) $ degradeBy 0.8 $ slice 16 "<4 8 12>*16"
+   $ s "loop"
+   # speed (ival "[1, 10, 12]") # amp 0.4 # room 0.6 # legato 0.2 # lpf (rangex 200 4000 rand)
+
+d8 $ slow 4 $ n "e2*2 ~" # s "supersaw" # amp 0.2 # lpf 800
+
+d7 $ fast 2 $ slice 8 "2" $ s "loop:3" # amp 0.2 # room 0.4 # legato 0.8
+d7 $ silence
+
+d8 $ fast 2 $ s "loop:2" # speed (ival "[0, 4]") # amp 0.4 # room 0.8 # legato 0.3
+
+d7 $ slice 8 2 $ slow 4 $ s "loop" # n 0 # amp 0.2 # room 0.4
+
+d7 $ sometimes (# amp 0.4)
+   $ jux press $ slow 4
+   $ slice 8 (range 0 8 $ rand)
+   $ s "loop:1" # amp 1.4 # room 0.6
+
+d5 $ slice 4 4 $ s "loop:0"
+               # amp 1.2
+               # room 0.6
+               # panbus 0 (segment 16 sine)
+
+-- d1-5 samples
+-- d6 main vocals
+-- d7+ vocal loops
+
+-- Full contact
+d6 $ slow 4 $ s "input" # dry 0.3 # room 0.5 # size 0.8
+
+d1 $ struct "t*4" $ s "loop" # n 1 # speed (ival "[0, 4]") # amp 0.4 # legato 0.8
+d2 $ every 4 (|- (speed 0.1))
+   $ jux (rev) $ struct "t*2" $ s "loop" # n 0
+   # speed (ival "[5, 9]")
+   # amp 0.2 # legato 0.4 # room 0.4d3 $ s "input" # speed (ival "[0]") # dry 0.5 # room 0.6 # gain 1.05
+d4 $ s "loop" # n 1 # amp 1.5
+d5 $ striate 12 $ slow 4 $ s "[loop:3, loop:5]" # amp 1.2
+
+rec 0 4
+
+d11 $ silence
+
+d9 $ jux rev $ stutWith 2 0.25 (# amp 0.1) $ slow 4 $ s "loop:1" # amp 0.2 # room 0.4
+d7 $ degradeBy 0.4 $ slice 16 "7*16" $ s "loop:3" # amp 0.1 # speed (ival "[7, 10]") # room 0.8 # legato 0.1
+d10 $ stutWith 2 0.25 (# amp 0.1) $ slow 4 $ s "loop:4" # amp 0.4 # room 0.4
+d8 $ silence
+
+d9 $ slow 4 $ rarely (stutter 2 0.125) $ slice 16 "14" $ s "loop:1"
+   # speed (ival "0") # amp 0.2 # room 0.4 # legato 0.4
+
+d10 $ silence -- slow 4 $ s "loop:2" # amp 0.6 # room 0.4
+d10 $ degrade $ fast 8 $ slice 12 "9" $ s "loop:4" # amp 0.6 # legato 0.2 # room 0.2 # speed "-1"
+
+
+d9 $ slow 2 $ struct "t*4" $ s "loop" # speed (ival "[0, <5 4>, <12 ~ 10?>]") # amp 0.4 # legato 0.4 # room 0.4
+d7 $ stutWith 2 0.25 (# amp 0.2) $ slow 4 $ s "loop:1" # amp 0.4 # room 0.4
+
+d10 $ jux rev $ degradeBy 0.6 $ stutter 8 (1/8) $ s "loop:3" # room 0.4 # speed (ival "6") # legato 0.1
+d11 $ slow 4 $ s "loop:3" # amp 0.2 # room 0.8 # speed (ival "2")
+
+-- Monkey on your back
+d6 $ slow 4 $ s "input" # dry 0.3 # room 0.5 # size 0.7 # gain 0.85
+
+do
+  setcps(135/60/7)
+  -- jumpMod 1 7
+  d1
+    $ stack[
+    -- sound "ssk:1*7" # lpf 600 # gain 1.35 # orbit 3
+    -- # dry 0.5 # room 0.4
+    -- sound "tsn:4",
+    -- slow 4 $ stutWith 4 0.5 ((|*| room 0.8).(|*| size 0.5).(|*| gain 0.9)) $ sound "monke" # speed (0.9) |*| gain 0.8
+    -- # gain 1 # cut 1 # hpf 800 # orbit 2 # pan 0.3
+    -- sound "~ snap ~ snap ~ snap ~" # gain 1.1
+    -- sound "ssk:2" # gain 0.7
+    ]
+  -- jumpMod 2 7
+  d2
+    $ (n "f2 [~ f2] [~ ds2] [~ c2] [~ c2] [~ c2] [~ as1]" |+| n "-1"
+    |+| stack [n"0", n "12"]
+    # sound "supersaw"
+    # voice 0 # distort 0.1) # lpf 100 # gain 1 # sustain 0.3
+  -- jumpMod 3 14
+  d3
+    $ jux(# crush 12) $ n "<[f5,as5] [f5,g5]>" |+| n "-12" |+| n "-1"
+    # s "superhammond" # voice 5 # lpf (5000 * slow 4 saw) # gain "[0.8|0.9]" # hpf 300
+  d4
+  -- $ stutWith 2 0.25 ((|+| n "12").(|*| room 0.4).(|-| pan 0.25))
+    $ n "[~ ~ f4 ds4 f4 as3 c4]*2" |+| n "[0,12]" |+| n "-1"
+    # s "superpwm" # sustain 0.5 # lpf (8000 * slow 4 saw) # attack 0.05 # pan 0.25 # distort 0.04 # gain 0.9
+  d5
+    -- $ every' 4 1 (|+| gain 1)
+    -- $ (1<~)
+    $ fast 2 $ stutWith 8 0.25 ((|*| pan 0.2). (|*| gain 0.9))
+    $ n "<[a3] ~ ~ [~ ~ f4 ds4 cs4 c4 as3 ]>" |+| n "23" # s "superfm"  # voice 0 # detune 200 # room 0.9 # size 0.9 # hpf 1000 # orbit 4
+    # gain 0.7
+
+
+hush
+
+d5 $ silence
+
+rec 0 4
+rec 1 4
+rec 2 4
+
+d7 $ slice 16 "8*4" $ s "loop:0" # speed (ival "[0, 7]") # amp 0.3 # room 0.5 # legato 0.2
+d8 $ degradeBy 0.1 $ slice 8 "6*8" $ s "loop:2" # amp 0.3 # room 0.5 # legato "0.4"
+d9 $ slow 4 $ slice 4 "3*4" $ s "loop:2" # amp 0.2 # room 0.6 # legato 0.2
+d10 $ fast 2 $ ply 3 $ slice 4 3 $ s "loop" # amp 0.2 # room 0.4 # delay 0.9 # delaytime 0.25
+
+d7 $ ply 3 (~> 0.125) $ fast 2 $ s "loop" # speed (ival "7") # amp 0.4 # room 0.5 # legato 1
+d8 $ struct "t(11, 14)" $ slice 7 0 $ s "loop:0" # amp 0.5 # pan 0.4 # speed (ival "[2, 8]") # room 0.5 # legato 0.4
+d9 $ slice 2 0 $ s "loop:2" # amp 0.3 # room 0.5
+
+d10 $ off 0.25 (# room 0.8) $ slice 8 "2*4 6*4" $ s "loop:1" # amp 0.1 # room 0.5
+
+d10 $ silence

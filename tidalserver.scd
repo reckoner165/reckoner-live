@@ -17,7 +17,7 @@ Server.default.options.inDevice_("USB Audio CODEC");
 
 
 // Send to Focusrite
-Server.default.options.inDevice_("Scarlett 2i4 USB")
+Server.default.options.inDevice_("Scarlett2i4 USB")
 Server.default.options.outDevice_("Scarlett 2i4 USB")
 
 
@@ -98,6 +98,55 @@ s.start
 // ~dirt = SuperDirt(2, s);
 ~looper = TidalLooper(~dirt);
 ~dirt.start
-
+//
 { SoundIn.ar([0, 0]) }.play;
 { SoundIn.ar([1, 1]) }.play;
+
+// VOCAL BYPASS
+(
+SynthDef(\input, {
+    | out, sustain=1, freq=440, speed=1, begin=0, end=1, pan, accelerate, offset, volume|
+	var env    = EnvGen.ar(Env.linen(0, sustain, 0), doneAction: Done.freeSelf);
+	var osc    = PitchShift.ar(SoundIn.ar(0), pitchRatio: speed);
+    OffsetOut.ar(out, DirtPan.ar(osc, ~dirt.numChannels, pan, env));
+}).add;
+)
+
+
+
+
+
+
+
+// MULTI-CHANNEL EXPERIMENTS
+s.options.memSize = 65536;
+s.options.numOutputBusChannels = 2;
+// Server.default.options.outDevice_("Soundflower (64ch)");
+Server.default.options.outDevice_("Built-in Output");
+
+~dirt = SuperDirt(1, s); // two output channels, increase if you want to pan across more channels
+~dirt.start(57120, (4..16));
+
+~dirt.loadSoundFiles("/Users/Srinivasan/Music/samples/*");
+
+
+SuperDirt.start
+
+Quarks.install("https://github.com/florian-grond/SC-HOA")
+
+Platform.userExtensionDir
+s.options.outDevice_
+
+
+// try different orders up to 5 and watch the scope window.
+HOADecLebedev50.loadHrirFilters(s);
+
+
+~order = 1;
+// s.scope((~order+1).pow(2));
+(
+{
+	HOADecLebedev50.ar(~order,
+		HOAEncoder.ar(~order, SoundIn.ar(0)), hrir_Filters: 1  )
+}.play
+)

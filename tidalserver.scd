@@ -129,6 +129,9 @@ Server.default.options.outDevice_("Built-in Output");
 
 ~dirt.loadSoundFiles("/Users/Srinivasan/Music/samples/*");
 
+~dirt.loadSoundFiles("/Users/Srinivasan/Music/samples/eu_tour_samples/*");
+
+
 
 SuperDirt.start
 
@@ -150,3 +153,12 @@ HOADecLebedev50.loadHrirFilters(s);
 		HOAEncoder.ar(~order, SoundIn.ar(0)), hrir_Filters: 1  )
 }.play
 )
+
+
+
+
+s.options.memSize = 131072;
+s.options.numOutputBusChannels = 8;
+Server.default.options.outDevice_("SERIES 208i");
+~dirt = SuperDirt(8, s); // two output channels,
+~dirt.start(57120, (0..7));

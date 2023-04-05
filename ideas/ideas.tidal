@@ -1567,6 +1567,17 @@ do
   d2 $ slow 8 $ every 4 ((|*| gain 0)) $ slice 8 (run 8) $ n "0 3 -2 1" |+ n "e4" |+| n "-24"
     # s "supersaw" # lpf 300 # distort 0.2 # gain 1.1
 
-  once $ (stut 4 0.5 0.5 $ sound "cstm" # n "[0|1|2]" # gain 1 # room 0.6 # size 0.7 # orbit 1) # pan (rand)
+  once $ (stut 4 0.5 0.5 $ sound "cstm" # n "[0|1|2]") # cut 1
+  -- # gain 1 # room 0.6 # size 0.7 # orbit 1) # pan (rand)
+
 
   hush
+
+
+
+
+-- MULTI CHANNEL TEST
+d1 $ stack [
+  n (scale "dorian" "0 1 2 3 4 5 6 7") # s "supervibe" # pan (saw)
+  -- # pan "0 0.125 0.25 0.375 0.5 0.625 0.75 0.875"
+  ]

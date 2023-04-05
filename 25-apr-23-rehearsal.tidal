@@ -1,0 +1,44 @@
+let amp1 = pF "amp1"
+    amp2 = pF "amp2"
+    amp3 = pF "amp3"
+    amp4 = pF "amp4"
+    amp5 = pF "amp5"
+    amp6 = pF "amp6"
+
+
+do
+  setcps (100/60/4)
+  -- resetCycles
+  d1 $ stack[
+    slow 4 $ sometimes (|*| speed 2) $ striateBy 32 "[0.006 0.002]*8" $ jux (0.125~>) $
+    -- slow 8 $ sometimes (|*| speed 2) $ striateBy 32 "[0.002 0.005]*4" $ (0.0125<~) $
+    -- sometimes (linger 0.25) $
+    -- sometimes (jux (# smear 0.6)) $
+    struct "t" $ sound "<lowtest:0 lowtest:1>" # legato 1 # crush 8 # distort "[0,1]" # speed "[0, 0.5]"
+    -- , sound "bd*4" |+| lpf 2000
+    -- , sound "kr:3*8" # gain (0.7 + rand*0.2)
+    ]
+  d2 $ stack[
+      slow 2 $ striateBy 128 0.03 $ sound "ssk" # end 0.125 # gain 1.4
+      -- ,stutWith 8 0.0625 ((|*| speed 1.5).(|*| room 0.9).(|*| size 0.9).(|*| gain 0.9))
+      -- $ fast (8/5) $ n "9 11 13 6 ~"
+      -- # s "supervibe" # gain 0.6 # pan (rand) # orbit 2 # sustain (range 0.6 1 saw)
+      -- , jux ((# room 0.5).(# size 0.9).(# orbit 1)) $ slow 8 $ sound "lowtest:2" # legato 1 # gain 1.2
+      -- , degradeBy 0.5 $ sound "~ ssn"
+      -- , sound "808bd(3,8)" # gain 1.2
+      -- , sound "808:2" $ gain (sew "t f f t f f t f" 1 0.9)
+    ]
+  d3 $ sometimes (# distort 0.8) $ sometimesBy 0.6 (# crush 4) $ stack [
+      -- slow 8 $ n "[e7][[ds7 cs7 ~ ~ ][b6 a6 ~ ~][gs6 fs6 ~ ~][e6 ds6 ~ ~]][[cs6 b5 ~ ~ ][a5 gs5 ~ ~][fs5 e5 ~ ~][ds5 cs5 ~ a4]][b4]" # pan 0.3,
+      -- slow 8 $ n "[fs7][[e7 ds7 ~ ~ ][cs6 b6 ~ ~][a6 gs6 ~ ~][fs6 e6 ~ ~]][[ds6 cs5 ~ ~ ][b5 a5 ~ ~][gs5 fs5 ~ ~][e5 ds5 ~ gs4]][a4]"  |+| n "12" # pan 0.7
+    ] # s "superfm" # orbit 0
+    # amp1 1 # pF "ratio1" 2 # pF "mod15" 0.9
+    # amp2 0
+    # amp3 0.5 # pF "ratio3" (slow 2 $ range 0.75 1.5 square)
+    # amp4 0
+    # amp5 (slow 4 $ range 0 0.8 tri) # pF "ratio5" 8.08 # pF "mod51" 0.8
+    # amp6 0.5
+
+  -- d3 $ fast 2 $ stut 2 0.125 0.25 $ struct "t(3,8)" $ n "[fs4|b4|a4|e4]" |+| n "[24|0]" # s "microkorg"
+  -- d4 $ fast 2 $ struct "t(3,8)" $ n "a3" # s "supersaw" # lpf 400
+  -- d3 $ slow 8 $ n "6 11" |+| n "-24" # s "midi"

@@ -1,4 +1,20 @@
+m1 $ slow 4 $ n "<b2 fs2>*4" |+ n "0" # legato 0.9 # amp 0.2 # s "blof"
+m1 $ silence
+m1 $ degrade $ n "b3(7, 16)" |+ n "0 12" # s "blof"
+m2 $ fast 2 $ n "fs6 <fs6 [fs6*2]> <df6 ~ ds6> ds6" |- n "12" # legato 0.6 # s "blof"
+m5 $ fast "2 4" $ n "fs6 fs6 df6 ds6" |+ n "5" |- n "24" # legato 0.4 # s "blof"
+m6 $ n "b7*16" # amp 0.01 # legato 0.5 # s "blof"
+m2 $ silence
 
+m3 $ n "f(5, 16)" |- n "12 7 0 20" # midichan 1 # amp 0.8 # s "blof"
+m3 $ n "c2(7, 16)" # midichan 1 # amp 0.8 # s "blof"
+
+m4 $ n "[b3*3] ~ [b3*2] ~" # midichan 3 # amp 0.1 # s "blof"
+m4 $ silence
+
+m1 $ n "c*4" # legato 0.5 # s "blof"
+
+hush
 
 -- Galaxy brain
 do
@@ -16,7 +32,8 @@ do
 
 m1 $ slow 4 $ n "d4(3, 16)" # s "blof" # midichan 0
 m2 $ degrade $ n "g4 d4" # s "blof" # midichan 1
-m3 $ slow 4 $ n "g2 ~ ~ ~" # amp 0.2 # s "blof" # midichan 4
+m3 $ slow 4 $ n "g2 ~ ~ ~" # legato 0.8 # amp 0.2 # s "blof" # midichan 4
+m4 $ slow 4 $ n "~ g5(3, 8) ~ ~" |+ sine # legato 0.2 # amp 0.2 # s "blof" # midichan 2
 
 m1 $ n "g7(9, 16)" # s "blof" # midichan 0
 m2 $ fast 4 $ n "<d2(3, 8) [d2*2 d3]>" # s "blof" # amp "0.8 0.5 0.3 0.5" # midichan 1
@@ -44,6 +61,14 @@ m2 $ n "b5" # midichan 2 # s "blof"
 
 m1 $ silence
 
+m1 $ slow 8 $ n "[b3, <ds4 cs4>]" # legato 0.8 # amp 0.3 # midichan 5 # s "blof"
+m2 $ n "fs7*16" # legato 0.3 # amp 0.8 # midichan 7 # s "blof"
+
+m3 $ n "<b5 cs6 ds6 e6>" # amp 0.4 # midichan 0 # s "blof"
+m3 $ slow 4 $ n "fs6 e6" # amp 0.4 # midichan 0 # s "blof"
+
+m4 $ degrade $ n "1*4" # legato 0.3 # amp 0.2 # midichan 2 # s "blof"
+
   hush
 
   -- Doomscroll
@@ -53,56 +78,76 @@ m1 $ silence
     -- resetCycles
     d1 $ stack[
       -- slow 4 $ sometimes (|*| speed 2) $ striateBy 32 "[0.006 0.002]*8" $ jux (0.125~>) $
-      slow 4 $ sometimes (rev) $ sometimes (|*| speed "[0.5|2|4|16]") $ rarely (# smear 1) $ striateBy 64 0.08 $
+      slow 8 $ sometimes (|*| speed 2) $ striateBy 32 "[0.002 0.005]*4" $ (0.0125<~) $
+      sometimes (linger 0.25) $
       struct "t" $ sound "<lowtest:0 lowtest:1>" # cut 1 # crush 8
-      , sound "bd*8" |+| lpf 2000 |+| gain 0.8
+      , sound "bd*4" |+| lpf 2000 |+| gain 0.8
+      , sound "kr:3*8" # gain (0.7 + rand*0.2)
       ]
     d2 $ stack[
         slow 2 $ striateBy 128 0.03 $ sound "ssk" # end 0.125
         ,stutWith 8 0.0625 ((|*| speed 1.5).(|*| room 0.8).(|*| size 0.8).(|*| gain 0.9))
         $ fast (8/5) $ n "9 11 13 6 ~"
         # s "supervibe" # gain 0.6 # pan (rand) # orbit 2
-        , slow 8 $ sound "lowtest:2" # cut 1
+        , slow 8 $ sound "lowtest:2" # cut 1 # gain 1.2
+        , degradeBy 0.5 $ sound "~ ssn"
+        -- , sound "808bd(3,8)" # gain 1.2
+        -- , sound "808:2" $ gain (sew "t f f t f f t f" 1 0.9)
       ]
+    d3 $ fast 2 $ stut 2 0.125 0.25 $ struct "t(3,8)" $ n "[fs4|b4|a4|e4]" |+| n "[24|0]" # s "microkorg"
+    d4 $ fast 2 $ struct "t(3,8)" $ n "a3" # s "supersaw" # lpf 400
     -- d3 $ slow 8 $ n "6 11" |+| n "-24" # s "midi"
 
 
     d3 $ slow 16 $ n "9 10 9 6 9 10 11 4" |+| n "-24" # s "midi"
+d1 $ silence
+d2 $ silence
+d3 $ silence
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   do
+    setcps (100/60/4)
     d1 $ stack[
-      slow 4 $ sometimes ((|*| speed 2).(# distort (0.5 * rand)).(|*| gain 1.2)) $ (striateBy 16 0.6 $ n "<6 11>" |+| n "-12" # s "superhammond") # gain 0.6 # lpf (5000 + 3000*sin(20))
-      ,slow 4 $ sometimes (|*| speed 2) $ striateBy 32 "[0.006 0.002]*8" $ jux (0.125~>) $ struct "t" $ sound "<lowtest:0 lowtest:1>" # cut 1 # crush 8
+      slow 4 $ sometimes (|*| speed 2)
+      $ sometimesBy 0.2 (density 2)
+      -- $ sometimes (|*| speed "[2|4|8]")
+      $ striateBy 32 "[0.006 0.002 0.05]*4"
+      $ jux (0.125~>)
+      $ struct "t" $ sound "<lowtest:0 lowtest:1>" # cut 1 # crush 8
       ]
-    d2 $ fast 4 $ striateBy 16 0.1
-       $ sound "[ssk]*4"
+
+    d1 $ silence
+    d2 $ stack[
+      fast 4 $ striateBy 16 0.1
+       $ sound "ssk(3,8)"
        # crush 10
+      , sound "kr:3*8" # gain (0.7 + rand*0.2)
+      , fast 2 $ sound "808bd [~ 808bd] cp ~" # lpf 3000
+      -- , (0.25<~) $ sound "808:2(3,8)" # speed (0.8) # gain 0.8 # pan 0.2
+      -- , slow 4 $ sound "lowtest:2" # pan 0.5 # gain 0.9
+      ]
+    d3 $ fast 2 $ sometimes (|+| n "12") $ struct "t(3,8)" $ n "[e4|fs4|a4|b4]" # s "microkorg" # nudge (-0.5)
+
+    d2 $ silence
+
     d3 $ stack [
         slow 8 $ n "[e7][[ds7 cs7 ~ ~ ][b6 a6 ~ ~][gs6 fs6 ~ ~][e6 ds6 ~ ~]][[cs6 b5 ~ ~ ][a5 gs5 ~ ~][fs5 e5 ~ ~][ds5 cs5 ~ a4]][b4]",
         slow 8 $ n "[fs7][[e7 ds7 ~ ~ ][cs6 b6 ~ ~][a6 gs6 ~ ~][fs6 e6 ~ ~]][[ds6 cs5 ~ ~ ][b5 a5 ~ ~][gs5 fs5 ~ ~][e5 ds5 ~ gs4]][a4]"  |+| n "12"
-      ] # s "microkorg" # nudge (-0.3)
-
-
-do
-  d1 $ fast 2 $ stack[
-    -- sound "808bd [808bd? 808bd] cp ~"
-    -- ,
-    sound "[~ thh:2]*2" # gain 0.8
-    -- , sound "[808:2*4] ~ " # speed (rand*0.5)
-    , sometimes (striate 4) $ sound "vk vsn"
-    ]
-  d3 $ stack [
-      slow 8 $ n "[e7][[ds7 cs7 ~ ~ ][b6 a6 ~ ~][gs6 fs6 ~ ~][e6 ds6 ~ ~]][[cs6 b5 ~ ~ ][a5 gs5 ~ ~][fs5 e5 ~ ~][ds5 cs5 ~ a4]][b4]",
-      slow 8 $ n "[fs7][[e7 ds7 ~ ~ ][cs6 b6 ~ ~][a6 gs6 ~ ~][fs6 e6 ~ ~]][[ds6 cs5 ~ ~ ][b5 a5 ~ ~][gs5 fs5 ~ ~][e5 ds5 ~ gs4]][a4]"  |+| n "12"
-    ] # s "microkorg" # nudge (-0.3)
-
-
-
-do
-  setcps(90/60/4)
-  d1 $ sound "ssk*4"
-  d2 $ stack[
-    slow 4 $ striateBy 64 0.08 $ sound "[~ ~ 808:2 ~]*2"
-    , slow 16 $ striate 32 $ sound "[~ 808bd ~ ~] *4"
-    ]
+      ] # s "microkorg" # nudge (-0.65)

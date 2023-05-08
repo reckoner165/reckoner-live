@@ -154,7 +154,7 @@ HOADecLebedev50.loadHrirFilters(s);
 }.play
 )
 
-
+"/Users/Srinivasan/Music/reckoner-live/synthdefs1.scd".load()
 
 
 s.options.memSize = 131072;
@@ -162,3 +162,11 @@ s.options.numOutputBusChannels = 8;
 Server.default.options.outDevice_("SERIES 208i");
 ~dirt = SuperDirt(8, s); // two output channels,
 ~dirt.start(57120, (0..7));
+
+
+
+
+
+
+// PARIS
+"/Users/Srinivasan/Music/reckoner-live/paris.scd".load()

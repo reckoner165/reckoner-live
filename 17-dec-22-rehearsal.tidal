@@ -139,7 +139,7 @@ do
   -- jumpMod 1 7
   d1
     $ stack[
-    -- sound "ssk:1*7" # lpf 600 # gain 1.35 # orbit 3
+    sound "ssk:1*7" # lpf 600 # gain 1.35 # orbit 3
     -- # dry 0.5 # room 0.4
     -- sound "tsn:4",
     -- slow 4 $ stutWith 4 0.5 ((|*| room 0.8).(|*| size 0.5).(|*| gain 0.9)) $ sound "monke" # speed (0.9) |*| gain 0.8

@@ -1,0 +1,79 @@
+rec :: Time -> [Note] -> IO ()
+rec len ns = p 99 $ qtrigger 99
+                  $ playFor 0 (len * (toRational $ length ns))
+                  $ slowcat $ map (\i -> slow (pure len) $ s "looper" # n (pure i)) ns
+rec1 = rec 1
+rec2 = rec 2
+rec4 = rec 4
+free = once $ s "freeLoops"
+
+rec2 [4]
+
+free
+    
+p "saw" $ stack [
+--   n "f3" # s "supersaw" # voice 2 # legato 2 # decay 0.5 # lpf 50 # amp 0.4 # distort 0.2,
+  silence
+  ]
+
+do
+  setcps(135/60/7)
+  p "vocals" $ stack [
+    -- degradeBy 0.3 $ jux (# speed(-1)) $ slice 14 "<8(9,14) 4*7 2(3,14)>" $ n "0" # amp 0.3 # dry 0.3 # room 0.6 # size 0.8 # pan (rand) # legato 0.2,
+    -- sometimes (# speed "-1") $ sometimes (rev) $ slice 14 (struct "[t*4]*14" (irand 14)) $ pan rand # n "1" # room 0.9 # size 0.9 # legato 0.85 # amp 0.2 # lpf 7000 # gain 0.9,
+    -- slow 2 $ slice 7 "{4 3*4 6 7}%21" $ n "3" # speed "0.5" # legato 0.5 # room 0.3 # amp 0.9 # begin (range 0.4 0.9 saw),
+    -- jux ((1/14) ~>) $ slice 14 (struct "[t*2]*14" (irand 14)) $ n 4 # speed "1" # room 0.8 # size 0.9 # amp 0.6 # legato 0.6,
+    -- # lpfbus 7 "[8000 2000 10000 800]*14" # orbit 8,
+    -- fast 2 $ slice 14 "[6|4](3,8,2)" $ n "7" # speed 2 # legato 0.5 # amp 0.5 # pan 0,
+    silence
+    ] # s "loop"
+  -- jumpMod 1 1
+  d1
+    $ stack[
+      sound "ssk:1*7" # lpf 600 # gain 1.5 # orbit 3 # dry 0.5 # room 0.4,
+      -- ,sound "tsn:4(2,7)"
+    --   slow 4 $ stutWith 4 0.5 ((|*| room 0.8).(|*| size 0.5).(|*| gain 0.9)) $ sound "monke"|*| gain 0.8
+    --   # gain 1.2 # cut 1 # hpf 800 # orbit 2 # pan 0.3,
+    --   sound "~ clak ~ clak ~ clak ~" # gain 1.1,
+      -- sound "ssk:2" # gain 0.7,
+      silence
+      ]
+  jumpMod 2 1
+--   d2
+    $ stack [
+      (n "f2 [~ f2] [~ ds2] [~ c2] [~ c2] [~ c2] [~ as1]" |+ n "[0,12]"
+      # s "supersaw" # voice 0 # lpf 100) # triode 6 # gain 1.2 # sustain 0.3 # legato 0.7 # orbit 2,
+      silence
+      ]
+  jumpMod 3 2
+--   d3
+    $ stack [
+    --   jux((# crush 12).( # nudge 0.01)) $ stutWith 2 (1/32) ((|*| gain 0.1).(# room 0.8).(# size 0.9).(# hpf 3000).(# pan (rand))) $ n "<[f5,as5] [f5,g5]>" |+| n "-12"
+    --   # s "superhammond" # voice "[5,2,1]" # lpf (5000 * slow 4 saw) # gain "[0.7|0.8]" # hpf 300,
+      silence
+      ]
+  d4
+  -- $ stutWith 2 0.25 ((|+| n "12").(|*| room 0.4).(|-| pan 0.25))
+    $ stack [
+    --   n "[~ ~ f4 ds4 f4 as3 c4]*2" |+| n "[0,12]"
+    -- # s "superpwm" # sustain 0.55 # lpf (8000 * slow 4 saw)
+    -- # attack 0.06 # pan 0.25 # gain 0.9 # hpf 1000,
+    silence
+      ]
+  d5
+    $ stack [
+      fast 2 $ stutWith 8 0.25 ((|*| pan 0.2). (|*| gain 0.8))
+      $ n "<[a3] ~ ~ [~ ~ f4 ds4 cs4 c4 as3 ]>" |+| n "24" # s "sinosc"  
+    --   # voice 0 # detune 200 
+      # sustain 1 # legato 1
+      # room 0.9 # size 0.9 # hpf 1000 # orbit 4
+      # gain 0.8,
+    silence
+      ]
+  d6 $ stack [
+        -- slow 4 $ s "input" # dry 0.3 # room 0.5 # size 0.7 # amp 0.9 # gain 1.05,
+        silence
+    ]
+
+
+hush

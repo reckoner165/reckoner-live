@@ -93,15 +93,19 @@ d4 $ stack[
 
 
 -- SONG AND DANCE
-bps(85/60)
+setcps(85/60/2)
 
-d1 $ degradeBy 0.05 $ stut 2 0.3 0.25 $ sound "kr:9 kr:8 kr:9 kr:9 kr:8 kr:8 kr:9 kr:8"
-    |+| gain (0.95 + 0.1*rand) |+| speed 0.95 |+| crush 10 |+| lpf 6000 |+| room 0.7 # orbit 2
+d1 $ degradeBy 0.02 $ stutWith 2 0.25 ((# gain 0.3).(# lpf 2000).(# legato 0.3))
+  $ sound "kr:9 <~ kr:8> kr:9 kr:9 kr:8 kr:8 kr:9 kr:8"
+    # gain (0.96 + 0.1*rand) # speed 0.92 # crush 12 # lpf 6000 # room 0.7 # size 0.9 # orbit 2
+    # dry 0.4 # begin 0.001
 
 d2 $ every 4 (stut 4 0.5 "0.5 0.25") $ degradeBy 0.7 $ stack [
   sound "tbd:2 tbd:2? tbd:2 ~ tsn:4 tbd:2 ~ tsn:4",
   sound "thh*8"
-] |+| crush 8 |+| lpf (5000 + 2000 * sin 2) |+| hpf (rand*1000)
+] # crush 8 # lpf (5000 + 2000 * sin 2) # hpf (rand*1000)
+
+  d2 $ silence
 
 
 d2 $ stack [
@@ -1473,7 +1477,6 @@ do
 
 
 -- Dec 17 rehearsal ideas
-
 do
   setcps(156/60/2)
   d1 $ slow 8 $ slice 8 (run 8) $ sound "lady156:1" # legato 1 # gain 1.1
@@ -1581,3 +1584,71 @@ d1 $ stack [
   n (scale "dorian" "0 1 2 3 4 5 6 7") # s "supervibe" # pan (saw)
   -- # pan "0 0.125 0.25 0.375 0.5 0.625 0.75 0.875"
   ]
+
+
+
+d1 $ n (scale "dorian" "0 1 2 3 4 5 6 7") # s "supervibe" # pan (saw)
+
+setcps(100/60/4)
+d1 $ slow 4 $ sometimes (density 2) $ ply 4 $ n (scale "dorian" "0 1 2 3 4 5 6 7")|+ n "24" # s "donk" # room 0.8 # size 0.8
+
+d2 $ stack [
+  struct "<t*2><t(3,8)>" $ sound "ssk"
+  ] # gain 1.4
+-- # distort 0.5 # legato (range 0.5 0.8 saw)
+
+
+
+
+d1 $ fast 2 $ iter 4 $ every 2 (linger 0.5) $ slice 8 "<3 4 8 0>(5,8)" $ splice 16 (run 16) $ sound "bv"
+    # gain 1.3
+
+d2 $ stack [
+  sound "ssk*4",
+  fast 4 $ sound "jhh:6 jhh:2 jhh:8 ~" # gain 0.6 # pan 0,
+  sound "[~ sn:2]*2",
+  silence
+  ]
+
+d3 $ struct "t(10,16)" $ n "e3 g3 b3 d4" |-| n "12" # s "industrial" # voice 0 # lpf (fast 8 $ range 1000 8000 perlin)
+
+hush
+
+
+
+-- ALLYTALK
+
+setcps(155/60/7)
+
+d2 $ fast 7 $ sound "jhh:6 jhh:6 jhh:9 ~" # pan 0.24 # speed 1.05 # hpf 100 # gain 0.7
+
+
+d1 $ stack [
+sound "tbd [[jsn:3,sn:1] tbd] [~ tbd] [[jsn:3,sn:1] tbd] [~ tbd] [[jsn:3,sn:1] tbd] [~ <[jsn [jsn:3,sn:1]] ~>]" # speed 1,
+sound "kr:6*7" # pan 0.7 # gain 1.2,
+silence
+]
+
+
+
+d3 $ n "<[f4,a4,c5] [g4, b4, d5]>" # s "superhammond"
+
+d4 $ n "[d2 a3] [c4 d4] [~ c4] [~ a3] [a3 ~] [f3 ~] d2" # s "supersaw" # voice 0 # lpf 300 # distort 0.2
+
+
+
+rec :: Time -> [Note] -> IO ()
+rec len ns = p 99 $ qtrigger 99
+                  $ playFor 0 (len * (toRational $ length ns))
+                  $ slowcat $ map (\i -> slow (pure len) $ s "looper" # n (pure i)) ns
+rec1 = rec 1
+rec2 = rec 2
+rec4 = rec 4
+free = once $ s "freeLoops"
+
+free
+
+
+rec4 [0 .. 3]
+
+d5 $ slow 4 $ ((1/7)<~) $ n "<3 2 1 0>" # s "loop" # legato 1 # gain 1.2 # speed (-1)

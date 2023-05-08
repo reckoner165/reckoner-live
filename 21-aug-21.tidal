@@ -66,8 +66,8 @@ do
   d1 $ stack [
     -- degradeBy 0.4 $ sometimes(rev) $
     -- degrade $ fast 2 $
-    -- sometimes(stutWith 2 0.25 ((|*| speed (-1)).(|*| room 0.5).(|*| size 0.5).(|*| hpf 1000))) $
-    -- sound "[vk:2 [vk:3*2]?] ssn:3 [vk:2 ~ ~ vk:3] [<ssn:3 tsn:4> ~ ~ <vsn:2 vk:3 ~>]" # orbit 3,
+    sometimes(stutWith 2 0.25 ((|*| speed (-1)).(|*| room 0.5).(|*| size 0.5).(|*| hpf 1000))) $
+    sound "[vk:2 [vk:3*2]?] ssn:3 [vk:2 ~ ~ vk:3] [<ssn:3 tsn:4> ~ ~ <vsn:2 vk:3 ~>]" # orbit 3,
     fast 2 $ every 4 ((striate 2).(chop 2)) $ sometimes (rev) $ sound "[tsn:4*2] vk:2 ssn:3 ~",
     -- sometimes (fast 4) $
     sound "hh*8" # gain "[0.7 0.8 1.2 0.9]*2",
@@ -76,7 +76,7 @@ do
     slow 4 $ sound "wf:4" # speed 1 # cut 1 # crush 8 # gain 1.5
     ]
   -- GUITAR
-  -- d2 $ slow 4 $ n (run 4) |+| sound "wf" # cut 1 # gain 1.6 # hpf 900
+  d2 $ slow 8 $ n (run 4) |+| sound "wf" # legato 1 # gain 1.6 # hpf 700
 
 d2 $ silence
 

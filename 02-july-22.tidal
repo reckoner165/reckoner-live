@@ -2,34 +2,37 @@
 
 do
   setcps(80/60/2)
-  d1 $ stack[
-    slow 4 $
-    degradeBy 0.2 $ slice 8 (run 8) $
-    sound "qw" # legato 1 # gain 1.35 # shape 0.7,
-    fast 2 $ sound "<jcy:1 ~> <jhh:2 jhh:3 jhh:1 jhh:9>",
-    -- degradeBy 0.8 $ sound "jk:1 jk:2 [ssn:1 jsn:1] [~ ssn:1?]" # gain 1.2
-    sometimes (linger "0.5") $
-    sometimesBy 0.2 (within (0.25, 0.75) (density 2)) $
-    -- degradeBy 0.2 $
-    sound "[<jk:8 ~ ~ ~> jsn:4] [jk:1 vk:1] [ssn:1 kr:1?] <[~ jsn:16] ~ [~ jsn:11?] [kr:7 kr:8]>"
-    |+| gain "[1 0.8] [1 0.8] [1 0.7?] <0.8 0.8 0.8 1>" |*| gain 1.5,
-    degradeBy 0.7 $ sound "~ ~ [~ kr:1?] ~" |+| gain 0.7
-    # nudge (rand * 0.01) # gain 1.25
-    ]
+  -- d1 $ stack[
+  --   slow 4 $
+  --   degradeBy 0.2 $ slice 8 (run 8) $
+  --   sound "qw" # legato 1 # gain 1.2 # shape 0.7,
+  --   fast 2 $ sound "<jcy:1 ~> <jhh:2 jhh:3 jhh:1 jhh:9>",
+  --   -- -- degradeBy 0.8 $ sound "jk:1 jk:2 [ssn:1 jsn:1] [~ ssn:1?]" # gain 1.2
+  --   sometimes (linger "0.25") $
+  --   -- sometimesBy 0.8 (within (0.25, 0.75) (density "2")) $
+  --   degradeBy 0.7 $
+  --   sound "[<jk:8 ~ ~ ~> jsn:4] [jk:1 vk:1] [ssn:1 kr:1?] <[~ jsn:16] ~ [~ jsn:11?] [kr:7 kr:8]>"
+  --   |+| gain "[1 0.8] [1 0.8] [1 0.7?] <0.8 0.8 0.8 1>" |*| gain 1.55,
+  --   degradeBy 0.7 $ sound "~ ~ [~ kr:1?] ~" |+| gain 0.7
+  --   # nudge (rand * 0.01) # gain 1.25
+  --   ]
   d2
-    $ stut 2 0.8 (1/8)
-    $ degradeBy 0.2
-    $ sometimes (rev)
-    $ density "[0.5|2|4]"
+    -- $ sometimes (fast 2)
+    -- $ stut 2 0.8 (1/8)
+    -- $ degradeBy 0.2
+    -- $ sometimes (rev)
+    -- $ sometimes ((|*| speed (-1)))
+    -- $ density "[0.5|2|4]"
     $ (# legato (range (13/16) 1 saw))
-    $ (# legato 1)
+    -- $ (# legato 1)
     $ (# begin (slow 16 (range 0 1 perlin)))
     $ fast "<2 1>/4"
-    $ sound "qw:1" # gain 1.7
-  d3 $ slow 4 $ n "0 -2 -3 -4" |+| n "4" # s "superhammond"
-    # voice (stack ["7","6"]) # size 0.8 # room 0.9 # orbit 2 # gain 0.8
+    $ sound "qw:1" # gain 1.7 # room 0.8 # orbit 4
+  -- d3 $ slow 4 $ n "0 -2 -3 -4" |+| n "4" |+| n "[0|-12]" # s "superhammond"
+  --   # voice (stack ["7","6"]) # size 0.8 # room 0.9 # orbit 2 # gain 0.8
 
 
+d3 $ silence
 let amp1 = pF "amp1"
     amp2 = pF "amp2"
     amp3 = pF "amp3"
@@ -38,28 +41,33 @@ let amp1 = pF "amp1"
     amp6 = pF "amp6"
 
 do
-  setcps(90/60/2)
+  setcps(80/60/2)
   d1 $ stack[
-    n "{[~ ~ <0 3 10 7> _ ]!4, [<14 12>!2]/3}" |-| n "12"
+    -- degradeBy 0.1 $
+    -- rarely (density "[0.5|2]") $
+    sometimes ((rev).(fast 2)) $
+    stutWith 2 (1/8) ((|+| n "48").(# sustain 0.2)) $
+    n "{[~ ~ <0 3 10 7> _ ]!4, [<14 12>!2]/3}" |+| n "< -12 12>"
+    -- n "{[~ ~ <0 3 10 7> _ ]!4, [<14 12>!2]/3}" |-| n "12"
     # s "superfm" # legato 1 # sustain 0.34
-    # amp1 1 # pF "ratio1" 2
+    # amp1 1 # pF "ratio1" 2 # pF "mod15" 0.9
     # amp2 0
     # amp3 0.5 # pF "ratio3" (slow 2 $ range 0.75 1.5 square)
-    # amp4 1
-    # amp5 (slow 4 $ range 0 0.5 tri) # pF "ratio5" 8.08
-    # amp6 0,
-    slow 4 $ stutWith 8 (1/64) ((|*| speed 0.9).(|*| gain 0.8).(|+| size 0.5)) $ n "17" # s "supersaw"
+    # amp4 0
+    # amp5 (slow 4 $ range 0 0.8 tri) # pF "ratio5" 8.08 # pF "mod51" 0.8
+    # amp6 0.5,
+    slow 4 $ stutWith 16 (1/32) ((|*| speed 0.9).(|*| gain 0.8).(|+| size 0.5)) $ n "17" # s "supersaw"
     # voice 0 # pan 1 # sustain 0.05 # lpf (slow 8 $ range 1000 2000 saw) # hpf 200
-    ] # triode 0.5 # room 0.3 # size 0.5
-  d2 $ sound "ssk:1*2" |*| gain 1.7
+    ] # triode "<0.5 1>" # room 0.3 # size 0.5
+  d2 $ sound "[[ssk:1 ssk:1?] 808:2]*2" |*| gain 1.7
 
 
 do
-  setcps(90/60/2)
+  setcps(80/60/2)
   d1 $ stack[
     fast (4/5) $
     jux ((degrade).(0.2<~)) $
-    stutWith 2 0.6 ((# pan 0).(|+| n "12")) $
+    stutWith 2 0.3 ((|-| n "12").(# pan (rand))) $
     n "[10 3 ~ ~ 7 ~ 2 0 ~ ~]" |-| n "12"
     # s "superfm" # legato 1 # sustain 0.34
     # amp1 1 # pF "ratio1" 2
@@ -69,9 +77,13 @@ do
     # amp5 (slow 4 $ range 0 0.5 tri) # pF "ratio5" 8.08 # pF "mod51" (fast 2 $ range 0 1 saw)
     # amp6 0,
     slow 4 $ stutWith 8 (1/64) ((|*| speed 0.9).(|*| gain 0.8).(|+| room 0.4)) $ n "17" # s "supersaw"
-    # voice 0 # pan 1 # sustain 0.05 # lpf (slow 8 $ range 1000 2000 saw) # hpf 200
-    ] # triode 0.5 # room 0.3 # size 0.5
+    # voice 0 # pan 1 # sustain 0.5 # lpf (slow 8 $ range 1000 3000 saw) # hpf 200
+    ] # triode 0.5 # room 0.8 # size 0.5 # orbit 2
   d2 $ stack[
-    sound "ssk:1*2" # gain 1.7,
+    -- sound "[[ssk:1 ssk:1?] 808:2]*2" |*| gain 1.7,
     rarely ((1/8)<~) $ sound "kr:3*4" # gain (range 0.6 0.8 tri)
     ]
+
+
+
+d1 $ sound "ssk:1*8"

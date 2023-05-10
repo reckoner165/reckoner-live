@@ -95,22 +95,17 @@ d4 $ stack[
 -- SONG AND DANCE
 setcps(85/60/2)
 
-d1 $ degradeBy 0.02 $ stutWith 2 0.25 ((# gain 0.3).(# lpf 2000).(# legato 0.3))
+d1 $ degradeBy 0.02 $ stutWith 2 0.24 ((# gain 0.3).(# lpf 2000).(# legato 0.3))
   $ sound "kr:9 <~ kr:8> kr:9 kr:9 kr:8 kr:8 kr:9 kr:8"
-    # gain (0.96 + 0.1*rand) # speed 0.92 # crush 12 # lpf 6000 # room 0.7 # size 0.9 # orbit 2
-    # dry 0.4 # begin 0.001
+    # gain (0.96 + 0.1*rand) # speed 0.92 # crush 12 # lpf 6000 # dry 0.6 # room 0.7 # size 0.9 # orbit 2
+    # begin 0.003
 
-d2 $ every 4 (stut 4 0.5 "0.5 0.25") $ degradeBy 0.7 $ stack [
-  sound "tbd:2 tbd:2? tbd:2 ~ tsn:4 tbd:2 ~ tsn:4",
-  sound "thh*8"
-] # crush 8 # lpf (5000 + 2000 * sin 2) # hpf (rand*1000)
 
-  d2 $ silence
 
 
 d2 $ stack [
-  sound "thh*16" |+| gain (0.7  + 0.2*rand),
-  degradeBy 0.1 $ sound "bd:2 hh tsn:2 tbd:2 ~ sn:2 [~ tbd:2?] [sn tsn:2?]" |+| gain 1.1
+  degrade $ sound "jhh:4*16" # gain (0.9  + 0.2*rand),
+  every 2 (const $ jux (# nudge 0.001) $ iter 4 $ n "<[0 .. 7] [5 .. 12] [3 .. 10] [8 .. 15]>" # s "amencutup" # gain 1.4) $ degradeBy 0.1 $ sound "vk:3 <vk:2 thh> tsn vk:2 <~ thh> sn:2 [thh vk:2?] [sn jk:2?]" |+| gain 1.1
 ]
 
 
@@ -118,9 +113,9 @@ c1 $ n "0 10" # sound "supersaw"
 
 
 d4 $ stut 2 0.5 0.5 $ stack[
-  n "<4 2 0 -1 -3 ~ ~ ~>" |+| n "-12",
+  slow 4 $ n "<[4 2 0 -1] [-3 _ _ _]>" |+| n "-24" # gain 0.4 # voice 0 # legato 1,
   whenmod 8 4 (const $ n "~ 9 [11 12] ~") $ n "~ 8 [9 11] ~"
-] # sound "supersaw" |+| decay 1.5 |+| sustain 0.9 |+| room 0.7 # orbit 3 |+| gain 0.8
+] # sound "sawpluck" |+| decay 1.5 |+| sustain 0.9 |+| room 0.7 # orbit 3 |+| gain 0.8
 
 d4 $ slow 8 $ n "16" # sound "supersaw" |+| decay 0.5 |+| sustain 0.3
 
@@ -1633,7 +1628,7 @@ silence
 
 d3 $ n "<[f4,a4,c5] [g4, b4, d5]>" # s "superhammond"
 
-d4 $ n "[d2 a3] [c4 d4] [~ c4] [~ a3] [a3 ~] [f3 ~] d2" # s "supersaw" # voice 0 # lpf 300 # distort 0.2
+d4 $ n "[d2 a3] [c4 d4] [~ c4] [~ a 3] [a3 ~] [f3 ~] d2" # s "supersaw" # voice 0 # lpf 300 # distort 0.2
 
 
 
@@ -1652,3 +1647,37 @@ free
 rec4 [0 .. 3]
 
 d5 $ slow 4 $ ((1/7)<~) $ n "<3 2 1 0>" # s "loop" # legato 1 # gain 1.2 # speed (-1)
+
+
+
+
+d1 $ sound "bd sn:2"
+
+hush
+
+
+
+setcps(120/60/4)
+
+d1 $ stack [
+  every 4 (const $ fast 2 $ sound "ssk:1(3,8)") $ sound "ssk*4" # gain 1.2,
+  jux rev $ sound "[~ [hh hh?]]*4"
+  ]
+
+d2 $
+
+d3  $ soun "[~ ~ sn:2 sn:1]*2"
+
+d4 $ off (1/8) (|+| n "19") $ off (1/16) (|+| n "24") $ n "0 3 -2 1" |+| n "-24" # s "supersaw" # legato 0.5 # voice 0 # lpf 200
+
+
+d5 $ degrade $ every 2 (# squiz 2) $ sound "808:2*16" # speed (rand)
+
+
+
+hush
+
+
+d1 $ sometimes (# squiz 3)  $ sometimes (# speed 2) $ every 2 (linger (1/4)) $ slow 2 $ n "[3 <12 4 0 7>]*8 [<8 2> 12]*8" # sound "amencutup"
+
+d2 $ degrade $ every 4 (|+| n "3") $ fast 4 $ n "0 3 5 7" # s "supervibe"

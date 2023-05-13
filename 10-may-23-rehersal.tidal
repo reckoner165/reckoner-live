@@ -34,7 +34,7 @@ d1 $ stack [
   sound "hh*4" # pan 1
  ]
 
-d2 $ fast 2 $ n "<[e5 cs5 a4 _][e5 b4 g4 _][d5 b4 fs4 _][cs5 a4 e4 _]>" |+| n "12" # s "supersaw" # voice 0
+d2 $ fast 2 $ n "<[e5 cs5 a4 _][e5 b4 g4 _][d5 b4 fs4 _][cs5 a4 e4 _]>" |+| n "[12, 24]" # s "blofeld" # midichan 12 # legato 0.8
 
 
 -- ALLYTALK
@@ -49,7 +49,7 @@ sound "kr:6*7" # pan 0.7 # gain 1.2,
 silence
 ]
 
-d3 $ n "<[f4,a4,c5] [g4, b4, d5]>" |+| n "12" # s "superhammond"
+d3 $ n "<[f4,a4,c5] [g4, b4, d5]>" |+| n "12" # s "blofeld" # midichan 13
 
 --bassline
 d4 $ n "[d2 a3] [c4 d4] [~ c4] [~ a 3] [a3 ~] [f3 ~] d2" # s "supersaw" # voice 0 # lpf 300 # distort 0.2

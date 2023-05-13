@@ -37,3 +37,41 @@ SynthDef(\input, {
 
 "/Users/Srinivasan/Music/reckoner-live/synthdefs1.scd".load()
 
+
+MIDIClient.init;
+~blofeld = MIDIOut.newByName("Blofeld", "");
+~dirt.soundLibrary.addMIDI(\blofeld, ~blofeld);
+~blofeld.latency = 0
+
+
+
+// Evaluate the block below to start the mapping MIDI -> OSC.
+(
+var playbackControl, osc;
+
+osc = NetAddr.new("127.0.0.1", 6010);
+
+MIDIClient.init;
+MIDIIn.connectAll;
+
+playbackControl = MIDIFunc.cc({ |val, num, chan, src|
+if ((chan == 9) && (num >= 20) && (num <= 23), {
+if (val == 0, {
+osc.sendMsg("/mute", num - 19);
+}, {
+osc.sendMsg("/unmute", num - 19);
+});
+});
+});
+
+if (~stopMidiMuteControl != nil, {
+    ~stopMidiMuteControl.value;
+});
+
+~stopMidiMuteControl = {
+    playbackControl.free;
+};
+)
+
+// Evaluate the line below to stop it.
+~stopMidiMuteControl.value;

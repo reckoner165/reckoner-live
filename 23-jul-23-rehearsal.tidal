@@ -1,0 +1,101 @@
+-- Starting progression: <cM7 fM7 em7 [dsm7 d7]>
+d1 $ struct "[t*6]" $ n "<c5'maj7'4 as4'min7'4 g5'dom7'4 [fs5'min7'4 d5'min7'4]>"
+                      # s "supersquare" # lpf 2000 # legato 0.4 # room 0.2
+
+p "bass" $ struct "t(<10 5>,12)" $ n (scale "mixolydian" ("<0 3 2 -2>")) |- n 24 # s "minitaur"
+
+
+d2 $ fast (6/5) $ "xmas:4 [808:3 <~ xmas:4>] <808:3 [~ 808:3]> 808:3 808:3" # gain 1.4
+
+d2 $ fast (6/5) $ "[xmas:4]*5"
+
+d3  $ often ((density 2)) $ sometimes (# speed 2) $ ply 2 $ n "[~ e5 ~ ~] g7 ~" # s "supervibe" # legato 1 # room 0.5
+d3 $ silence
+
+d4 $ degradeBy 0.3 $ jux ((rev).(density 0.5).(|- n 12)) $ every 2 (density 2) $ n (scale "major" "[6,9] 7 4 [5, 11] 2 3") # s "superfm" # triode 1 # squiz 2
+# room 0.8 # size 0.8 # dry 0.1 # attack 0.5 # sustain 0.7
+-- # amp1 1 # pF "ratio1" 2 # pF "mod11" 0.9
+--     # amp2 0.4
+--     # amp3 0.5 # pF "ratio3" (slow 1 $ range 0.75 1.5 square)
+--     # amp4 0.5 # pF "mod44" 0.8
+--     # amp5 (slow 2 $ range 0 0.9 saw) # pF "ratio5" 8.08 # pF "mod55" 0.8
+--     # amp6 0.5
+
+d5 $ n "<[c8 ~ b7 ~] [~ bf7 a7 ~] [g7 ~ fs7 f7] [e7 ~ ds7 e7] >" # s "supersaw" # voice 0.01 # legato 0.2 # room 0.8
+
+d5 silence
+
+setcps(40/60/4)
+
+hush
+
+setcps(125/60/4)
+d1 $ slow 2 $ every 8 (const $ sometimes (density 2) $ sound "xmas*8") $ timeCat [(1, sound "xmas hh sn:2 808:2 ~"), (1.2, sound "xmas hh sn:2 casio:1 <casio:3 birds> 808:2"), (1,sound "xmas hh sn:2 808:2 808:2")] # legato 1
+
+d2 $ slow 2 $ timeCat [(1, n "f4 a4 ds4 ~ ~"), (1.2, n "f4 a4 ds4 ~ ~ ~"), (1,n "f4 a4 ds4 ~ ~")] |+| n "[[12|24]]" # s "supersaw" # voice "0" # legato "0.2" # hpf 1000 # hpq (0.5 * range 0 1 saw) # lpf 1000
+# room 0.9 # size 0.9 # dry 0
+
+d1 silence
+d1 $ every 4 (rev. density 2) $ sound "[[xmas, 808bd] ~ ~ xmas?] [sn:2 sn:2?]" # gain 1.5
+d1 $ sound "[sn:2 sn:2]*4" # gain 1.4
+d1 silence
+d4 $ n "[~ f4] [~ f4 ~ ~]" |+ n "[0, 4, 7, 12]" # s "supersaw" # voice 0 # legato 0.3 # lpf (fast 4 $ range 1000 6000 saw) # lpq 0.4
+d4 silence
+
+d3 silence
+d6 $ slow 2 $ ply 2 $ sometimes (density 1) $ rarely (# speed "[2|[4,2]]") $ often (rev) $ sometimes (density 2) $ n "<g5 f5 [f5 a5 ds5 g5][ds5 c5 a5 as5]> _ _ _" # s "futuresaw" # legato 1 # hpf 1000
+d5 $ fast 4 $ sound "jhh:2 jhh:5 jhh:8 ~" # gain 1.2 # hpf 8000 # legato 0.3
+
+p "bass" $ iter 2 $ rarely (|+ n 12) $ n (scale "mixolydian" ((fast 2 $ run 8) + "<0 2 4 -2>")) |+ n ("f2") # s "minitaur"
+p "bass" $ n "f3*8" # s "minitaur" # legato 0.8
+
+let amp1 = pF "amp1"
+    amp2 = pF "amp2"
+    amp3 = pF "amp3"
+    amp4 = pF "amp4"
+    amp5 = pF "amp5"
+    amp6 = pF "amp6"
+
+-------
+
+setcps(85/60/4)
+p "bass" $ n (scale "messiaen1" $ rev $ run 4) |- n 24 # s "minitaur" # legato "[0.8|0.3]"
+p "bass_bend" $ fast 2 $ segment 20 $ bend (sine2 * 0.01) # s "minitaur"
+
+bend :: Pattern Double -> ControlPattern
+bend pat = midibend (range 0 16384 (pat * 0.5 + 0.5))
+
+d1 $ degrade $ fast 2 $ sometimes (density "<1 2 2 1>".linger "<0.75 0.5 0.25 0.25>") $ iter 8 $ sound "[[jk:4 <jhh jk:2>] [jsn:3 <~ jhh:4>]]*2" # gain 1.5
+
+d1 $ fast 2 $ sound "jk:4(3,8)" # gain 1.5
+d2 $ s "[[jhh:2|jhh:3|jhh]!3 ~]*4" # amp 1.2 # hpf 8000 # pan 0.2
+d2 silence
+d3 $ degrade $ jux (rev.((1/32)<~)) $ iter 8 $ density 2 $ n (run 8) # sound "tmess" # gain 1.5 # legato 1 # lpf 3000 # hpf 100 # lpq (fast 3 $ range 0 0.9 saw)
+d3 silence
+
+d4 $ ply 4 $ n (scale "messiaen1" $ run 4) |+ n "[-12,8,4]" # s "superhammond" # sustain 0.8 # room 0.8 # size 0.9
+
+
+d3 $ fast 2 $ sound "[[xmas, 808bd:1] rm:4] [realclaps] [mouth:4? xmas] realclaps" # gain 1.2
+d1 $ fast 2 $ sound "[xmas:4*8]"# gain 1.3 # lpf 200
+d2 $ slow 2 $ sometimes (# speed 1.5) $ ply 2 $ sound "seal:1 seal:0" # legato 1 # gain 1.5 # room 0.9 # size 0.9
+d1 silence
+d2 $ n (fast 2 $ run 4) # s "sitar" # legato 1 # gain 1.5 # lpf 5000 # lpq 0.6
+d2 silence
+d4 $ n (scale "messiaen1" $ "{3 1 0}%16") # s "superfm" # squiz 0.5 # amp 0.6 # lpf 200 # lpq 0.9 # legato "0.2 0.5!2"
+
+d5 $ trunc 0.75 $ sometimes (jux rev) $ chop 4 $  n (scale "messiaen1" "[5 8] 9 [2 12] [~ 4]") # s "supervibe" # room 0.9 # size 0.9
+
+p "bass" $ struct "[t ~ t t]*2" $ n (scale "messiaen1" "0 2 3 1") |- n 24 # s "minitaur" # legato "0.6"
+p "bass" $ stack [n "0*2" |- n 24, timeCat [(0.5, bend 0), (0.5, segment 40 $ bend (range 0 0.75 isaw))]] # s "minitaur"
+
+d1 $ silence
+
+hush
+
+d5 $ s "[hh(3, 4)]*8" # amp 1.3 # lpf 4000
+# bpf (rangex 20000 5000 $ fast 2 saw)
+
+d6 $ n (scale "messiaen1" "{0!4 <-1 -3>}%8") |+ n "24" # s "superfm" # voice 0 # legato 0.2 # lpf 400
+
+hush

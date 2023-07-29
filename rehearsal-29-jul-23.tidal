@@ -1,0 +1,39 @@
+--- JAM 1
+setF "root" "<0 7 5 2>/2"
+
+d1 $ n (scale "mixolydian" (run 8 + cI0 "root"))
+   |+ n "24"
+   # s "supersquare"
+   # legato 0.9 # attack 0.09 # sustain 1 # decay 1
+
+setcps(90/60/4)
+
+hush
+
+d2 $ struct "t*4"
+$ n "c5'major" # s "superfm"
+# pF "amp1" 1 # pF "ratio1" (slow 2 $ range 2 5 saw) # pF "mod11" 3
+# pF "amp2" 0.5 # pF "ratio2" 0.8 # pF "mod23" 0.9
+# pF "amp3" 0.3 # pF "mod33" 2 # pF "mod35" 3
+# pF "amp4" 0.8 # pF "ratio4" 2 # pF "mod46" 1
+# pF "amp5" (slow 2  $ range 0.3 1 saw) # pF "ratio5" 4
+# pF "amp6" 0.8 # pF "ratio6" 1 # pF "mod66" 1
+# pF "lfofreq" 1 # pF "lfodepth" 0.01
+# gain 0.8 # legato 0.8
+# attack 0.3 # decay 1
+
+p "bass" $ n (scale "mixolydian" ("0" + cI0 "root")) |+| n "-36" # s "minitaur"
+
+d3 $ every 4 (const $ fast 2 $ sound "[xmas|xmas:2|xmas:4](3,8)" # gain 1.4 # squiz "[0,[2|4|9]]") $ sound "xmas:4 thh realclaps xmas:4 thh realclaps ~ xmas:3*2?" # gain 1.4
+d3 $ fast 2 $ sometimes (trunc 0.5) $ sound "[[xmas|xmas:2|xmas:4](3,8), [~ <realclaps ~ > ~ ~ ~ ~ ~ ~]]" # gain 1.4
+d3 $ sometimes (rev) $ sometimes (iter 4.linger 0.25) $ sound "[xmas xmas? ~ xmas:2?] [sn:2,jsn:4]*2?" # gain 1.4
+d6 $ sound "[tas:1 thh]*2" # gain 1.3 # pan 0
+d4 $ jux rev $ degradeBy 0.8 $ sound "808:2*8" # gain 1.1 # speed (perlin) # room 0.4 # size 0.4
+
+d5 $ jux rev $ stut 4 0.8 0.166 $ slow 4 $ chop 1 $ randslice 8 $ s "[cstm|cstm:1](3,8)" # gain 1.2 # room 0.8 # size 0.9 # legato 0.2
+d5 silence
+d3 silence
+d3 $ degradeBy 0.8 $ sound "[sn:2,[tav:2|tav:1]]*8" # triode "[0,6]" # gain 1.2 # legato 1
+
+d7 $ sometimes (0.25~>) $ sometimes (density 2) $ degradeBy 0.3 $ (slice 8 (run 8) $ sound "[trump:2|trump|trump:1]" # gain 2) # speed (0.5 + (0.3 * rand)) # legato 0.2 # room 0.8 # size 0.4 # dry 0.5
+d7 silence

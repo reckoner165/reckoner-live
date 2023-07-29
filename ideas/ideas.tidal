@@ -1681,3 +1681,11 @@ hush
 d1 $ sometimes (# squiz 3)  $ sometimes (# speed 2) $ every 2 (linger (1/4)) $ slow 2 $ n "[3 <12 4 0 7>]*8 [<8 2> 12]*8" # sound "amencutup"
 
 d2 $ degrade $ every 4 (|+| n "3") $ fast 4 $ n "0 3 5 7" # s "supervibe"
+
+
+
+
+
+setcps(100/60/2)
+
+d1 $ sound "bassdm*2" # lpf 500 # gain 1.3

@@ -1,0 +1,38 @@
+let amp1 = pF "amp1"
+    amp2 = pF "amp2"
+    amp3 = pF "amp3"
+    amp4 = pF "amp4"
+    amp5 = pF "amp5"
+    amp6 = pF "amp6"
+
+d1 $ slow 8 $ n (scale "messiaen1" "[3,1] [2,5] [4,5] [2,4]") |+ n "-12" # s "superfm" # legato 1
+    # amp1 1 # pF "ratio1" (slow 4 $ range 0 10 saw) # pF "mod11" "0.5 1"
+    # amp2 0.4 # pF "ratio2" 1 # pF "mod21" 0.6
+    # amp3 0.5 # pF "ratio3" (slow 1 $ range 0.75 1.5 square)
+    # amp4 0.5 # pF "mod44" 0.8 # pF "mod46" 0.4 # pF "ratio4" 5
+    # amp5 (slow 2 $ range 0 0.9 saw) # pF "ratio5" 8.08 # pF "mod55" 0.8 # pF "detnue5" 2
+    # amp6 0.5 # pF "ratio6" (fast 4 $ "6 0")
+    # gain 0.4 # room 0.9 # size 0.9
+    # pF "lfofreq" 0.8 # pF "lfodepth" 0.01
+
+once $ jux rev $ sometimes (# speed(-1)) $ stut 8 0.8 0.125 $ randslice 4 $ sound "cstm:1" # gain 1.3
+
+setcps(170/60/4)
+
+d2 $ sometimes (rev) $ every 4 (const $ sound "[xmas(3,8)]*2" # gain 1.3) $ sound "xmas hh realclaps xmas*2 hh realclaps 808:2 [xmas:4*2?]" # gain 1.4
+d2 $ degradeBy 0.1 $ sound "[[xmas(3,8)], [~ [realclaps, realclaps:3, realclaps:2]]*2]" # gain 1.4
+
+d2 $ degradeBy 0.9 $ sound "xmas*16" # gain 1.4 # squiz "[0,[4 2 3 8],[12,16]]" # triode "[0,4,5]" # distort "[0,0.5]"
+d6 $ degrade $ sound "[realclaps*2 [sn:2 ~]]*2" # gain 1.4
+d6 silence
+
+d2 $ sometimes (rev) $ sound "xmas thh [glitch:2 sn:2] xmas*2 thh sn:2 808:2 [xmas:4*2?]" # gain 1.4
+
+d3 $ jux rev $ degrade $ sound "808:2*16" # speed (perlin) # room 0.8 # size 0.6 # distort 0.1
+d3 silence
+
+d4 $ degradeBy 0.3 $ sometimes (ply "[4|2]") $ sometimes (|- n 4) $ n (scale "messiaen1" (iter 4 $ "0 1 6 5")) |+ n "12" # s "supersaw"
+# voice 0 # gain 1.2 # pan 0 # legato "[0.8|0.5]" # attack "[0|0.3]" # room 0.8 # size 0.8
+
+d5 $ brak $ (0.125~>) $ ply 2 $ often (|- n "[2|4|-2]") $ n (scale "messiaen1" (iter 4 $ "2 0 1 6")) |+ n "12" # s "superfm" # voice 0 # gain 1.2 # pan 1
+d4 silence

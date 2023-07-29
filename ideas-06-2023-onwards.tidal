@@ -1,0 +1,37 @@
+-- idea 1 -- baggage claim
+
+-- 130bpm
+d1 $ degradeBy 0.2 $ sound "xmas*8"
+
+d5 silence
+
+-- d1 $ every 8 (const $ sound "xmas*16") $ sound "xmas(3,8)"
+
+d2 $ sound "hh? [xmas:33 xmas:33?]"
+
+d3 $ ((1/8)<~) $ stut 4 0.5 0.125 $ n "<[<a6 c7 e7 g7>*2 ~][~]>" # s "ultrasaw" # legato (range 0.1 0.4 $ perlin)
+
+d4 $ stack [
+  slow 2 $ "sheffield" # legato 0.25 # begin 0.25,
+  stut 16 0.5 (1/16) $ slow 2 $ sound "808:2 ~"
+  ]
+
+d5 $ every 4 (density 2) $ every 2 (# speed (-1)) $ (chop 8 $ sound "<cstm cstm:1>"
+  # legato 1 # begin (slow 1 $ range 0.1 0.5 $ saw) # end (slow 1.3 $ range 0.1 1 $ saw) # gain 1.1 # triode 1) # pan (rand)
+
+
+
+-- idea 2 -- Citypop song
+
+setcps(125/60/4)
+
+d1 $ whenmod 3 1 ((fast 1.2).(trunc (5/6)).(zoom (0, 5/6))) $ stack [sound "xmas xmas xmas ~ ~ ~", sound "hh*6"]
+
+d3 $ sound "xmas*4"
+d4 $ fast 4 $ sound "jhh:1 jhh:3 jhh:9 ~" # gain 0.5
+
+d4 silence
+
+
+d1 $ slow 2 $ timeCat [(1, n "f4 a4 ds4 ~ ~"), (1.2, n "f4 a4 ds4 ~ ~ ~"), (1,n "f4 a4 ds4 ~ ~")] # s "supersaw"
+d2 $ sound "~ ~ ~ <~ sn:2>"

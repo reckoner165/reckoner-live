@@ -2,8 +2,26 @@
 
 bps (60/60)
 
-d1 $ every 2 (stut 4 0.3 0.25) $ slow 64 $ chop 2 $ sound (samples "subway*4" (run 7))
+d1 $ rarely (stutWith 4 (1/16) (|*| gain 0.8).(# pan (rand))) $ slow 32 $ n (run 6) # s "subway" # legato 1 # gain 5
 
 
+
+
+d2 $ slow 2 $ stutWith 4 (1/16) ((# room 0.6).(# size 0.6).(# gain 0.7)) $ randslice 64 $ sound "tanpuraD" # legato 1 # gain 0.9
+
+
+setF "root" "2"
+setI "degree" "<0 5 1 4>" -- "<0 3 4 4>*2"
+setS "scale" "<lydian>" -- "<major!3 minor>*2"
+
+-- Given a scale degree, automatically pitch that degree in the
+inKey :: Pattern Int -> Pattern Note
+inKey pat = (scale (cS "lydian" "scale") (pat)) + cN0 "root"
+
+inChord :: Pattern Int -> Pattern Note
+inChord pat = (inKey $ pat + cI0 "degree")
+
+d3 $ degradeBy 0.8 $ slow 2 $ often (# squiz 2 ) $ sometimes (((1/16)<~).rev) $ rarely (ply "[2|4|8]") $ n (scale "lydian" "<3 [4 6]> [4 -2?] <[1 ~ 0 0] 6> <5 2>") |+| n "[2 | 14]"
+# s "superpiano" # gain 1.4 # legato 1 # room 0.6 # size 0.8 # lpf 1500 # crush 10 # speed (0.95 + 0.1*perlin) # gain 1
 
 hush

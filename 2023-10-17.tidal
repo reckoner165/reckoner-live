@@ -1,0 +1,37 @@
+
+
+d1 $ sound "[cstm| cstm:1]"
+  # room 0.8 # size 0.9 # gain 1 # legato 0.98
+
+
+
+  setF "root" "0"
+  setI "degree" "[0,7,14]" -- "<0 3 4 4>*2"
+  setS "scale" "<dorian>" -- "<major!3 minor>*2"
+
+  -- Given a scale degree, automatically pitch that degree in the
+  inKey :: Pattern Int -> Pattern Note
+  inKey pat = (scale (cS "major" "scale") (pat)) + cN0 "root"
+
+  inChord :: Pattern Int -> Pattern Note
+  inChord pat = (inKey $ pat + cI0 "degree")
+
+
+  d1 $ slow 2 $ n "[0,7,14, -12]" |+| n "<0 -5 2 -7>" # s "superfm" # legato 1 # decay 1 # sustain 3.75
+  # pF "lfofreq" 0.6 # pF "lfodepth" 0.01 # squiz 3 # distort 0.3 # crush 8 # lpf 1000
+
+  d2 $ stack [
+    sound "thh*8",
+    every 4 (jux rev) $ rarely (# speed (-1)) $ sound "[tbd ~ ~ tbd:3?] [tsn:3? ssn:1*2? ~ ~]" # gain 2,
+    silence
+    ]
+
+  d3 $ degradeBy 0.3 $ sometimes (jux rev) $ sound "tbd:2 [thh thh?] ssn:1 ~ tbd:2 [thh thh?] tsn:1 ~" # gain 1.5
+
+  d4 $ degradeBy 0.7 $ slow 2 $ stutWith  4 (1/8) ((# room 0.8).(# size 0.9).(# gain 0.8)) $
+    sometimes ((1/16)<~) $ n "0 7 14 11?" |+| n "<0 -5>" |+| n "12" # s "supervibe" # voice 2 # room 0.9 # size 0.9 # squiz 1
+
+  d5 $ slow 4 $ stutWith  4 (1/8) ((# room 0.8).(# size 0.9).(# gain 0.8)) $ jux rev $ striateBy 256 0.06 $ sound "cstm:1" # gain 1.5 # legato 1
+
+
+  setcps(130/60/4)

@@ -23,6 +23,13 @@ s.stopRecording
 
 MIDIClient.init;
 
-~minitaur = MIDIOut.newByName("Moog Minitaur", "");
+~minitaur = MIDIOut.newByName("Moog Minitaur", "Moog Minitaur");
 ~dirt.soundLibrary.addMIDI(\minitaur, ~minitaur);
+~minitaur.latency = 0.03
 
+
+
+~dirt.loadSoundFiles("/Users/Srinivasan/Music/samples/*");
+
+
+"/Users/Srinivasan/Music/reckoner-live/synthdefs1.scd".load()

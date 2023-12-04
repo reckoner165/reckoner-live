@@ -1,0 +1,10 @@
+
+-- Delhi - male passengers
+setcps (150/60/4)
+
+d1 $ fast 8 $ sound "delhi:1*16" # cut 1 # begin (range 0 0.9 $ slow 40 saw)
+# gain 1.2 # lpf (range 800 1500 $ slow 24 sine) # speed ( range 0.85 1.25 $ slow 16 sine |* "[1,-1]") # pan (perlin)
+# squiz 1
+-- |*| speed
+
+d2 $ degradeBy 0.6 $ rarely (chop 4) $ sometimes (# speed ((-1)*perlin)) $ slice 7 (run 7) $ fast (8/7) $ sound "delhi" # gain 0.9 # squiz 1 # room 0.9 # size 0.9

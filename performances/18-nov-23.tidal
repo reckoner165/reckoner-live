@@ -49,18 +49,22 @@ d3 $ n "2" |+| n "<0 -12>" # s "microkorg" # legato 1 # sustain 3 # gain 0.7
 
 free
 
-rec4 [5,6]
+rec4 [2,3]
 
-d4 $ degradeBy 0.9 $ stack [
-n "0(3,8)" # s "loop" # gain 5 # legato 0.3  # begin 0.1,
-slow 1 $ n "1*[8]" # s "loop" # gain 1.5 # legato 0.2 # speed (ival "[0,12]") # begin 0.06,
-sometimes (# speed 2) $ slow 2 $ struct "t*[8|16|24]" $ n "<2 3>" # s "loop" # gain 2.2 # legato 0.4 # begin 0.03 # pan (rand),
-sometimes (0.125<~) $ slow 2 $ struct "t*16" $ n "<5 6>" # s "loop" # gain 2 # legato 0.4 # begin 0.03
-] |*| gain 4 # hpf 200
+do
+  d4 $ n "0(3,8)" # s "loop"  # begin 0.01 # hpf 200  # amp 35 # legato 0.4 # pan 0 # distort 0.8
+  d5 $ slow 1 $ n "1*[4|8|16|32]" # s "loop" # gain 1.5 # speed (ival "[0, 12]") # begin 0.01 # hpf 200  # amp 30 # legato 0.4 # pan 0.6
+  d6 $ slow 2 $ struct "t*[8|24|32]" $ n "<2 3>" # s "loop" # gain 1 # begin 0.01 # pan (rand) # hpf 200  # amp 30 # legato 0.3 # pan (rand)
+  d7 $ sometimes (0.125<~) $ slow 2 $ struct "t*16" $ n "<5 6>" # s "loop" # gain 2 # legato 0.4 # begin 0.03 # hpf 200  # amp 30 # legato 0.3
 
 d3 silence
 
-d4 silence
+
+do
+  d4 silence
+  d5 silence
+  d6 silence
+  d7 silence
 
 -- EVENING RITUAL
 
@@ -68,19 +72,19 @@ bps (60/60)
 
 d1 $
 -- rarely (stutWith 4 (1/16) (|*| gain 0.8).(# pan (rand))) $
-slow 64 $ n (run 6) # s "subway" # legato 1 # gain 1.5 # hpf 200
+slow 64 $ n (run 6) # s "subway" # legato 1 # gain 2.6 # hpf 200
 
-d2 $ slow 2 $ stutWith 4 (1/16) ((# room 0.6).(# size 0.6).(# gain 0.7)) $ randslice 64 $ sound "tanpuraD" # legato 1 # gain 0.3
+d2 $ slow 2 $ stutWith 4 (1/16) ((# room 0.6).(# size 0.6).(# gain 0.7)) $ randslice 64 $ sound "tanpuraD" # legato 1 # gain 1.2
 
 d3
 $ slow 2 $ sometimes (((1/16)<~).rev) $ rarely (ply "[2|4|8]")
 -- $ slow 2
 $ rarely (#squiz 2)
-$ n (scale "lydian" "<3 [4]> [4 -2?] <[1 ~ 0 0] 6> <5 2>") |+| n "[2 | 14]"
+$ n (scale "lydian" "[<3 [4]> [4 -2?] <[1 <~ 6> 0 0] 6> <5 2>,[[~ <7 9>]*[2|4|8]]]") |+| n "[2 | 14]"
 # s "superpiano" # gain 1.2 # legato 1 # room 0.6 # size 0.8 # lpf 1500
-# crush 10 # speed (0.95 + 0.1*perlin) # gain 0.88
+# crush 10 # speed (0.95 + 0.1*perlin) # gain 1.7
 
-d2 silence
+d3 silence
 
 
 hush
@@ -96,7 +100,7 @@ rec2 [7]
 
 rec4 [4]
 
-d1 $ n "0" # s "input" # gain 1.5 # dry 0.3 # room 0.8 # size 0.8
+d1 $ n "0" # s "input" # gain 1.4 # dry 0.3 # room 0.8 # size 0.8
 
 do
   p "drums" $ stack [
@@ -124,10 +128,12 @@ do
       slow 4 $ struct "t" $ n "[2]" # s "loop" # gain 1.7 # pan 0.5,
       slow 4 $ struct "t" $ n "[3]" # s "loop" # gain 1.7 # pan 0.8,
       slow 4 $ ply 2 $ struct "t" $ n "[4]" # s "loop" # gain 1.7 # pan 1
-    ] # room 0.8 # size 0.9 # dry 0 # legato "[0.3|0.5]" # hpf 550 |*| gain 0.9
+    ] # room 0.8 # size 0.9 # dry 0
+    -- # legato 1 |*| gain 0.6 # hpf 550
+    # legato "[0.3|0.5]" # hpf 550 |*| gain 0.9
   p "vocals2" $ stack [
-      -- slow 1 $ ply 2 $ every 4 (stutWith 4 0.5 (rev).(# pan 0))
-      -- $ n "[7]" # s "loop" # legato 1 # lpf 8000 # gain 1.4 # room 0.8 # size 0.8 # speed (ival "[0|2|7]")
+      slow 1 $ ply 2 $ every 4 (stutWith 4 0.5 (rev).(# pan 0))
+      $ n "[7]" # s "loop" # legato 1 # lpf 8000 # gain 1.4 # room 0.8 # size 0.8 # speed (ival "[0|2|7]")
     ] # orbit 8
   p "synthchimes" $ every 4 (within (0.25, 0.5) (const $ n "8*8" |+| n "3")) $ every 2 (rev) $ within (0.75, 1) ((0.5<~).(density 1).(jux rev)) $ stack [
     n (( scale "dorian" $ fast 4 "[8 7 6 5, [10 11]/2]") + "e6") # amp 0.2 # pan (range 0.1 0.4 perlin),
@@ -141,7 +147,7 @@ do
     d2 $ stack [
       every 1 (const $ fast 2 $ sound "sn:2*8" # gain 2) $
       fast 2 $ sound "ssk sn:2" # gain 2,
-      sound "[[jhh:2 jhh:3] jhh:9]*4" # gain 1.3 # pan 0,
+      sound "[[jhh:2 jhh:3] jhh:9]*4" # gain 1.2 # pan 0 # hpf 1000,
       -- n "e3(3,8)" # sound "bass*8" # gain 1 # lpf (fast 4 $ perlin)
       -- (chop 4 $ sound "noise2*8") # legato 1 # lpf (rand) # gain 1.4,
       silence

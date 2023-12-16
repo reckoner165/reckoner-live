@@ -1,0 +1,14 @@
+setcps(100/60/4)
+
+
+d1 $ stack [
+  slow 4 $ striate "[1, [32 64]]" $ sound "ssk:1*8" # gain 1.5,
+  -- sometimes (# squiz 4) $ fast 2 $ sound "~ [sn:2 ~ ~ sn:2?]",
+  -- struct "t*16" $ n (irand 8) # s "noise2" # legato 1 # lpf (range 1000 8000 sine) # pan (perlin) # gain 0.9,
+  -- fast 4 $ sound "jhh jhh jhh:8 ~" # pan 0,
+  silence
+  ]
+
+d2 $ slow 2 $ jux (rev) $ chop "16" $ sound "<lowtest lowtest:1>" # legato 0.3 # distort "[0,0.5]" # speed "[0, 0.5]"
+
+d3 silence

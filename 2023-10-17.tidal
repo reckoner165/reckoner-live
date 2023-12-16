@@ -18,7 +18,7 @@ d1 $ sound "[cstm| cstm:1]"
 
 
   d1 $ slow 2 $ n "[0,7,14, -12]" |+| n "<0 -5 2 -7>" # s "superfm" # legato 1 # decay 1 # sustain 3.75
-  # pF "lfofreq" 0.6 # pF "lfodepth" 0.01 # squiz 3 # distort 0.3 # crush 8 # lpf 1000
+  # pF "lfofreq" 0.6 # pF "lfodepth" 0.01 # squiz 3 # distort 0.3 # crush 8 # lpf 1000 # gain 0.9
 
   d2 $ stack [
     sound "thh*8",

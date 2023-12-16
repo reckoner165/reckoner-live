@@ -32,6 +32,15 @@ d4 $ fast 4 $ sound "jhh:1 jhh:3 jhh:9 ~" # gain 0.5
 
 d4 silence
 
+d1 $ slow 2 $ sometimes (jux rev) $ chop "1 2" $ timeCat [(1, n "f4 a4 ds4 ~ ~"), (1.2, n "f4 a4 ds4 ~ ~ ~"), (1,n "f4 a4 ds4 ~ ~")] |+| n "[12|24]" # s "supersaw" # voice "0" # legato 0.2
+d2 $ sound "~ ~ ~ <~ xmas:34>"
+d3 $ slow 2 $ every 8 (const $ sometimes (density 2) $ sound "xmas*8") $ timeCat [(1, sound "xmas hh sn:2 808:2 ~"), (1.2, sound "xmas hh sn:2 casio:1 <casio:3 birds> 808:2"), (1,sound "xmas hh sn:2 808:2 808:2")] # legato 1
 
-d1 $ slow 2 $ timeCat [(1, n "f4 a4 ds4 ~ ~"), (1.2, n "f4 a4 ds4 ~ ~ ~"), (1,n "f4 a4 ds4 ~ ~")] # s "supersaw"
-d2 $ sound "~ ~ ~ <~ sn:2>"
+d4 $ slow 2 $ sometimes (density 1) $ chop 1 $ rarely (# speed "[2|[4,2]]") $ often (rev) $ sometimes (density 4) $ n "<g5 f5 [f5 a5 ds5 g5][d5 c5 a5 as5]> _ _ _" # s "futuresaw" # legato 1 # hpf 1000
+d4 silence
+
+d5 $ degrade $ sound "hh*16" # gain 1.1
+
+d3 silence
+
+d3 $ fast 1 $ sound "[xmas]*4"

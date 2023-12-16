@@ -9,7 +9,7 @@ inKey :: Pattern Int -> Pattern Note
 inKey pat = (scale (cS "major" "scale") (pat)) + cN0 "root"
 
 inChord :: Pattern Int -> Pattern Note
-inChord pat = (pitch $ pat + cI0 "degree")
+inChord pat = (inKey $ pat + cI0 "degree")
 
 
 d1 $ ply 2 $ n (inChord "{0 1 2 1}%8") |- n 24 # s "minitaur"

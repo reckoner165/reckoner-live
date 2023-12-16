@@ -30,13 +30,17 @@ d4 $ stut 2 0.5 0.5 $ stack[
 setcps(66/60/4)
 
 d1 $ stack [
-  sound "ssk:1 ssk:1 808sd:1 [ssk:1 808:2] [ssk:1 808:2] ssk:1 808sd:1 [<ssk:1 ~> sd:1?]",
-  sound "hh*4" # pan 1
+  sound "bd:1 bd:1 808sd:1 [bd:1? 808sd:3] [bd:1 <808:2 808sd:1>] bd:1 808sd:1 [<bd:1 ~> 808sd:3?]",
+  sound "808oh:2*8" # pan 1 # legato 0.08
  ]
 
-d2 $ fast 2 $ n "<[e5 cs5 a4 _][e5 b4 g4 _][d5 b4 fs4 _][cs5 a4 e4 _]>" |+| n "[12, 24]" # s "blofeld" # midichan 12 # legato 0.8
+d2
 
+jumpMod 2 2 $ fast 2 $ n "<[e5 cs5 a4 _][e5 b4 g4 _][d5 b4 fs4 _][cs5 a4 e4 _]>" |+| n "[12, 24, 36]" # s "blofeld" # midichan 12 # legato 0.8
 
+d1 silence
+
+d2 silence
 -- ALLYTALK
 
 setcps(155/60/7)

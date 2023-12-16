@@ -15,22 +15,22 @@ d2 silence
 
 do
   -- let pentatonic = "0 2 5 7 11"
-  setcps(65/60/2)
-  -- d1 $ degradeBy 0.1
-  --    $ jux (rev)
-  --    $ whenmod 5 3 (slow "<2? 4 8>") $ fast "<5 3>" $ sometimes (ply 2)
-  --    $ n (inChord (run 5)) |+| n "<12 0 24>"
-  --    # s "supermandolin" |+| sustain 1.1
-  --    # room 0.8 # size 0.8 # dry 0.5 # orbit 2
-  --    # hpf 500  # hpq 0.3 # lpf 8000
-  --    # legato 0.3
-  --    # gain "0.8" # pan (perlin)
-  -- -- d2 $ degrade $ sound "jcy:3*8" # gain (perlin) |+| gain 0.6 # hpf "<500 1000 2000>" # begin 0.01
-  -- d2 $ sound "kr:3*4"|+| speed 1.1 # pan (0.6 + 0.1*rand) # gain (0.8 + 0.2*perlin) # room 0.3 # size 0.3 # orbit 2 |+| hpf 3800 # lpf 10000
+  setcps(68/60/2)
+  d1 $ degradeBy 0.5
+     $ jux (rev) $ rev
+     $ whenmod 5 3 (slow "<2? 4 8>") $ fast "<5 3 1>" $ sometimes (ply 1)
+     $ n (inChord (run 5)) |+| n "<12 0 24>"
+     # s "supermandolin" |+| sustain 1.1
+     # room 0.8 # size 0.8 # dry 0.5 # orbit 2
+     # hpf 500  # hpq 0.3 # lpf 8000
+     # legato 0.5
+     # gain "0.8" # pan (perlin)
+  -- d2 $ degrade $ sometimes (fast 3) $ sound "[jcy:3|jcy:4|jcy:6|jsn:2|jsn|jsn:5]*8" # gain (perlin) |+| gain 0.5 # hpf "<100 3000 4000>" # begin "<0.03 0>"
+  -- d2 $ sound "jcy:3*4"|+| speed 1.1 # pan (0.6 + 0.1*rand) # gain (0.6 + 0.2*perlin) # room 0.3 # size 0.3 # orbit 2 |+| hpf 2800 # lpf 10000
   d3 $ stack [
-    sound "~ kr:6 ~ kr:6" # gain 2,
-    -- every 4 (density 4) $ sound "[[jsn?,jcy] ~ < ~ [realclaps:3|jsn*2|jsn:5]>] [jk:2? ~ jk:3] jk:4 [jsn:3? jk?]" # gain 1.2,
-    -- degradeBy 0.2 $ sound "[~ ~ jk:3][~ ~ jsn:3*2][~ ~ jk][~ ~ jsn:3*2?]" # gain 1.2,
+    -- sound "~ kr:6 ~ kr:6" # gain 1.6,
+    -- sound "[[jcy:6|jcy:5|jcy:2]? <jsn:5?> < ~ [[808:2]|jsn|jsn:5] [jsn]>] [jk:2? ~ jk:3] jk:4 [jsn:3? jk?]" # gain 1.2,
+    -- degradeBy 0.3 $ sound "[~ ~ jk:3][~ ~ jsn:3*2][~ ~ jk][~ ~ [jsn|jsn:3*2]]" # gain 1.2,
     silence
     ] |*| gain 1
 

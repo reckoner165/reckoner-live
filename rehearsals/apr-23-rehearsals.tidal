@@ -52,9 +52,9 @@ setcps(120/60/4)
 
 d1 $ fast 2 $ n "<e5>(3,8)" |+ n "<0 [6 7]>" |- n "[12,24]" # s "blofeld" # legato (range 0.7 0.9 rand)
 
-d2 $ fast 2 $ every 4 (const $ sound "808:1 ssk:1 808:2 808:1")
-   $ sound "808:1 ssk:1 808:1 808:2" # amp 0.25
-    # delay 0.1 # delaytime (1/16)
+  d2 $ fast 2 $ every 4 (const $ sound "808:1 ssk:1 808:2 808:1")
+     $ sound "808:1 ssk:1 808:1 808:2" # amp 0.25
+      # delay 0.1 # delaytime (1/16)
 
 d1 $ silence
 

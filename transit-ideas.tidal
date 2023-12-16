@@ -8,3 +8,25 @@ d1 $ fast 8 $ sound "delhi:1*16" # cut 1 # begin (range 0 0.9 $ slow 40 saw)
 -- |*| speed
 
 d2 $ degradeBy 0.6 $ rarely (chop 4) $ sometimes (# speed ((-1)*perlin)) $ slice 7 (run 7) $ fast (8/7) $ sound "delhi" # gain 0.9 # squiz 1 # room 0.9 # size 0.9
+
+setcps(125/60/4)
+
+d1
+  -- $ every 2 (rev) $ jux (rev.(0.125<~)) $ sometimes (# speed 1.5) $ sometimes (ply 4)
+  -- $ stutWith 4 (1/8) ((# room 0.8). (# size 0.8).( # gain 0.3))
+  $ n "<[0 1 2 _] ~>" # sound "sncf" # legato 0.5 # hpf 100 # lpf 2000 # room 0.8 # size 0.8 # dry 0.5 # gain 0.9
+
+d2 $ fast 2 $ stack [
+  -- struct "<[t ~ t? t ~ t t? t?] ~ ~ ~ > " $ sound "xmas:2" # gain 1.2 # lpf 200 # legato 0.7,
+  every 2 (rev) $ sound "<tbw:110*2 tbw:22> tbw:4 <tbw:55 ~> <~ tbw:90> ~ thh ~ <tbw:21? tbw:49?>" # legato 0.15,
+  -- sound "[~][~ [ssn:3, tsn:4, [tbw:11|tbw:48|tbw:89]?] ~ ~]",
+  -- degradeBy 0.6 $ sound "808:2*8" # speed (0.25* perlin) # legato 0.8 # pan (perlin) # room 0.8 # size 0.8 # orbit 3 # hpf 900,
+  -- sound "[hh*8|~] " # lpf 6000,
+  silence
+]
+
+d3 $ slow 2 $ n "<[0,3,7][2,7,10][2,5, 8]>" # s "superfm" # gain 0.7
+
+d4 $ slow 4 $ sometimes (degradeBy 0.6 .ply 16) $ n (scale "minor" "0 1 5 2") |-| n "24" # s "supersaw" # voice 0 # lpf 200 # orbit 5
+
+d4 silence

@@ -1,0 +1,21 @@
+-- shipwreck (modeselektor)
+
+
+setcps(165/60/4)
+
+
+do
+  d1 $ sound "[~ hh]*4"
+  d2 $ fast 2 $ sound "[808bd:2] [~ 808bd:2] ~ ~" # nudge "[0 0.02]*4"  # hpf 40 # hpq 0.1 # lpf 800 # gain 1.4
+  d3 $ fast 2 $ sound "~!2 [jsn:8 jsn:2] [brl:5 jsn:2]" # hpf 300 # lpf 8000 # gain "~!2 [1 0.6] [0.7 0.9]" # pan 0.6
+
+d4 $ slow 4$ n "<[e3, g5][b3, ds5][c3,e5][a3, c5][b3, ds5]> _ _ _" |+| n "12" # s "superfm"
+# amp3 0.8 # pF "ratio3" (slow 2 $ range 0.75 1 square)
+# amp4 1 # pF "ratio4" 0.5 # pF "mod45" 0.9
+# amp5 1 # pF "mod44" 2 # pF "mod55" 1
+# lpq 0.05 # (lpfbus 1 $ segment 2048 $ fast 32 $ range 800 10000 $ tri) # legato 1 # hpf 200
+# gain 0.7 # room 0.5 # size 0.3
+
+d5 $ fast 2 $ n "~ e4" |+| n "-12" # s "supersaw" # voice 0 # lpf 500 # legato 0.5 # gain 0.6 # room 0.2 # size 0.1
+
+once $ n "ds5" # s "superfm"

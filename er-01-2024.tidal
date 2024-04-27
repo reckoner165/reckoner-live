@@ -1,0 +1,21 @@
+-- EVENING RITUAL
+
+bps (60/60)
+
+d1 $
+slow 64
+$ n (run 6)
+ # s "subway" # legato 1 # gain 1.4 # hpf 200 # lpf 8000 |*| gain 1.2
+
+d2 $ slow 2 $ stutWith 4 (1/16) ((# room 0.6).(# size 0.6).(|*| gain 0.7)) $ randslice 64 $ sound "tanpuraD" # legato 1 # gain 0.6
+
+d3
+$ slow 2
+$ degradeBy 0.9
+$ n (scale "lydian" "[<3 [0 4]> [2 3] <[1 <[2 3] 6> [8 3] 0*2?] 6> <5 2>,[[[~ [2 7]] <7 3>]*[2|4|1]]]") |+| n "[2 | 14]"
+# s "superpiano" # gain 0.9 # legato 1 # room 0.6 # size 0.8 # dry 0.3 # lpf 1500
+-- # crush 10
+# speed (0.95 + 0.1*perlin)
+# pan (0.1 + (0.8 * rand))
+
+d3 silence

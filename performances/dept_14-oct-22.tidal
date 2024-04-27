@@ -94,21 +94,21 @@ do
     -- shuffle 8 $ linger 0.25 $ (0.5~>) 1 $
     stack[
     -- stut 2 (1/2) (3/16) $
-    -- trunc 0.25 $ struct "t t [t ~ ~ t] [~ t?]" $ sound "ssk:1" # gain 2 # lpf 300,
-    -- degradeBy 0.1 $ stut 2 (1/4) (5/16) $ struct "[~ t]*4" $ sound "jhh:7" # gain 1.3 # hpf 5000,
-    -- stutWith 2 (5/16) ((|*| speed 0.5).(# room 0.5).(# size 0.4).(# gain 0.25)) $ struct "~ <~ t> <t ~> ~" $ sound "ssn"
-    -- # gain 1.55 # pan 0.3 # orbit 0,
-    -- stut 2 (1/4) (3/16) $ struct "~ [~ t] ~ [~ [~ t]]" $ sound "cp:2" # nudge 0.01 # pan 0.7,
+    -- trunc 0.25 $
+    struct "t t [t ~ ~ t] [~ t?]" $ sound "xmas:3" # end 0.8 # gain 2 # lpf 200,
+    degradeBy 0.1 $ stut 2 (1/4) (5/16) $ struct "[~ t]*4" $ sound "jhh:7" # gain 1.3 # hpf 5000,
+    -- stutWith 2 (5/16) ((|*| speed 0.5).(# room 0.5).(# size 0.4).(# gain 0.25)) $
+    struct "~ <~ t> <t ~> ~" $ sound "ssn"
+    # gain 1.55 # pan 0.3 # orbit 0,
+    stut 2 (1/4) (3/16) $ struct "~ [~ t] ~ [~ [~ t]]" $ sound "realclaps:2" # nudge 0.01 # pan 0.7,
     -- rarely ((fast 4.striate 2)) $ chop 8 $
-    slow 2 $ stutWith 2 (3/32) ((# room 0.8).(# size 0.9).(|*| gain 0.5).(|*| pan 0.6)) $ n "b5 d6 b5 a5 b5 a5 b5 a5"
-    |+| n "0" # s "superfm"
-    # sustain 0.08 # decay 0.1 # voice 0 # squiz 1.4 # lpf 15000  # orbit 1 # gain 0.8 # pan 0.8,
+
     slow 2 $ sound "ceph" # legato 1 # gain 1.53 # orbit 2 # hpf 2000 # cut 1 # sustain 0.2
     -- sometimes (# speed 2) $ fast 2 $ (n "0(3,8)" # s "808bd:1" # speed "<0.8 1>" # gain 1.8 # squiz 1.8) # hpf 100 # lpf 2000
     ]
   d2 $
-    degradeBy 0.3 $ sometimes (|+| n "[24|12|5|7]") $ slice 16 (run 16) $
-    jux (# nudge 0.01) $
+    -- degradeBy 0.3 $ sometimes (|+| n "[24|12|5|7]") $ slice 16 (run 16) $
+    -- jux (# nudge 0.01) $
     stack [
     slow 4 $ ((3/64)~>) $ n "[d3, f4, a4][e3, g4, b4][d3, a4, c5][d3, fs4, b4]" |+| n "12" # s "superfm" # legato 1
     # amp1 1 # pF "ratio1" 0.5 # pF "mod11" 0.9
@@ -119,6 +119,9 @@ do
     # amp6 0.5
     ] # lpf 1000 # orbit 2 # gain 0.8
   -- d3 $ slow 2 $ sound "padlong:4" # legato 1 # orbit 1
+  d3 $ slow 2 $ stutWith 2 (3/32) ((# room 0.8).(# size 0.9).(|*| gain 0.5).(|*| pan 0.6)) $ n "b5 d6 b5 a5 b5 a5 b5 a5"
+  |+| n "0" # s "superfm"
+  # sustain 0.08 # decay 0.1 # voice 0 # squiz 1.4 # lpf 15000  # orbit 1 # gain 0.8 # pan 0.8
 
 
 

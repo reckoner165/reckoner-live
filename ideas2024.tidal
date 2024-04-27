@@ -1,0 +1,147 @@
+
+setcps(122/60/4)
+
+d1 $ stack [
+  fast 4 $ sound "<[[tok,click:2] [click:1, thh:2, 808:4] ][~ [tok,click:2]!3]!3>"
+  # lpf 1500 # hpf 120 # hpq 0.1 # nudge "[0 0.02]*2",
+  fast 4 $ sound "thh:3*4" # legato 0.5 # nudge "[0.0 0.01]*2" # lpf 3000
+  ]
+
+do
+  d2 $ stack [
+      sound "xmas:3 [~ xmas] realclaps [~ <realclaps rm!3>] <[~ xmas] ~!3> [~ rm] ~ ~"
+      # nudge "[0.0 0.01]*2"
+    ] # gain 1.1
+  d3 $ fast 2 $ (0.375~>) $ stack [
+    n "[10 _] ~ ~ 10 ~ ~!3",
+    n "[~ <6!2 5!2 3!2 1!4 1!2 3!2 1!2>] [<10!2 8!2 6!2 5!4 3!2 6!2 5!2> ~] ~ ~"
+    ] # s "superchip"
+    # voice 0 # gain 0.9 # room 0.2 # size 0.3 # dry 0.3 # distort 0.15
+    # pitch2 2 # pitch3 0.5
+    # lpf (6000 + 2000 * (fast 8 $ sine)) # lpq 0.1 # hpf 400
+  d4 $ fast 2 $ (0.375~>) $ n "[10 _] ~ ~ 10 _ _ ~!2" # s "superfm"
+    # pF "lfodepth" 0.02 # pF "lfofreq" 6 # legato 1
+    # pF "mod 15" 0.8 # pF "mod33" 1 # pF "ratio1" 4 # pF "ratio3" 2
+    # room 0.8 # size 0.8 # gain 0.5 # pan 0.8 # hpf 1000
+
+do
+  d3 silence
+  d4 silence
+
+
+d5 $ struct "t _ t _ [~ t] [~ t*2] [~ t] _ " $ n "<10 8 3!2 -2!2 1 3 5!2 10 8 3!2 -2!2>" |+| n "-24"
+# s "supersaw" # lpf 100 # voice 0 # legato 1
+
+resetCycles
+
+
+setcps(125/60/4)
+
+d1 $ stack[
+  -- every 4 (linger 0.5) $ sound "xmas*2 [~ xmas ~ ~] <~ [~ ~ sn:2? sn:2]> [xmas*2 xmas?]",
+  -- fast 2 $ sound "<xmas ~ [xmas [xmas? xmas]] ~> ~" # gain 1,
+  every 1 ((fast 4).(|*| speed (-1))) $ sound "click:1*4" # legato 0.1 # pan 0.2 # gain 1.2,
+  -- sound "[~ tbw:65 tbw:11? tbw:31]*4" # legato 0.25 # speed 2 # pan (rand),
+  -- fast 2 $ sound "[808oh:1 ~ thh:3!2]*2" # gain 0.8,
+  -- fast 2 $ sound "[~ bottle:1] <brlsamp:3 brl:8 [~ bottle:1]> brl:2? bottle:1",
+  -- every 2 (# squiz 3) $ fast 2 $ sound "808:2(3,8,3)" # speed (rand) # room 0.8 # speed 0.8 # dry 0.2 # pan 1 # lpf 1600 # gain 1 # orbit 7,
+  silence
+  ]
+
+
+d2 $ every 8 (jux rev) $ every 2 (chop 4) $ sometimes (|+| n "12") $ n "0 [~ <3 -1> ~ 2?] [7 3?] [~ 10]" |+| n "-24" # s "supersaw"
+# voice 0 # gain 0.9 # lpf 100
+-- # lpf "300 800" # lpq (0.9 * (fast 3 $ sine))
+
+d2 silence
+
+d3 $ ((1/16)~>) $ stutWith 16 (1/4) ((# room 0.95).(# size 0.95).(|*| gain 0.9).(|*| speed "[1.05|0.94]")) $ fast 2 $ sound "tav:8"
+# speed (1 + perlin) # begin (range 0.2 0.9 $ slow 4 $ saw) # pan 0.7 # lpf 3000 # legato 0.5 # hpf 500 # gain 0.9
+
+d3 silence
+
+d4
+-- $ slow 2 $ linger 0.125
+-- $ iter 8 $ whenmod 4 3 (fast 2.rev)
+$ fast 1
+-- $ n (scale "dorian" "<[<0 [0 2 5 ~] 0*2> [4 1 9!2] <[3 <1 2>] <3 7>(3,8)> <[4 2] 7 5>][0? 1 2 3 4 5 6 7 ~!8]>")
+$ n "<0>" # legato 0.2
+# s "supersaw" # voice 0 # lpf "[1500|1000|700|2000]" # room 0.8 # size 0.9 # dry 0.2 # gain 0.7
+
+
+setcps(115/60/4)
+
+d1 $ stack[
+  sound "jhh!11",
+  sound "jk ~ jsn ~ jk ~ jk jsn ~ [jk] [jsn jsn:4?]"
+  ]
+
+
+
+
+
+
+-- 2024-02-10 sample PARTY
+
+-- round 1
+
+d1 $ sometimes (striate 8) $ fast 2 $ sound "rrmc:1"
+# cut 1
+# begin (fast 3.5 $ range 0.3 0.6 $ tri)
+# start 0.9
+-- # end (fast 1.4 $ range 0.7 0.9 $ saw)
+# gain 1.4
+
+
+d2 $ fast 2 $ sound "[xmas(3,8),[~ [sn:2,realclaps]]]" # gain 1.2
+d2 silence
+
+d3 $ fast 2 $sound "808:4*8" # nudge "[0 0.02]*4" # lpf 5000
+d3 silence
+
+d4 $ chop 2 $ slice 8 "<4 5 4 7>(3,8)" $ sound "rrmc" # cut 1 # gain 2 # distort 0.01 # lpf (range 1000 6000 $ fast 20 $ saw) # lpq 0.4
+
+d5 $ chop 8 $ (degradeBy 0 $ (# speed (-1)) $  slice 8 (rev $ run 8) $ sound "rrmc:8" # cut 1
+# begin 0.01 # speed 1.32 # gain 2 # hpf (fast 2.3 $ range 1000 6000 $ tri) # hpq 0.9 # pan 1 # room 0.8 # size 0.9) # lpf 2000
+
+d6 $ sometimes (|+| n "12") $ chop 16 $ n "<-2 1 -4 -1>" |+| n "-24" # s "supersaw" # voice 0 # lpf 200 # distort 0.1 # gain 1.3
+d6 silence
+
+d7 $ fast 2 $ sound "808:2(3,8,1)" # speed (0.8 + 0.1* perlin) # gain 1.1 # room 0.9 # size 0.9 # pan 1
+
+-- round 2
+
+d1 $ sometimes (chop 4) $ sound "cabin68*2" # legato 1 # lpf "[<440 698.4 1024 698.4>,220?,110?]"
+# lpq "<0.8 0.5>" # gain 1.2 # room 0.8 # size 0.8 # hpf 300
+
+d2 $ iter 8 $ slice 16 (run 8) $ jux (|*| speed 1.1) $ (|*| speed (-1)) $ chop 2 $ loopAt "1 2 8 [0.5|0.25]" $ sound "cabin68*8"
+# begin (rand) # legato 0.5 # lpf 1024 # room 0.8 # size 0.8
+
+d3 $ fast "4 8 [16|2]" $ striate 8 $ sound "cabin68"
+# legato 1 # begin 0.4 # lpf 100 # lpq 0.7 # legato 0.2 # distort 0.4 # speed 0.5 # gain 1.3
+
+d4 $ stack [
+striateBy 32 0.05 $ sound "xmas" # gain 1.9 # speed 0.5,
+sound "xmas:4" # gain 2
+]
+
+d5 $ degradeBy 0.7 $ jux (((1/16)~>).rev) $ n (scale "dorian" (run 8)) |+| n "12" |+| n "0"
+# s "supervibe" # room 0.9 # size 0.9 # lpf 5000 # hpf 3000 # gain 0.9
+
+d5 silence
+
+d6 $ sometimes (palindrome) $ slow 2 $ n (scale "dorian" "[0 -2?] [~ 8] [3|4(3,8,1)] [[0 _ 6 7]|[3 4 5 6]*2]") # s "supersaw" # voice 0
+# lpf (range 500 1000 $ fast 1.45 $ sine) # room 0.9 # size 0.9 # distort 0.01
+
+d6 silence
+
+d7 $ sound "xmas sn:2" # squiz 2 # crush 10 # gain 1.5 # speed 0.75 # lpf 5000
+
+-- new song ideas
+
+setcps(110/60/4)
+
+d1 $ fast 2 $ sound "bd!4 realclaps _ _ _" # nudge "[0 0.017]*4" # distort "0 0.2" # crush "16 9"
+
+d2 $ sometimes (chop 4) $ sound "cabin68*2" # legato 1 # lpf "[<440 698.4 1024 698.4>,220?,110?]"
+# lpq "<0.8 0.5>" # gain 0.8 # room 0.8 # size 0.8 # hpf 300

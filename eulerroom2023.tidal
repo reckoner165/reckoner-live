@@ -1,0 +1,45 @@
+
+-- Given a scale degree, automatically pitch that degree in the
+inKey :: Pattern Int -> Pattern Note
+inKey pat = (scale (cS "major" "scale") (pat)) + cN0 "root"
+
+inChord :: Pattern Int -> Pattern Note
+inChord pat = (inKey $ pat + cI0 "degree")
+
+setF "root" (slow 16 $ "<0>")
+setI "degree" (slow 2 $ "<0 -1 -2 -3>")
+setS "scale" "minor"
+
+-- n (inChord "[0, 2, 4, [6 | 7]]*2")
+
+-- SNCF
+
+setcps(125/60/4)
+
+d1
+  -- $ every 2 (rev) $ jux (rev.(0.125<~)) $ sometimes (# speed "[1.5|2]") $ sometimes (ply 4)
+  -- $ stutWith 4 (1/8) ((# room 0.8). (# size 0.8).( # gain 0.3))
+  -- $ every 2 (rev . slice 8 (run 8))
+  $ n "<[0 1 2 _] ~>" # sound "sncf" # legato 0.5 # hpf 100 # lpf 2000 # room 0.8 # size 0.8 # dry 0.5 # gain 0.9
+
+d2 $ fast 2 $ stack [
+  -- struct "<[t ~ t? t ~ t t? t?] ~ ~ ~ > " $ sound "xmas:2" # gain 1.2 # lpf 200 # legato 0.7,
+  -- slow 2 $ struct "<[[~ t] t t ~ t [~ t] ~ ~]> " $ sound "xmas:2" # gain 1.2 # lpf 200 # legato 0.7,
+  -- every 2 (rev) $ sound "<tbw:110*2 tbw:22> tbw:4 <tbw:55 ~> <~ tbw:90> ~ thh ~ <tbw:21? tbw:49?>" # legato 0.15 # pan "[0.25 | 0.75]" # gain 1.1 # speed 2,
+  -- sound "[~][~ [ssn:3, tsn:4, [tbw:11|tbw:48|tbw:89|tbw:100|tbw:24]?] ~ ~]",
+  -- struct "t(3,8)" $ sound "tbw:72 tbw:99*2 tbw:81 tbw:12*2" # pan (perlin) # legato 0.7,
+  -- sometimes (stut 3 0.5 0.166) $ sound "[~][[cp:2] ~ ]",
+  -- degradeBy 0.3 $ sound "808:2*8" # speed (0.25* perlin) # legato 0.8 # pan (perlin) # room 0.8 # size 0.8 # orbit 3 # hpf 900,
+  -- degradeBy 0.2 $ sound "[hh*8|~] " # lpf 6000,
+  silence
+]
+
+d2 silence
+
+d3 $ slow 2 $ sometimes (chop 16) $ n "<[0,3,7][2,7,10][2,5, 8]>" # s "superfm" # gain 0.7 # hpf 500 # pan 0.4
+-- # squiz 1.5 # voice 2 # room 0.8 # size 0.5
+
+d4 $ degrade $ slow 4 $ often (|+| n "7") $ sometimes (degradeBy 0.3 .ply 16) $ n (scale "minor" "0 3 5 6") |-| n "24"
+# s "supersaw" # voice 0 # lpf 200 # orbit 5
+
+d4 silence

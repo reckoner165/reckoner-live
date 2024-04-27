@@ -1,0 +1,54 @@
+
+-- SNCF
+
+
+setcps(125/60/4)
+
+
+d3 $ slow 2 $ n "<[0,3,7][2,7,10][2,5,8]>" # s "superfm" # gain 0.7
+
+d4 $ slow 4 $ sometimes (degradeBy 0.6 .ply 16) $ n (scale "minor" "0 1 5 2") |-| n "24"
+# s "supersaw" # voice 0 # lpf 200 # orbit 5
+
+d3 silence
+
+-- voice
+d5
+
+
+
+d1
+  -- $ every 2 (rev) $ jux (rev.(0.125<~)) $ sometimes (# speed 1.5) $ sometimes (ply 4)
+  -- $ stutWith 4 (1/16) ((# room 0.9). (# size 0.9).( # gain 0.3).(# pan 0))
+  $ n "<[0 1 2 _] ~>" # sound "sncf"
+  -- # legato 1
+  # legato 0.5
+  # hpf 100 # lpf 2000 # room 0.8 # size 0.8 # dry 0.5
+  # gain 0.9
+  -- # gain 1
+
+d2 silence
+
+
+
+d2 $ stack [
+  trunc 0.5 $ struct "[t t?] [~ t t ~] [~ t*2?] [~ t t? t?]" $ sound "xmas" # gain "<1 0>",
+  trunc 0.5 $
+  n "[<99 122> <78 [55 56]> <13*2 42 [12 113]> ~] [56 37] [28 1*2] <22 56*2>"
+  # s "tbw" # legato 0.2 # gain "<1.5 0>" # speed "[1|-1]" # pan (rand),
+  -- sound "[hh(3,8,1)]*2" # hpf 1000 # begin 0.02 # gain 0.9,
+  slow 2 $ (slice 8 (fast 4 $ run 8 ) $ sound "[~ <tbw:124 tbw:61 tbw:68>]~") # pan (rand),
+  -- sound "~ [~ cp cp ~]",
+  silence
+  ]
+
+
+d2 $ stack [
+  sound "<t ~>" # s "xmas" # lpf 300,
+  sound "[~ <t t t [~ t*2]>]*2" # s "ssn:2",
+  iter 4 $ sound "[808:2(3,8,1)]*2" # speed 0.0625 # gain 0.7,
+  degradeBy 0.2 $ sound "click:2*16",
+  sound "808oh:1*4" # lpf 2000 # pan 0,
+  fast 4 $ sound "808oh:2 ~ 808oh 808:10" # pan 1 # lpf 3000 # gain 0.8,
+  silence
+  ] |*| gain 1.02

@@ -1,0 +1,38 @@
+setcps(150/60/5)
+
+
+
+-- [2, 5, 12]
+
+d1 $ slow 2 $ n "<[-10,2, 5, 12][-5,2, 5, 9, 12][-12,0,4,11]>" # s "omi" 
+   # clouds 0.1 0.5 0.05 0.1
+    # cloudsblend 0.2 0.2 0.23 0.8
+    # gain 1.1
+
+d5 $ n "[24]*4" # s "supersaw" 
+   # lpf 2500 
+   # legato 3
+   # voice 0
+   -- # morph 1
+   # clouds 0.4 0.5 0.25 0.5
+    # cloudsblend 0.7 0.7 0.34 0.8
+    # verb 0.9 0.4 0.3 0.8
+    # gain 0.3
+
+d4 $ stutWith 2 0.5 ((# gain 0.6).(# pan 0.5)) $ n "12 13 [17 19] [~ 14] [~ 12]" # s "supervibe" 
+   # verb 0.9 0.6 0.3 0.8
+   # hpf 1500 # lpf 7000
+
+do
+  d2 $ fast 2 $ sound "[[hh ~ hh [~ rm:4] hh],[808bd:1 ~!4]]" # mu 2 # lpf 9000
+  d3 
+     -- $ rarely (# crush 4) 
+     $ fast 2 
+     -- $ within (0.5,1) (striateBy 2 (slow 3.2 $ range 0.01 0.2 saw)) 
+     $ sound "<xm:4 ~> xm:8 noise2:6 ~!2" 
+     -- # legato 0.5
+     # verb 0.9 0.4 0.3 0.5 # speed "[0.3,0.4]"
+     # mu 3
+     # hpf 40 # hpq 0.2
+     # lpf 1000 # lpq 0.2
+     -- # lpf 50

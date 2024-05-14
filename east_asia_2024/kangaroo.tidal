@@ -1,0 +1,34 @@
+setcps(120/60/4)
+
+d1 $ stack[
+   stutWith 2 0.33 ((|*| gain 0.6)) $
+      ("0!2 0.05 0"<~) $ sound "[~ xm:47]*4",
+   sound "xm:1 [xm:113,xm:34] [xm:3? xm:3] [xm:113,xm:34]" # gain 1.2 # legato 0.5 # mu "[0,1]",
+   whenmod 4 3 (const $ sound "~") $ stutWith 8 0.2 ((|*| room 0.9).(|*| size 0.9).(|*| gain 0.9)) $
+   sometimesBy 0.8 (|+| "48") $
+   n "<3 ~> ~ <~ 0> -5" |+| n "16" # s "superpiano" # hpf 500 # orbit 2 # gain 0.9,
+   chop "[2|4]" $ slice 4 (run 4) $ n "<4 4 4 6>" |+| n "5" -- START HERE
+      # s "superpwm" # legato 1 # lpf 4000 # gain 0.7 # pan 0.1 # orbit 7 # room 0.9 # size 0.9,
+   silence
+  ]
+
+
+d2 $
+      -- degradeBy 0.4 $
+      -- sometimes (|+| n "[12|24]") $
+      -- chop "16" $
+      slow 4 $ n "0 3 -2 1" |+| n "-32" # s "supersaw" # voice 0 # lpf 500
+
+d3 $ stutWith 2 0.25 ((|*| room 0.5).(|*| size 0.5).(|*| gain 0.6))
+     -- $ shuffle 8 $ linger 0.5
+     -- $ striate 4 $ chop 8 
+     $ slow 4
+     $ sound "<sheep sheep:1>" # orbit 3 # legato 1
+     # mu 2 
+
+   d4 $ slow 4 $ often (striate 64) $ stack [
+    sound "sheep:3"
+    -- sound "sheep:4" # gain 1.2
+    ] # legato 1 # hpf 2000 # pan (rand)
+
+d3 silence

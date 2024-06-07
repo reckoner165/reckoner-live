@@ -2,6 +2,9 @@ s.options.memSize = 65536;
 Server.default.options.outDevice_("Scarlett 2i4 USB")
 Server.default.options.inDevice_("Scarlett 2i4 USB")
 
+
+Server.options.inDevice_
+
 SuperDirt.start
 
 ~dirt.loadSoundFiles("/Users/sumanth/Music/samples/*");
@@ -9,6 +12,8 @@ SuperDirt.start
 // "/Users/sumanth/Music/reckoner-live/east_asia_2024/peripherals.scd".load()
 
 load("/Users/sumanth/Library/Application Support/SuperCollider/synthdefs/mi-ugens.scd");
+
+load("/Users/sumanth/Music/reckoner-live/synthdefs1.scd")
 
 // define global effects for mutable instruments effects
 (
@@ -38,3 +43,15 @@ SynthDef(\input, {
 s.record
 s.stopRecording
 
+
+
+// install this repository
+// Quarks.install("https://github.com/geikha/tidal-drum-machines.git");
+
+~drumMachinesDir = Quarks.all.detect({ |x| x.name == "tidal-drum-machines" }).localPath;
+
+~dirt.loadSoundFiles(~drumMachinesDir +/+ "machines" +/+ "*" +/+ "*", namingFunction: { |x| x.basename.replace("-","")})
+
+SuperDirt.default = ~dirt;
+
+(type:\dirt, s: \rolandtr909sd, n: 0).play;

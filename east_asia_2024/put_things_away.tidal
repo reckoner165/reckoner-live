@@ -1,0 +1,37 @@
+
+-- Put Things Away (sketch )
+
+setcps(100/60/4)
+
+do
+  d1 $ sound "[xm ~ ~ xm] ~ ~ ~"
+  d2 $ sound "~ ~ ~ [tbw:24 tbw:34] ~ [tbw:106 ~ ~ ~] tbw:78*2!2"
+  d3 $ sound "~ [~ tbw:98] ~ ~ ~ ~ [tbw:98] ~" # hpf 5000 # hpq 0.5
+  d4 $ struct "t*16" $ n "[24|20|52|104]*16" # s "tbw" # legato 0.2 # crush 4 # hpf 1000 # pan (rand)
+  d5 $ slow 2 $ ((1/32)~>) $ struct "t!8"  $ n "<a5 e5 d5 c5>" # s "superpiano" # lpf 500 # legato 1 # hpf 400 
+    # room 0.4 # size 0.4 # dry 0.5
+  d6 
+    -- $ sometimes (chop "[32|64]".(# legato 0.4))
+    -- $ fast 2
+    $ slow 2 $ n "<[a4,c5,e5] [e4,g4,b4][d4,fs4,a4][c4,e4,g4]>" # s "supersaw" 
+    # voice 0 # lpf 250
+    # verb 0.9 0.5 0.3 0.6
+    # gain 0.9 # hpf 250
+
+do
+  d2 silence
+  d3 silence
+  d6 silence
+
+d7 $ degradeBy 0.8 $ sound "808:2*32" # speed (0.25 * perlin) # squiz 4 # room 0.9 # size 0.9  # hpf 30 # hpq 0.4
+
+d7 
+   $ slow 8 
+   -- $ stutWith 32 (1/128) (|*| gain 0.98)
+   $ n "0" # s "input" 
+   -- # gain 1 
+   # gain 1
+   -- # verb 0.9 0.8 0.3 0.5
+   # verb 0.8 0.5 0.6 0.3
+   # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.7 0.2 0.34 0.8 # cloudspitch 0
+   

@@ -1,0 +1,10 @@
+d1 $ fast 2 $ ply 4 $ jux rev . slice 2 (run 2) $ sound "subway:1" # cut 1 # begin (range 0.7 0.92 sine)
+   # up "0 3 <5 7>"
+
+
+d2  $ fast 16 $ struct "t" $ n "[100|85|22|33|47]" # s "tbw" # cut 1
+
+d3 $ s "[~ 808sd]*4"
+
+
+d4 $ degrade $ s "808:2*16" # up (scale "dorian" (run 16)) # distort 0.2

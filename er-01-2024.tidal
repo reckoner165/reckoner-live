@@ -6,12 +6,13 @@ d1
   $ slow 64
   $ n (run 6)
   # s "subway" # legato 1 # gain 1.4 # hpf 200 # lpf 8000 |*| gain 1.2
+  # verb 0.8 0.7 0.3 0.6
 
 d2 $ slow 2 $ stutWith 4 (1/16) ((# room 0.6).(# size 0.6).(|*| gain 0.7)) $ randslice 64 $ sound "tanpuraD" # legato 1 # gain 0.6
 
 d3
   -- $ slow 2
-  -- $ degradeBy 0.3
+  $ degradeBy 0.8
   -- $ every 4 (ply 2)
   $ every 2 (trunc 0.5. ply 2)
   -- $ n (scale "lydian" "[<3 [0 4]> [2 3] <[1 <[2 3] 6> [8 3] 0*2?] 6> <5 2>,[[[~ [2 7]] <7 3>]*[2|4|1]]]") |+| n "[2 | 14]"
@@ -22,7 +23,7 @@ d3
   # lpf 1500
   -- # crush 10
   # pan (0.1 + (0.8 * rand))
-  # velocity (0.5 + perlin)
+  -- # velocity (0.5 + perlin)
   # detune "[0|0.3|0.5]"
 
 d3 silence

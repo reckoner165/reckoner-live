@@ -1,0 +1,39 @@
+setcps(130/60/4)
+
+do
+ d1 $ struct "t!4 t*2 ~ ~" $ stack [
+     sound "[xm,xm:45]" # lpf 1500,
+     sound "hh" 
+     # hpfbus 0 (segment 1024 $ range 1000 10000 $ fast 10.3 sine) # hpq 0.6
+     # gain 1.1
+     ,
+     silence
+   ]
+   
+ d2 $ struct "~ t ~ t ~ t*2 ~" $ s "808:2" # speed (perlin) # room 0.8 # size 0.8
+
+
+d2 
+   -- $ jux (# lpq 0.1) $ chop 2 .(# legato 0.2) 
+   $ struct "t!4 t*2 ~ ~"
+   -- $ (whenmod 5 4 (const $ n "<[d5, fs5, a5]!4 [d5, f5, a5]!4>") 
+   $ n "<[d5, fs5, a5]!4 [g5, as5, d6]!4 [d5, fs5, a5]!4 [d5, f5, a5]!4 [gs5, c5, ds6]!4>" 
+   # s "supersaw" # voice 0 # mu 5 
+   -- # lpf 400
+   # lpfbus 1 (segment 512 $ slow 4 $ range 800 10000 saw)
+   # lpq 0.3
+   # voice 0 
+   # legato 1 
+   # decay 0.9 # sustain 2
+   # clouds 0.2 0.5 0.05 0.1
+   # cloudsblend 0.4 0.2 0.33 0.8
+
+
+d3 $ struct "<t _ _ _>"
+   $ n "<[d5, fs5, a5]!4 [g5, as5, d6]!4 [d5, fs5, a5]!4 [d5, f5, a5]!4 [gs5, c5, ds6]!4>"  |+| n "[0,-12]"
+   # s "superpiano"
+   # gain 1 # sustain 2
+
+
+d4 $ sound "sn:2*14" # hpf 300 # lpf 8000 # gain 1.1
+   # mu 4 # crush 4 # nudge "[0 0.003]*8"

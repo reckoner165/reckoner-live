@@ -1,0 +1,6 @@
+{
+    "tidal.boot.useDefaultFile": true,
+    "tidal.boot.customFiles": [
+      "/Users/sumanth/Library/Application Support/SuperCollider/synthdefs/mi-ugens-params.hs","/Users/sumanth/Music/reckoner-live/utils/rec.tidal","/Users/sumanth/Music/reckoner-live/utils/ival.tidal"
+      ]
+    }

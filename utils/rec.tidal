@@ -3,10 +3,8 @@ let rec :: Sound.Tidal.Context.Time -> [Note] -> IO ()
     rec len ns = p 99 $ qtrigger
                       $ playFor 0 (len * (toRational $ length ns))
                       $ slowcat $ map (\i -> slow (pure len) $ s "looper" # n (pure i)) ns
-
     rec1 = rec 1
     rec2 = rec 2
     rec4 = rec 4
     rec8 = rec 8
-    rec16 = rec 16
     free = once $ s "freeLoops"

@@ -1,0 +1,27 @@
+setcps(100/60/4)
+
+--  [a5 g5 f5 e5] 
+
+-- [g5 f5 e5 d5][a5 g5 f5 e5]
+
+-- $ jux ((0.37~>).(# mu 4).(# lpf 2000)) 
+
+
+do
+  d1 $ fast 2 
+   $ jux ((0.37~>).(# mu 9).(# lpf 6000).(|*| gain 0.9).(# speed 0.99)) 
+   $ stutWith 2 (0.37) ((# lpf 3000).(|*| gain 0.9).(# speed 0.99).(# pan 0.8)) 
+   $ n "<[g5 f5 e5 d5]!4 [a5 g5 f5 e5]!2 [f5 g5 as5 c6][d6 f6 g6 as6]>" 
+   # s "plaits" # sustain (range 0.1 0.4 $ fast 1.3 $ saw) # engine 1
+   # timbre 1
+   # morph 0.8
+   # level 0.5
+   # hpf 1000 # hpq 0.3 # gain 0.9 # mu 9 # lpf 2000
+  d4 $ n "[g4,as4,d4,f5,<a5 g5>]" |+| n "12" # s "tides" # verb 0.9 0.9 0.5 0.3 # hpf 1000
+  d2 $ sound "[<[jhh|jhh:3|jhh:8|jhh:10]>!2 jhh:13 ~]*4" # cut 1 # pan 0.2 # hpf 500 # nudge "[0 0.008]*8" 
+  d5 $ sound "[xm:7 sn:2?] xm:7 sn:2*2 [~ sn:2] [~ sn:2] <[xm:7*2]!3 sn:2*2> <sn:2!3 sn:2*2> <[~ sn:2]!3 sn:2*2>"
+   # nudge "[0 0.008]*8" # hpf "[40,800]" # hpq 0.08
+  d6 $ n "[<g3 f3> _ ~ g4] [~ g5 f5 d5] [<g3 f3> ~ ~ g4] [~ g5 f5 d5]" |+| n "-12" 
+     # s "supersaw" # voice 0 # hpf 300 # lpf 800 # legato 0.8 # gain 0.8
+
+  d5 silence

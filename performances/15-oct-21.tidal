@@ -8,11 +8,12 @@ do
     $ struct "t" $ sound "<lowtest:0 lowtest:1>"
     # cut 1 # crush 8 # gain 1.0
  d2 $ stack[
-     slow 2 $ striateBy 128 0.03 $ sound "ssk" # end 0.125 # gain 1.5
-     ,stutWith 8 0.0625 ((|*| speed 1.5).(|*| room 0.8).(|*| size 0.8).(|*| gain 0.9))
-     $ fast (8/5) $ n "9 11 13 6 ~"
-     # s "supervibe" # gain 0.6 # pan (rand) # orbit 2
-     , slow 8 $ sound "lowtest:2" # cut 1 # gain 1.1 # pan 0.3
+     slow 2 $ striateBy 128 0.03 $ sound "ssk" # end 0.125 # gain 1.5,
+     -- stutWith 8 0.0625 ((|*| speed 1.5).(|*| room 0.8).(|*| size 0.8).(|*| gain 0.9))
+     -- $ fast (8/5) $ n "9 11 13 6 ~"
+     -- # s "supervibe" # gain 0.6 # pan (rand) # orbit 2
+     -- slow 8 $ sound "lowtest:2" # cut 1 # gain 1.1 # pan 0.3,
+     silence
    ]
  d3 $ slow 8 $ n "6 11" |+| n "-24" # s "midi"
 

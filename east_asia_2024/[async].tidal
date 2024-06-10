@@ -2,19 +2,19 @@ setcps(130/60/4)
 
 do
  d1 $ struct "t!4 t*2 ~ ~" $ stack [
-     sound "[xm,xm:45]" # lpf 1500,
+     sound "[xm,xm:45]" # lpf 2000,
      sound "hh" 
-     # hpfbus 0 (segment 1024 $ range 1000 10000 $ fast 10.3 sine) # hpq 0.6
+     # hpfbus 0 (segment 1024 $ range 1000 10000 $ fast 10.3 sine) # hpq 1
      # gain 1.1
      ,
      silence
    ]
-   
- d2 $ struct "~ t ~ t ~ t*2 ~" $ s "808:2" # speed (perlin) # room 0.8 # size 0.8
+ -- d2 $ struct "~ t ~ t ~ t*2 ~" $ s "808:2" # speed (perlin) # room 0.8 # size 0.8
 
 
 d2 
    -- $ jux (# lpq 0.1) $ chop 2 .(# legato 0.2) 
+   -- $ chop 4
    $ struct "t!4 t*2 ~ ~"
    -- $ (whenmod 5 4 (const $ n "<[d5, fs5, a5]!4 [d5, f5, a5]!4>") 
    $ n "<[d5, fs5, a5]!4 [g5, as5, d6]!4 [d5, fs5, a5]!4 [d5, f5, a5]!4 [gs5, c5, ds6]!4>" 
@@ -32,8 +32,8 @@ d2
 d3 $ struct "<t _ _ _>"
    $ n "<[d5, fs5, a5]!4 [g5, as5, d6]!4 [d5, fs5, a5]!4 [d5, f5, a5]!4 [gs5, c5, ds6]!4>"  |+| n "[0,-12]"
    # s "superpiano"
-   # gain 1 # sustain 2
+   # gain 1.1 # sustain 2
 
 
-d4 $ sound "sn:2*14" # hpf 300 # lpf 8000 # gain 1.1
+  d4 $ sound "sn:2*14" # hpf 300 # lpf 8000 # gain 1.1
    # mu 4 # crush 4 # nudge "[0 0.003]*8"

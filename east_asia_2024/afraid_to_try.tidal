@@ -32,12 +32,12 @@ do
       fast 2 $ sound "808:1*4" # gain 0.8 # end 0.2,
         -- # delay 0.1 # delaytime (1/16),
       -- degrade $ sometimes (# distort 0.4) $
-      -- degrade $ fast 2 $ "808:2*8" # speed (0.08 * 8) # gain 1 # triode 4,
+      degrade $ fast 2 $ "808:2*8" # speed (0.08 * 8) # gain 1 # triode 4,
       silence
    ]
   d3 $ stack [
         ((1/8)<~) $ struct "t [~ t] [t? t] [t ~]" $ n "<[b2 g2 [b2 g3] a3] [b2 e2 [b2 e3] fs3]>" |+| n "[0]"
-        # s "braids" # model 1 # mu 2 # gain 1
+        # s "braids" # model 1 # mu 2 # gain 1.1
         # color (range 0.6 1 $ saw)
         # timbre 0.7,
         silence
@@ -62,20 +62,20 @@ do
      silence
    ] # verb 0.9 0.9 0.2 0.7
    -- # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.7 0.2 0.3 0.8 # cloudspitch 0
-   -- # legato 1.2 |*| gain 0.96 # hpf 800
-   # legato "[0.6|0.5|0.7]" # hpf 550 |*| gain 1.25 |*| pan (rand)
+   -- # legato 1.2 |*| gain 0.6 # hpf 1000
+   # legato "[0.6|0.5|0.3]" # hpf 1350 |*| gain 1.2 |*| pan (rand)
   d6 $ stack [
       slow 1 $ ply 2 $ every 4 (stutWith 4 0.5 (rev).(# pan 0))
-      $ n "[7]" # s "loop" # legato 1 # lpf 6000 # gain 1.1 # room 0.8 # size 0.8 # speed (ival "[0|2|7]") # hpf 400,
+      $ n "[7]" # s "loop" # legato 1 # lpf 6000 # gain 1.2 # room 0.8 # size 0.8 # speed (ival "[0|2|7]") # hpf 400,
       silence
    ] 
   d7
    $ every 2 (rev) $ within (0.75, 1) ((0.5<~).(density 1).(jux rev)) 
    $ stack [
-      -- n (( scale "dorian" $ fast 4 "[8 7 6 5, [10 11]/2]") + "e6") # amp 0.2 # pan (range 0.1 0.4 perlin),
+      -- n (( scale "dorian" $ fast 4 "[8*2? 7 6 5, [10 11]/2]") + "e6") # amp 0.2 # pan (range 0.1 0.4 perlin),
       -- n (( scale "dorian" $ fastcat ["8(4, 8)", "[8 7 6 5, [10 11]/2]"]) + "e6"),
       -- n ((scale "dorian" $ fast 2 $ "0 3 4 6") + "e6") # pan 0.8,
-      fast (8/5) $ n ("0 3 2 <5 -2> ~" + "e7") # pan 0,
+      -- fast (8/5) $ n ("0 3 2 <5 -2> ~" + "e7") # pan 0,
       silence
     ] # s "sinosc" # gain 0.78 # room 0.8 # size 0.5 # dry 0.5 # hpf 2000
       # squiz 3
@@ -83,8 +83,8 @@ do
 
 d8 $ stack [
       (every 1 (const $ fast 2 $ sound "sn:2*8") $
-      fast 2 $ sound "xm:2 sn:2") # gain 2.1 # lpf 10000 # hpf 50 # hpq 0.05,
-      sound "[[jhh:2 jhh:3] jhh:9]*4" # gain 1.6 # pan 0.1 # hpf 4000 # lpf (range 15000 20000 (slow 8 $ saw)),
+      fast 2 $ sound "xm:2 [sn:2 ~ ~ sn?]" ) # gain 2.1 # lpf 10000 # hpf 50 # hpq 0.05,
+      sound "[[jhh:2 jhh:3] jhh:9]*4" # gain 1.6 # pan 0.1 # hpf 4000 # lpf (range 15000 20000 (slow 8 $ saw)) # hpq (0.2* sine),
       (chop 8 $ sound "sheffield*2") # legato 0.8 # lpf (1000 + 4000 * rand) # gain 1.4 # pan 1 # crush 4,
       silence
     ] # nudge "[0 0.001]*8" |*| gain 0.9

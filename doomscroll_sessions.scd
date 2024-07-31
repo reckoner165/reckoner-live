@@ -1,9 +1,11 @@
 s.options.memSize = 65536;
 Server.default.options.outDevice_("Scarlett 2i4 USB")
+
+// Server.default.options.outDevice_("USB Audio CODEC")
 Server.default.options.inDevice_("Scarlett 2i4 USB")
 
 
-ServerOptions.inDevices
+// ServerOptions.inDevices
 
 SuperDirt.start
 

@@ -1,0 +1,24 @@
+setcps(125.6/60/4)
+
+
+do
+  d2 $ stack [
+    sound "<[[rytm:28 ~ ~ rytm:28] [~ 808sd:6] [808sd:6 rytm:28] [ ~ rytm:28 ~ 808sd:6]][rytm:28!2 [rytm:27 ,808sd:6] ~ rytm:28 ~ rytm:28 ~]>" # hpf 50,
+    sound "[ ~ mouth:3]*2" # pan 0.5 # gain 1.1,
+    sound "[[tbw:29 tbw:18], 808:1!2]*8" # legato 0.1 # speed 1.5 # gain 0.9 # hpf 4000
+    ] # nudge "[0 0.016]*8"
+  d6 $ n "<[g3 bf3 a3 ~][a3 c4 ~!2][c3!3 ~][e3 g3 ~!2]>" # s "supersaw" # voice 0 # lpf 200
+
+
+ d3 $ trunc "<1 0.5>" $ chop "<1 2>" $ n "[g3,bf4,d5,f6]" |+| n "<0 2>" # s "supersaw" # voice 0 
+   # attack 0.9 # sustain 32 # decay 2 # hpf 500 # legato 0
+    # lfo 2 # rate 0.5
+    # clouds 0.1 0.3 0.05 0.1 # cloudsblend 0.8 0.2 0.33 0.4 # cloudspitch 0
+    # lpf 2000
+    # gain 0.8
+   -- # resonance 0
+   -- # pitch1 "<[1,2]>"
+
+ d4 $ jux (# nudge 0.005) $ trunc "<1 0.3>" $ n "g4 d5 f5 a5 bf5 ~!3" # s "supervibe"
+
+ d5 $ fast 1 $ ((1/8)<~)  $ n "< ~!3 [[a5 bf5] a5 g5 e5 g5 _ _ _]>" # s "supersaw" # voice 0 # verb 0.9 0.6 0.3 0.3 # gain 0.6 # mu 2

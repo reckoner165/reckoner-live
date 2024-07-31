@@ -9,13 +9,13 @@ d1 $ slow 2 $ n "<[-10,2, 5, 12][-5,2, 5, 9, 12][-12,0,4,11]>"
    # gain 1.1
 
 d5 $ n "[24]*4" # s "supersaw" 
-   # lpf 2500 
+   # lpf 2000 
    # legato 3
    # voice 0
    # clouds 0.4 0.5 0.25 0.5
     # cloudsblend 0.7 0.7 0.34 0.8
     # verb 0.9 0.4 0.3 0.8
-    # gain 0.5
+    # gain 0.4
 
 d4 $ stutWith 2 0.5 ((# gain 0.6).(# pan 0.5)) $ n "12 13 [17 19] [~ 14] [~ 12]" # s "supervibe" 
    # verb 0.9 0.6 0.3 0.8 # gain 0.7
@@ -24,7 +24,7 @@ d4 $ stutWith 2 0.5 ((# gain 0.6).(# pan 0.5)) $ n "12 13 [17 19] [~ 14] [~ 12]"
 do
   d2 $ fast 2 $ sound "[[hh ~ hh [~ rm:4] hh],[808bd:1 ~!4]]" # mu 3 
     # lpf 1000 
-    -- # gain 1.2
+    # gain 1.2
     -- # lpf 400
   d3 
      -- $ rarely (# crush 2) 
@@ -38,12 +38,12 @@ do
      # lpf 1500 # lpq 0.2
      -- # rings "[0,20]" rand 0.7 (slow 3 sine) 0.9
      -- # ringsmodel 0
-     -- # lpf 200
+     -- # lpf 200 # lpq 0
      
 
-d4 $ trunc 0.5 $ chop "<20 40>" $ sound "sheffield" # legato 0.5 # mu 5 # crush 5 # speed 4 
-   # hpf (4000 + 1000 * sine)
-   # hpqbus 1 (segment 512 $ range 0.1 0.5 $ fast 7.7 sine)
+d4 $ trunc 0.5 $ chop "<10>" $ sound "sheffield" # legato 0.5 # mu 5 # crush 5 # speed 4 
+   -- # hpf (5000 + (3000 * sine))
+   -- # hpqbus 1 (segment 512 $ range 0.1 0.3 $ fast 5.7 sine)
 
 d4 silence
 
@@ -55,11 +55,11 @@ d4
   # voice 0
   # attack 0.8 # sustain 32 # decay 1 # hpf 1000 # hpq 0 # legato 0
   # resonance 0 # pitch1 "<[1,2] 8>"
-  # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.8 0.3 0.35 0.8 # cloudspitch 0
+  # clouds 0.1 0.3 0.05 0.1 # cloudsblend 0.8 0.2 0.33 0.8 # cloudspitch 0
   # lfo 2 # rate 0.5
   # hpf 3000 # hpq 0.2
   # mu 3
-  # gain 0.8
+  # gain 0.9
   -- # legato 0.5
 
 d3 silence

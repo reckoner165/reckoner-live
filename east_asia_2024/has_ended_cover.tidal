@@ -1,0 +1,51 @@
+setcps(119/60/4)
+
+free
+
+
+
+d5 
+   $ slow 8 
+   -- $ stutWith 32 (1/128) (|*| gain 0.98)
+   $ n "0" # s "input" 
+   # gain 1 
+   -- # gain 1.2
+   # verb 0.9 0.6 0.3 0.3
+   -- # verb 0.8 0.5 0.5 0.3
+   # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.5 0.2 0.34 0.8 # cloudspitch 0
+
+rec 4 [4,5]
+
+once $ sound "sn:29"
+
+d1 $ stack [
+  sound "rytm:28 ~ ~ [~ ~ ~ xm:6]",
+  sound "<[~ ~ sn:29 ~][~ sn:29!3]>" # hpf 100 # lpf 9000 |*| gain 1.1 # speed 0.88,
+  silence
+  ] |*| gain 1.2 # nudge "[0 0.02]*16"
+
+-- d3 $ sound "[[808:1 ~ ~ 808:1]]*4" # nudge "[0 0.02]*16"
+d3 $ sound "[~ 808:1]*2"
+
+d4 $ 
+   -- n "< ~ [f3 _ _ [~ ~ ~ c3]]>" 
+   slow 2 $ n "c3 _ [g3 _ _ c3] [~ ~ f3 _] ~ [ef3 _ _ d3] c3 [~ ~ ~ c3]"
+   # "supersaw" # voice 0 # lpf 200  # lpq 0.2 # legato 2
+   -- # s "braids" # model 1 # gain 1.1
+   -- # nudge "[0 0.02]*8" 
+   # nudge "[0 0.02]*16"
+   # legato 1
+   -- # color (range 0.6 1 $ saw)
+   -- # timbre 0.7
+
+
+d6
+   $ stack [
+     ((0.25)~>) $ slow 2 $ struct "t" $ n "[0 1]" # s "loop" # gain 1.2 # pan 0 # begin 0.01,
+     ((0.25)<~) $ slow 2 $ struct "t" $ n "[2 3]" # s "loop" # gain 1.5 # pan 0.2 # begin 0.01,
+       slow 2 $ struct "t" $ n "[4 5]" # s "loop" # gain 1.5 # pan 0.5 # begin 0.01,
+     slow 4 $ struct "t" $ n "6" # s "loop" # gain 1.4 # pan 0.8,
+     silence
+   ] # verb 0.9 0.9 0.2 0.7
+   # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.7 0.2 0.33 0.8 # cloudspitch 0
+   # legato 1.2 |*| gain 0.9 # hpf 1000

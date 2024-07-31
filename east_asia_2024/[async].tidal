@@ -1,11 +1,21 @@
 setcps(130/60/4)
 
+d5 
+   $ slow 8 
+   -- $ stutWith 32 (1/128) (|*| gain 0.98)
+   $ n "0" # s "input" 
+   -- # gain 1 
+   # gain 1.2
+   # verb 0.9 0.6 0.3 0.3
+   -- # verb 0.8 0.5 0.5 0.3
+   -- # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.5 0.2 0.34 0.8 # cloudspitch 0
+
 do
  d1 $ struct "t!4 t*2 ~ ~" $ stack [
-     sound "[xm,xm:45]" # lpf 2000,
+     sound "[xm,xm:45]" # lpf 1000,
      sound "hh" 
-     # hpfbus 0 (segment 1024 $ range 1000 10000 $ fast 10.3 sine) # hpq 1
-     # gain 1.1
+     -- # hpfbus 0 (segment 1024 $ range 1000 10000 $ fast 10.3 sine) # hpq 1
+     -- # gain 1.1
      ,
      silence
    ]
@@ -14,26 +24,31 @@ do
 
 d2 
    -- $ jux (# lpq 0.1) $ chop 2 .(# legato 0.2) 
-   -- $ chop 4
+   -- $ chop 2
+   -- $ qtrigger
    $ struct "t!4 t*2 ~ ~"
    -- $ (whenmod 5 4 (const $ n "<[d5, fs5, a5]!4 [d5, f5, a5]!4>") 
-   $ n "<[d5, fs5, a5]!4 [g5, as5, d6]!4 [d5, fs5, a5]!4 [d5, f5, a5]!4 [gs5, c5, ds6]!4>" 
-   # s "supersaw" # voice 0 # mu 5 
+   $ n "<[gs5, c5, ds6]!4 [d5, fs5, a5]!4 [g5, as5, d6]!4 [d5, fs5, a5]!4 [d5, f5, a5]!4>" 
+   # s "supersaw"
+   # mu 5 
+   -- # s "ableton"
    -- # lpf 400
-   # lpfbus 1 (segment 512 $ slow 4 $ range 800 10000 saw)
+   # lpfbus 1 (segment 512 $ slow 4 $ range 800 8000 saw)
    # lpq 0.3
    # voice 0 
    # legato 1 
+   -- # legato 0.2
    # decay 0.9 # sustain 2
-   # clouds 0.2 0.5 0.05 0.1
-   # cloudsblend 0.4 0.2 0.33 0.8
+   # clouds 0.2 "0.8 0.1" 0.05 0.1
+   # cloudsblend 0.1 0.2 "0.83 [0.8|0.4] 0.33" 0.8
+   # gain 0.9
 
 
 d3 $ struct "<t _ _ _>"
-   $ n "<[d5, fs5, a5]!4 [g5, as5, d6]!4 [d5, fs5, a5]!4 [d5, f5, a5]!4 [gs5, c5, ds6]!4>"  |+| n "[0,-12]"
+   $ n "<[gs5, c5, ds6]!4 [d5, fs5, a5]!4 [g5, as5, d6]!4 [d5, fs5, a5]!4 [d5, f5, a5]!4 >"  |+| n "[0,-12]"
    # s "superpiano"
-   # gain 1.1 # sustain 2
+   # gain 1.1 # sustain 2 # lpf 3000 # verb 0.8 0.8 0.3 0.3
 
 
-  d4 $ sound "sn:2*14" # hpf 300 # lpf 8000 # gain 1.1
+  d4 $ sound "sn:2*14" # hpf 300 # lpf 8000 # gain 1.2
    # mu 4 # crush 4 # nudge "[0 0.003]*8"

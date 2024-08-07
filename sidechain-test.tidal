@@ -1,0 +1,19 @@
+setcps(110/60/4)
+
+d1 $ slow 2 $ sound "sheffield" # legato 1 # hpf "[256,512,1024]" # hpq 0.3 
+   # sidechain 1 # sidechain_thresh (1/10) # sidechain_compression (1/5) 
+   # sidechain_attack  (1/500) # sidechain_release (1/100)
+
+
+d2 $ sound "[[rytm:28,jhh] jhh jhh:9 _]*4"
+
+d2 $ fast 1 $ sound "rytm:28 ~ [rytm:28, realclaps?] ~ rytm:28 [~ rytm:28] ~ [~ realclaps?]" 
+d4 $ sound "[hh!2]*8" # nudge "[0 0.02]*8" # mu 2 # lpf 5000
+
+
+
+d2 silence
+
+d3 $ slow 1 $ n "0 3 2 8" |+| n "-24" # s "supersaw" # voice 0 # lpf 200
+   # sidechain 1 # sidechain_thresh (4/100) # sidechain_compression (1/100) 
+   # sidechain_attack  (1/2000) # sidechain_release (1/1000)

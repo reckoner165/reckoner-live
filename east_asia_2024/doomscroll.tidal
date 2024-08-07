@@ -69,6 +69,7 @@ do
     -- $ qtrigger 
     -- $ ply "[1|8]" 
     -- $ ply "[1,8]" 
+    -- $ ply 8
     -- $ jux (# squiz 2)
     $ stack [
      slow 8 $ n "[e7][[ds7 cs7 _ _ ][b6 a6 ~ ~][gs6 fs6 _ _][e6 ds6 ~ ~]][[cs6 b5 _ _ ][a5 gs5 ~ ~][fs5 e5 _ _][ds5 cs5 ~ a4]][b4]" # pan 0,

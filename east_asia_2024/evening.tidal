@@ -10,18 +10,18 @@ d1
 
 
 d2 $ slow 2 $ stutWith 4 (1/16) ((# room 0.6).(# size 0.6).(|*| gain 0.7)) 
-   $ randslice 64 $ sound "tanpuraD" # legato 1.1 # gain 0.85 # lpf 9000
+   $ randslice 64 $ sound "tanpuraD" # legato 1.1 # gain 0.88 # lpf 9000
    # verb 0.5 0.5 0.3 0.5
 
 d3
   $ slow 1
-  -- $ degradeBy 0.2
+  -- $ degradeBy 0.1
   -- $ every 2 (ply 2)
   -- $ every 2 (rev. fast 4 . ply "[1|8|16]")
   -- $ every 4 (linger 0.125. ply 2 . rev) 
   -- $ ply 2
   -- $ fast 2 $ linger 0.125
-  -- $ every 2 (rev)
+  -- $ every 4 (rev)
   -- $ every 2 (0.75~>)
   -- $ iter 4
   -- $ fast 2 $ linger 0.25  

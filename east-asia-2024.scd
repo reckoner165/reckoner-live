@@ -29,6 +29,8 @@ load("/Users/sumanth/Music/reckoner-live/synthdefs1.scd")
 
 ~looper = TidalLooper(~dirt);
 
+load("/Users/sumanth/Music/reckoner-live/sidechain.scd")
+
 // VOCAL BYPASS
 (
 SynthDef(\input, {

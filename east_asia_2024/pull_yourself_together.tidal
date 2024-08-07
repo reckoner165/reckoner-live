@@ -1,0 +1,53 @@
+setcps(120/60/5)
+
+d1 $ fast 2 $ stack [
+   struct "t ~ t ~ ~" $ s "rytm:28" # shape 0.8,
+   jux (# scram (rand)) $ sound "~ ~ ~ ~ sn:2" # shape 0.8 # coarse 12,
+   sound "[jhh:5 jhh] jhh*2 [jhh:5 jhh] jhh*2 ~" # shape (0.9 * rand) # coarse 0.8
+  ] 
+
+once $ qtrigger $ fast 4 $ sound "sn:2!5" # shape 0.9 # smear (rand) # coarse 0.7 # cut 1 # distort 0.9
+
+once $ fast 4 $ n "32 102 56 91 54" # sound "tbw" # shape 0.9 # coarse 0.8 # pan (rand) # legato 0.2
+
+
+d2 $ n "[4,16,<20 18 21>]" |+| n "-12"
+   # s "rhodes" # lpf 200
+   # clouds 0.1 0.5 0.05 0.1
+   # cloudsblend 0.2 0.2 0.28 0.8
+   # gain 1.4
+   -- # mu 3
+
+
+d3 $ fast 2 $ often (ply 2)  $ sometimes (within (0.25, 0.75) rev) 
+   $ n (scale "mixolydian" "0 1 <3 9> <4 2> <7 11>") |+| n "-8" 
+   # s "supersaw" # voice 0 # legato (0.2 + 0.8*rand) 
+   # shape (0.9 * perlin)
+   # verb 0.9 0.6 0.3 0.3
+
+do
+  d2 $ qtrigger $ fast 2 $ n "<[0,15,19]!4 [0,16,19]!12>" |+| n "<7!4 5!4 2!8>" |+| n "-12"
+   # s "rhodes" # lpf 200
+   # clouds 0.1 0.5 0.05 0.1
+   # cloudsblend 0.2 0.2 0.28 0.8
+   # gain 1.4
+   -- # mu 
+  d3 $ qtrigger $ fast 2 $ often (ply 2)  $ sometimes (within (0.25, 0.75) rev) 
+     $ n (scale "<minor!4 major!12>" "0 1 <3 9> <4 2> <7 11>") |+| n "<-5!4 -7!4 0!8>" 
+     # s "supersaw" # voice 0 # legato (0.2 + 0.8*rand) 
+     # shape (0.9 * perlin)
+     # verb 0.9 0.6 0.3 0.3
+   
+
+d3 silence
+
+d4 
+   $ slow 8 
+   -- $ stutWith 32 (1/128) (|*| gain 0.98)
+   $ n "0" # s "input" 
+   -- # gain 1 
+     # gain 1.2
+   # verb 0.9 0.6 0.3 0.3
+   -- # verb 0.8 0.5 0.5 0.3
+   -- # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.5 0.2 0.34 0.8 # cloudspitch 0
+   

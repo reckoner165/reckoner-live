@@ -1,0 +1,45 @@
+-- SP-1200 swing
+d1 $ stack [
+  sound "bd*2",
+  sound "[~ sn]*2",
+  sound "hh*4"
+  ] # nudge "[0 0.0832]*2" -- 66.67% "classic" swing i.e. every other note is delayed by 8.32%
+
+
+d1 $ stack [
+  sound "bd*2",
+  sound "[~ sn]*2",
+  sound "hh*4"
+  ] # nudge "[0 0.125]*2"  -- 75% "shuffle" swing i.e., every other note is delayed by 12.5%
+
+
+-- MPC swing
+
+do
+  d1 $ sound "bd*2"
+  d2 $ sound "[~ sn]*2" # nudge "[0 0.0832]*2"
+  d3 $ sound "hh*4" # nudge "[0 0.125]*2"
+
+
+-- MPC shift timing
+
+do
+  d1 $ sound "bd*2"
+  d2 $ sound "[~ sn]*2" |+| nudge "0.1"
+  d3 $ sound "hh*4" |+| nudge "-0.2"
+
+-- Shuffled hihats
+
+do
+  d1 $ sound "bd*2"
+  d2 $ sound "[~ sn]*2" 
+  d3 $ sound "hh*4" # nudge "[0 0.0832]*2"
+
+
+-- Simple dilla time (time shift + swing)
+
+do
+  d1 $ sound "bd*2"
+  d2 $ sound "[~ sn]*2" |+| nudge "0.02"
+  d3 $ sound "hh*4" # nudge "[0 0.0832]*2"
+

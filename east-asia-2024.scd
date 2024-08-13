@@ -3,6 +3,9 @@ Server.default.options.outDevice_("Scarlett 2i4 USB")
 Server.default.options.inDevice_("Scarlett 2i4 USB")
 
 
+Server.default.options.outDevice_("EarPods")
+
+
 ServerOptions.inDevices
 
 SuperDirt.start

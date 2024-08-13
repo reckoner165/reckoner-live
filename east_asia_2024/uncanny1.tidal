@@ -1,0 +1,65 @@
+setcps(93/60/4)
+
+let main = n "<a2 fs2 f2 e2>"
+    motif = n "{gs5 a5 c6 b5 a5 ~}%4"
+
+d1 $ sound "bd*8" # speed (-1) # end 0.2 # lpf 90
+
+d2 
+  -- $ jux (((1/32)~>).(# nudge 0.0432))
+  $ sometimes (jux (ply 2))
+  $ fast 2 
+  -- $ degradeBy 0.1
+  $ n "{gs5 a5 c6 b5 a5 ~}%4" 
+  # sound "[sinosc,supervibe?]" # lpf 2000 # voice 0 -- supervibe?
+  # verb 1 0.7 0.3 0.3
+  -- # mu 5 # gain (0.7 + 0.2*perlin)
+  -- # clouds perlin 0.1 0.05 0.5 # cloudsblend 0.1 0.8 "0.5 0.34" 0.1 # cloudspitch 0
+  -- # sidechain 2 # sidechain_thresh (8/100) # sidechain_compression (1/2)
+  -- # sidechain_attack (5/1000) # sidechain_release (1/1000)
+
+d3 $ sometimes (ply 1) $ struct "t*8" $ main # s "supersaw" # voice 0 # lpf 200
+
+do
+  d4 $ struct "t" $ main |+| n 36 # s "ultrasaw" # hpf 1000 # real 0.8 # imag 0.2
+  d5 $ fast 2 $ motif |+| n "24" # s "futuresaw" # shape 0.8 # coarse 0.9
+     # clouds perlin 0.1 0.2 0.5 # cloudsblend 0.9 0.2 "0.38 0.34" 0.1
+     # hpf 5000 # verb 0.9 0.7 0.5 0.5 # gain 0.7
+
+do
+  d4 silence
+  d5 silence
+
+d6 $ fast 2 $  n "{a2 ~ < a2 c3 e2> ~ ~}%4" # s "braids" # model 1 # mu 1 # gain 1.1
+    # color (range 0.2 1 $ saw)
+    # timbre sine
+    # mu (5*perlin)
+    # verb 0.8 0.8 0.3 0.3
+
+
+
+d3 
+   -- $ sometimes (linger 0.25) 
+   $ (fast 4
+   -- $ sound "{xm jhh rytm:9 jhh:2 sn:2}%4"
+   $ stack [
+     -- fast 2 $ sound "[jhh xm]",
+     degradeBy 0 $ fast 2 $ sound "[[[jhh|jhh:9] xm]|[sn:2*2?,[jhh|jhh:4]]]",
+     sound "[bd:2 bd]*2",
+     -- sound "hh" # hpfbus 0 (segment 1024 $ range 1000 10000 $ fast 5.3 sine) # hpq 1 |*| 2,
+     silence
+     ]
+   -- $ sound "sn:2*4"
+   # shape 0.9 # coarse 0.8 
+   # nudge "[0 0.00832]*2")
+   |*| gain 0.95 # hpf 40
+   -- # real 2 # imag 0.2
+
+d3 silence
+
+d4 silence
+d5 silence
+
+
+
+d4 $ degrade $ slice 16 (run 16) $ sound "sheffield" # legato 1 # begin 0.2 # real 0.5 # imag (rand)

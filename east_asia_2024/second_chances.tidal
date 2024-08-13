@@ -8,7 +8,7 @@ do
      ]
   d4 $ sound "xm:4*4" # gain 1.1 # lpf 200
   d7 $ stutWith 32 (1/32) ((|*| gain 0.95).(|*| speed "<0.95 1.04>")) $ s "xmas" |*| speed 2
-   # pan (perlin) # cut 1 # verb 0.8 0.8 0.2 0.2
+   # pan (perlin) # cut 1 # verb 0.8 0.8 0.2 0.2 # amp 0.8 # lpf 1000
 
 
 d2 $ slow 1 $ slice 4 (run 4) $ (n "[0 5]" |+| n "-24" # s "tides" # mu 4
@@ -45,6 +45,23 @@ d6 $ sometimes (rev) $ degradeBy 0.4 $ randslice 8 $ (# legato "[0.2|1]") $ stri
    # rings 100 rand 0.7 (slow 3 sine) 0.9
    -- # delaytimebus "0.33"
 
+d6 silence
+
+
+do
+  d1 $ stack [
+       fast 4 $ striateBy 16 "0.1 0.05 0.4 0.01" $ sound "xm:3" # speed 0.5 # lpf 80 |*| gain 1.2,
+       sound "xm*8" # pan "[0 1]*4" # speed "[-1 0.7]*4" # nudge "[-0.5 0]*4" # end "[0.8 1]*4"
+     ]
+  d4 $ sound "xm:4*8" # gain 1.1 # lpf 200
+  d7 $ stutWith 32 (1/32) ((|*| gain 0.95).(|*| speed "<0.95 1.04>")) $ s "xmas" |*| speed 2
+   # pan (perlin) # cut 1 # verb 0.8 0.8 0.2 0.2
+  d6 $ slow 2 $ n "[7,12,<16 17 19 17>]" |+| n "[-24,-12]"
+       # s "supersaw" # voice 0 # mu 10 # lpf 800
+       # clouds 0.1 0.5 0.05 0.1
+       # cloudsblend 1 0.2 0.33 0.8
+       
+
 
 
 do
@@ -63,18 +80,18 @@ do
 
 
 
-do
-  d1 $ stack [
-       fast 4 $ striateBy 16 "0.1 0.05 0.4 0.01" $ sound "xm:3" # speed 0.5 # lpf 80 |*| gain 1.2,
-       sound "xm*8" # pan "[0 1]*4" # speed "[-1 0.7]*4" # nudge "[-0.5 0]*4" # end "[0.8 1]*4"
-     ]
-  d4 $ sound "xm:4*8" # gain 1.1 # lpf 200
-  d7 $ stutWith 32 (1/32) ((|*| gain 0.95).(|*| speed "<0.95 1.04>")) $ s "xmas" |*| speed 2
-  d5 $ qtrigger $ slow 8 $ n "0!4" |+| n "[-24,-12]"
-           # s "supersaw" # voice 0 # mu 5 # lpf 200
-     # clouds 0.1 0.5 0.05 0.1
-     # cloudsblend 1 0.2 0.33 0.8
-  d6 $ qtrigger $ n "[{[0,<8!2 7!2 5!2>] [0,<8!2 7!2 5!2>] _}%8,3*4]" |+| n "[0,12]" # s "superpiano"
-     # verb 0.9 0.8 0.3 0.3
-     # clouds 0.1 0.5 0.05 0.1
-     # cloudsblend 0.6 0.2 0.33 0.8
+-- do
+--   d1 $ stack [
+--        fast 4 $ striateBy 16 "0.1 0.05 0.4 0.01" $ sound "xm:3" # speed 0.5 # lpf 80 |*| gain 1.2,
+--        sound "xm*8" # pan "[0 1]*4" # speed "[-1 0.7]*4" # nudge "[-0.5 0]*4" # end "[0.8 1]*4"
+--      ]
+--   d4 $ sound "xm:4*8" # gain 1.1 # lpf 200
+--   d7 $ stutWith 32 (1/32) ((|*| gain 0.95).(|*| speed "<0.95 1.04>")) $ s "xmas" |*| speed 2
+--   d5 $ qtrigger $ slow 8 $ n "0!4" |+| n "[-24,-12]"
+--            # s "supersaw" # voice 0 # mu 5 # lpf 200
+--      # clouds 0.1 0.5 0.05 0.1
+--      # cloudsblend 1 0.2 0.33 0.8
+--   d6 $ qtrigger $ n "[{[0,<8!2 7!2 5!2>] [0,<8!2 7!2 5!2>] _}%8,3*4]" |+| n "[0,12]" # s "superpiano"
+--      # verb 0.9 0.8 0.3 0.3
+--      # clouds 0.1 0.5 0.05 0.1
+--      # cloudsblend 0.6 0.2 0.33 0.8

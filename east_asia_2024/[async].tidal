@@ -17,6 +17,7 @@ do
      -- # hpfbus 0 (segment 1024 $ range 1000 10000 $ fast 10.3 sine) # hpq 1
      # gain 1.2
      ,
+     -- sound "tbw:77*14" # legato 0.1,
      silence
    ]
  -- d2 $ struct "~ t ~ t ~ t*2 ~" $ s "808:2" # speed (perlin) # room 0.8 # size 0.8
@@ -30,11 +31,11 @@ d2
    -- $ (whenmod 5 4 (const $ n "<[d5, fs5, a5]!4 [d5, f5, a5]!4>") 
    $ n "<[gs5, c5, ds6]!4 [d5, fs5, a5]!4 [g5, as5, d6]!4 [d5, fs5, a5]!4 [d5, f5, a5]!4>" 
    # s "supersaw"
-   # mu 5 
+   # mu 2 
    -- # s "ableton"
    -- # lpf 400
    # lpfbus 1 (segment 512 $ slow 4 $ range 800 8000 saw)
-   # lpq 0.5
+   # lpq 0.4
    # voice 0 
    # legato 1 
    -- # legato 0.2
@@ -50,7 +51,11 @@ d3 $ struct "<t _ _ _>"
    # gain 1.1 # sustain 2 # lpf 5000 # verb 0.9 0.8 0.3 0.3
    # clouds 0.2 "0.8 0.1" 0.05 0.1
    # cloudsblend 0.1 0.2 0.3 0.8
+   # lpf 4000
 
 
   d4 $ sound "sn:2*14" # hpf 300 # lpf 3400 # gain 1.2
     # mu 4 # crush 4 # nudge "[0 0.003]*8"
+
+
+    d5 $ sound "[tbw:77|tbw:118]*14" # legato 0.2 # gain 1 # hpf 2000

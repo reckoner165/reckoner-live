@@ -15,7 +15,7 @@ setcps(128/60/4)
 do
  d1 $ struct "t!4 t*2 ~ ~" $ stack [
      -- sound "[xm,xm:45]" # lpf 1200,
-     sound "rytm:28" # lpf 1200 # gain 1.1,
+     sound "rytm:28" # lpf 800 # gain 1.2,
      sound "hh" # gain 1.2
      -- # hpfbus 0 (segment 1024 $ range 1000 10000 $ fast 10.3 sine) # hpq 1
      ,
@@ -37,16 +37,16 @@ d2
    -- # s "ableton"
    -- # lpf 400
    # lpfbus 1 (segment 512 $ slow 4 $ range 800 8000 saw)
-   # lpq 0.2
+   # lpq 0.5
    # voice 0 
    # legato 1 
    -- # legato 0.2
    # decay 0.9 # sustain 2
    # clouds 0.2 "0.8 0.1" 0.05 0.1
-   # cloudsblend 0.1 0.2 0.3 0.8
+   # cloudsblend 0.5 0.2 0.3 0.8
    # gain 0.9
    # sidechain 3 # sidechain_thresh (1/100) # sidechain_compression (1/4)
-   # sidechain_attack (1/400) # sidechain_release (1/2000)
+   # sidechain_attack (1/400) # sidechain_release (1/900)
 
 
 d3 $ struct "<t _ _ _>"
@@ -57,7 +57,7 @@ d3 $ struct "<t _ _ _>"
    # clouds 0.2 0.1 0.05 0.1
    # cloudsblend 0.4 0.4 0.3 0.9
    # lpf 4000
-   # sidechain 2 # sidechain_thresh (1/100) # sidechain_compression (1/2)
+   # sidechain 2 # sidechain_thresh (1/100) # sidechain_compression (4/5)
    # sidechain_attack (1/1000) # sidechain_release (1/1000)
 
 do

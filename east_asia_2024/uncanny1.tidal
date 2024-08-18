@@ -3,7 +3,7 @@ setcps(93/60/4)
 let main = n "<a2 fs2 f2 e2>"
     motif = n "{gs5 a5 c6 b5 a5 ~}%4"
 
-d1 $ sound "bd*8" # speed (-1) # end 0.2 # lpf 90
+d1 $ sound "bd*8" # speed (-1) # end 0.2 # lpf 90 # shape 0.3
 
 d2 
   -- $ jux (((1/32)~>).(# nudge 0.0432))
@@ -18,7 +18,7 @@ d2
   -- # sidechain 2 # sidechain_thresh (8/100) # sidechain_compression (1/2)
   -- # sidechain_attack (5/1000) # sidechain_release (1/1000)
 
-d3 $ sometimes (ply 1) $ struct "t*8" $ main # s "supersaw" # voice 0 # lpf 200
+d3 $ sometimes (ply 1) $ struct "t*8" $ main # s "supersaw" # voice 0 # lpf 200 # shape 0.4
 
 do
   d4 $ struct "t" $ main |+| n 36 # s "ultrasaw" # hpf 1000 # real 0.8 # imag 0.2
@@ -30,7 +30,7 @@ do
   d4 silence
   d5 silence
 
-d6 $ fast 2 $  n "{a2 ~ < a2 c3 e2> ~ ~}%4" # s "braids" # model 1 # mu 1 # gain 1.1
+d6 $ fast 2 $  n "{a2 ~ < a2 c3 e2> ~ ~}%4" # s "braids" # model 1 # mu 1 # gain 1.3
     # color (range 0.2 1 $ saw)
     # timbre sine
     # mu (5*perlin)
@@ -44,14 +44,14 @@ d3
    -- $ sound "{xm jhh rytm:9 jhh:2 sn:2}%4"
    $ stack [
      -- fast 2 $ sound "[jhh xm]",
-     degradeBy 0 $ fast 2 $ sound "[[[jhh|jhh:9] xm]|[sn:2*2?,[jhh|jhh:4]]]",
-     sound "[bd:2 bd]*2",
+     degradeBy 0 $ fast 2 $ sound "[[[jhh|jhh:9] xm]|[sn:2*2?,[jhh|jhh:4]]]" |*| gain 1.1 # pan (0.4 + 0.2*sine),
+     sound "[bd:2 bd]*2" |*| gain 1,
      -- sound "hh" # hpfbus 0 (segment 1024 $ range 1000 10000 $ fast 5.3 sine) # hpq 1 |*| 2,
      silence
      ]
    -- $ sound "sn:2*4"
    # shape 0.9 # coarse 0.8 
-   # nudge "[0 0.00832]*2")
+   # nudge "[0 0.0166]*2") -- 0.00832
    |*| gain 0.95 # hpf 40
    -- # real 2 # imag 0.2
 

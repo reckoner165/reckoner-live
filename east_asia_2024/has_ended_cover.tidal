@@ -3,29 +3,29 @@ setcps(119/60/4)
 free
 
 d2 $ slow 2 $ stutWith 4 (1/16) ((# room 0.6).(# size 0.6).(|*| gain 0.7)) 
-   $ randslice 64 $ sound "tanpuraC" # legato 1.1 # gain 0.88 # lpf 9000 # hpf 400
+   $ randslice 64 $ sound "tanpuraC" # legato 1.1 # gain 0.92 # lpf 9000 # hpf 400
    # verb 0.5 0.5 0.3 0.5
 
 d5 
    $ slow 8 
    -- $ stutWith 32 (1/128) (|*| gain 0.98)
    $ n "0" # s "input" 
-   # gain 1 
-   -- # gain 1.2
+   -- # gain 1
+   # gain 1.1
    # verb 0.7 0.6 0.3 0.3
    -- # verb 0.8 0.5 0.5 0.3
    # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.5 0.2 0.34 0.8 # cloudspitch 0
 
 d6
    $ stack [
-     ((0.25)~>) $ slow 2 $ struct "t" $ n "[0 1]" # s "loop" # gain 1.2 # pan 0 # begin 0.01,
-     ((0.25)<~) $ slow 2 $ struct "t" $ n "[2 3]" # s "loop" # gain 1.2 # pan 0.2 # begin 0.01,
-       slow 2 $ struct "t" $ n "[4 5]" # s "loop" # gain 1.6 # pan 0.5 # begin 0.01,
-     slow 4 $ struct "t" $ n "6" # s "loop" # gain 1.4 # pan 0.8,
+     ((0.25)~>) $ slow 2 $ struct "t" $ n "[0 1]" # s "loop" |*| gain 1.2 # pan 0 # begin 0.01,
+     ((0.25)<~) $ slow 2 $ struct "t" $ n "[2 3]" # s "loop" |*| gain 1.2 # pan 0.2 # begin 0.01,
+       slow 2 $ struct "t" $ n "[4 5]" # s "loop" |*| gain 1.6 # pan 0.5 # begin 0.01,
+     slow 4 $ struct "t" $ n "6" # s "loop" |*| gain 1.4 # pan 0.8,
      silence
    ] # verb 0.9 0.9 0.2 0.7
    # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.7 0.2 0.33 0.8 # cloudspitch 0
-   # legato 1.2 |*| gain 0.9 # hpf 1000
+   # legato 1.2 |*| gain 0.92 # hpf 1400
 
    
    free
@@ -37,6 +37,7 @@ rec 4 [4,5]
 do
   d1 silence
   d4 silence
+  d7 silence
 
 do
   d1 $ stack [
@@ -44,13 +45,13 @@ do
     struct "<[~ ~ t ~][~ t!3]>" $ sound "808sd:9" # lpf 2800 |*| gain 1.1 # speed 0.78,
     sound "[<rytm:28 ~> ~ ~ <~ rytm:28>]*2" # lpf 400,
     silence
-    ] |*| gain 1.2 # nudge "[0 0.0832]*4"
+    ] |*| gain 1.4 # nudge "[0 0.0832]*4"
   d3 $ sound "[~ 808:1]*2"
   d4 $ 
-   -- n "< [~ ~ ~ [~ c3]] [f3 _ _ ~]>" 
-   slow 2 $ n "c3 _ [g3 c3] [~ f3 _ _ ] _ [ef3 d3] c3 [~ g2]"
+   n "< [~ ~ ~ [~ c3]] [f3 _ _ ~]>" 
+   -- slow 2 $ n "c3 _ [g3 c3] [~ f3 _ _ ] _ [ef3 d3] c3 [~ g2]"
    -- slow 2 $ n "c3*16"
-   # "supersaw" # voice 0 # lpf 100 # lpq 0.2 # legato 2
+   # "supersaw" # voice 0 # lpf 150 # lpq 0.2 # legato 2 # gain 1.1
    -- # s "braids" # model 1 # gain 1.1
    -- # nudge "[0 0.02]*8" 
    # nudge "[0 0.0832]*8"
@@ -63,12 +64,13 @@ do
    -- once $ n (scale "dorian" "3") # s "supersaw" # voice 0
 
 
-d7 $ degradeBy 0.6 $ fast "[4|4|2]" $ sometimes (rev) $ iter 4 $ n (scale "mixolydian" "{2 3 4 5 6 7}%8") # s "futuresaw" 
+d7 $ degradeBy 0.6 $ fast "[16|4|8]" $ sometimes (rev) $ iter 4 $ n (scale "mixolydian" "{2 3 4 5 6 7}%8") |+| n "[0|12]" # s "futuresaw" 
    # voice 0 # cut 1 # legato 3 # sustain 0.4 # offset 0.25 # begin (range 0.1 0.4 $ slow 2 $ sine)
-   # verb 0.9 0.5 0.2 0.5
-   # gain 0.99
+   # verb 1 0.8 0.2 0.5
+   # gain 0.9
+   -- # 0.5
    # lpf 7000 # lpq 0.1
-   # sidechain 0 # sidechain_thresh (1/50) # sidechain_compression (5/8)
+   # sidechain 0 # sidechain_thresh (4/50) # sidechain_compression (7/8)
    # sidechain_attack (1/50) # sidechain_release (1/10)
 
 

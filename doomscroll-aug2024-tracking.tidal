@@ -1,0 +1,29 @@
+setcps (100/60/4)
+
+
+
+
+d3 $ qtrigger $ slow 16 $ n "9 10 9 1 9 10 11 _" |+| n "5" |+| n "[-24,-12]" |+| n "[0,[4 3 4 3 4 3 4 _]]"
+     # s "supersaw" # voice 0 # mu 10 # lpf 800
+     # clouds 0.1 0.5 0.05 0.1
+     # cloudsblend 1 0.2 0.33 0.8
+     # shape 0.6 # coarse 1
+
+
+
+ d1 $ 
+    -- qtrigger $
+    -- whenmod 4 3 (ply 2) $
+    -- ply 4 $ 
+    -- slow 8 $ sometimes (|*| speed 2) $ striateBy 16 "[0.002 0.005]*4" $ (0.0125<~) $
+    -- sometimes (linger 0.25) $
+    -- sometimes (jux (# smear 0.6)) $
+    -- --start
+    slow 4 $ 
+    sometimes (|*| speed 2)$ 
+    striateBy 32 "[0.006 0.002 0.1]*8" $ jux (0.125~>) $
+    struct "t" $ sound "<lowtest:0 lowtest:1>"
+    # crush 8 # gain 1.2 # mu 6 # legato 0.7 # shape 0.3
+    -- --
+    # lpf 500 
+    # hpf 300

@@ -56,9 +56,9 @@ d4
   # voice 0
   # attack 0.8 # sustain 32 # decay 1 # hpf 1000 # hpq 0 # legato 0
   # resonance 0 # pitch1 "<[1,2] 8>"
-  # clouds 0.1 0.3 0.05 0.1 # cloudsblend 0.8 0.2 0.33 0.8 # cloudspitch 0
+  # clouds 0.1 0.3 0.05 0.1 # cloudsblend 0.8 0.2 0.34 0.8 # cloudspitch 0
   # lfo 2 # rate 0.5
-  -- # hpf 3000 # hpq 0.3
+  -- # hpf 3000 # hpq 0.2
   # mu 2
   # gain 0.9
   -- # legato 0.5

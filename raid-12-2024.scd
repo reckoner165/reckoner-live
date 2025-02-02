@@ -6,13 +6,9 @@ Server.default.options.inDevice_("Scarlett 2i4 USB")
 Server.default.options.outDevice_("EarPods")
 
 
-ServerOptions.inDevices
-
 SuperDirt.start
 
 ~dirt.loadSoundFiles("/Users/sumanth/Music/samples/*");
-
-// "/Users/sumanth/Music/reckoner-live/east_asia_2024/peripherals.scd".load()
 
 load("/Users/sumanth/Library/Application Support/SuperCollider/synthdefs/mi-ugens.scd");
 
@@ -30,42 +26,16 @@ load("/Users/sumanth/Music/reckoner-live/synthdefs1.scd")
  };
 )
 
-~looper = TidalLooper(~dirt);
-
 load("/Users/sumanth/Music/reckoner-live/sidechain.scd")
 
-// VOCAL BYPASS
-(
-SynthDef(\input, {
-    | out, sustain=1, freq=440, speed=1, begin=0, end=1, pan, accelerate, offset, volume|
-	var env    = EnvGen.ar(Env.linen(0, sustain, 0), doneAction: Done.freeSelf);
-	var osc    = PitchShift.ar(SoundIn.ar(0), pitchRatio: speed);
-    OffsetOut.ar(out, DirtPan.ar(osc, ~dirt.numChannels, pan, env));
-}).add;
-)
-
-
-s.record
-s.stopRecording
-
-
-
-// install this repository
-// Quarks.install("https://github.com/geikha/tidal-drum-machines.git");
-
-~drumMachinesDir = Quarks.all.detect({ |x| x.name == "tidal-drum-machines" }).localPath;
-
-~dirt.loadSoundFiles(~drumMachinesDir +/+ "machines" +/+ "*" +/+ "*", namingFunction: { |x| x.basename.replace("-","")})
-
-SuperDirt.default = ~dirt;
-
-(type:\dirt, s: \rolandtr909sd, n: 0).play;
-
-
 MIDIClient.init;
-~ableton = MIDIOut.newByName("IAC Driver", "Bus 1");
-~dirt.soundLibrary.addMIDI(\ableton, ~ableton);
-
 ~pro800 = MIDIOut.newByName("PRO 800", "PRO 800");
 ~dirt.soundLibrary.addMIDI(\pro800, ~pro800);
 ~pro800.latency = 0
+
+~ableton = MIDIOut.newByName("IAC Driver", "Bus 1");
+~dirt.soundLibrary.addMIDI(\ableton, ~ableton);
+~ableton.latency = 0
+
+s.record
+s.stopRecording

@@ -20,8 +20,9 @@ s.record
 s.stopRecording
 
 
-
 MIDIClient.init;
+
+
 
 ~minitaur = MIDIOut.newByName("Moog Minitaur", "Moog Minitaur");
 ~dirt.soundLibrary.addMIDI(\minitaur, ~minitaur);

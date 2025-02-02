@@ -1,0 +1,32 @@
+d2 $ fast 4 $ n "<[c5,e5]!4 [cs5,f5]!4 [ds5,g5]!4>"  |+| n "-12"
+  # sound "radiohead_pad" 
+  # sustain 1
+  # legato 1.2 
+  # detune "0.02" 
+  # pan (slow 8 $ sine)
+
+
+
+
+d2 $ n "e5 fs5 gs5" 
+  # sound "radiohead_pad" 
+  # sustain 1.5 
+  # legato 1.2 
+  # pan (slow 8 $ sine)
+
+
+
+
+-- TidalCycles pattern using the new synth
+d1 $ n "a4 b4 c5" # sound "supercollider_pad" # sustain 5 # pan (slow 8 $ sine)
+
+setcps(85/60/4)
+
+d2 $ fast 2 $ sound "rytm:28!6 808sd:1 ~"
+
+d1 $ fast 2 $ stack [
+  n "c4(3,8)" ,
+  n "<g4!2 f4 e4>(3,8)",
+  slow 2 $ n "{e5 f5 g5 c5 g5 f5}"
+  ] # sound "supercollider_pad" # sustain 0.7 # release 5 # pan (0.3) # cutoff (range 300 8000 $ slow 2 saw)
+  # verb 0.9 0.5 0.3 0.3

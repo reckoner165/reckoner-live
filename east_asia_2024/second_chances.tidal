@@ -7,7 +7,10 @@ do
        sound "xm*8" # pan "[0 1]*4" # speed "[-1 0.7]*4" # nudge "[-0.5 0]*4" # end "[0.8 1]*4"
      ]
   d4 $ sound "xm:4*4" # gain 1.1 # lpf 200
-  d7 $ stutWith 32 (1/32) ((|*| gain 0.95).(|*| speed "<0.95 1.04>")) $ s "xmas" |*| speed 2
+
+
+  
+  d7 $ stutWith 32 (1/32) ((|*| gain 0.95).(|*| speed "<0.91 1.01>")) $ s "xmas" |*| speed 2
    # pan (perlin) # cut 1 # verb 0.8 0.8 0.2 0.2 # amp 0.8 # lpf 1000
 
 

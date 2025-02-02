@@ -1,0 +1,15 @@
+
+setcps(90/60/4)
+
+d3 $ slow 1.5 $ layer [
+      (# (s "supersaw" # lpf 400)) . (|- n 24),
+      (# (s "superpiano"# lpf 3000))
+    ]
+   -- $ sometimes (|+| n "12") 
+   -- $ n "<[2 4 2 -3 <2 0>@4] <[~ ~ 2 4 2 4 7 4] [~ 12 [11 7] 4]>>"
+   $ n (scale "minor" ("[4 3 4 <7 <6 7>> 4 3 ]!2" - "<0 0 1 <1 [1 3]>>")) + "bf5" |+| n "12"
+   -- $ n "{[<f7 ef7 c7> <ef7 df7 bf6> <f7 ef7 c7> <af7 bf7 f7> <f7 ef7 c7> <ef7 df7 bf6>]!2}%3"
+   -- $ n "{<<ds7!2 cs7!2> <f7!2 ds7!2> gs7 <f7!2 ds7!2> <ds7!2 cs7!2> <f7 ds7 ds7!2>>}%4"
+
+
+

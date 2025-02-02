@@ -1,0 +1,95 @@
+--Doomscroll
+
+
+d4 
+   $ slow 8 
+   -- $ stutWith 32 (1/128) (|*| gain 0.98)
+   $ n "0" # s "input" 
+   -- # gain 1 
+   # gain 1.1
+   -- # verb 0.7 0.8 0.3 0.5
+   -- # verb 0.8 0.5 0.6 0.3
+   # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.7 0.2 0.3 0.9 # cloudspitch 0
+   
+
+do
+ setcps (100/60/4)
+ -- resetCycles
+ d1 $ 
+    -- whenmod 4 3 (ply 2) $
+    -- ply 4 $ 
+    -- slow 8 $ sometimes (|*| speed 2) $ striateBy 16 "[0.002 0.005]*4" $ (0.0125<~) $
+    -- sometimes (linger 0.25) $
+    -- sometimes (jux (# smear 0.6)) $
+    -- --start
+    slow 4 $ 
+    sometimesBy 0.4 (|*| speed 2)$ 
+    striateBy 32 "[0.005 0.003 0.1]*8" $ jux (0.125~>) $
+    struct "t" $ sound "<lowtest:0 lowtest:1>"
+    -- struct "t" $ sound "<doom:0 doom:1>"
+    # crush 8 # gain 1.2 
+    # mu 6 
+    # legato 0.7
+    -- --
+    # lpf 800 
+    -- # lpf 100 # hpf 150
+ d2 $ stack[
+     -- slow 2 $ striateBy 128 0.03 $ sound "ssk" # end 0.125 # gain 1.8,
+     -- stutWith 8 0.0625 ((|*| speed 1.5).(|*| room 0.8).(|*| size 0.8).(|*| gain 0.9))
+     -- $ fast (8/5) $ n "9 11 13 6 ~"
+     -- # s "supervibe" # gain 0.8 # pan (rand) # orbit 2,
+     -- slow 8 $ slice 8 (run 8) $ sound "lowtest:2" # legato 1 # gain 1.2 # pan 0.3 # mu 3 # verb 0.9 0.8 0.3 0.3,
+     silence
+   ]
+ -- d3 $ slow 4 $ n "<6*32 11*32>" |+| n "-24" # s "braids" 
+    -- # model 6 # gain 1.3 # timbre 0 # color 1 # mu 5 # lpf 100 # legato 0.6
+
+do
+  d1 $ silence
+  d2 $ stack[
+      slow 2 $ striateBy 128 0.03 $ sound "ssk" # end 0.125,
+      fast 2 $ sound "bd:3*4" # lpf 300 # gain 1.3
+    ]
+  d3 $ qtrigger $ slow 16 $ n "9 10 9 6 9 10 11 _" |+| n "[-24,-12]" |+| n "[0,[4 3 4 3 4 3 4 _]]"
+     # s "supersaw" # voice 0 # mu 10 # lpf 800
+     # clouds 0.1 0.5 0.05 0.1
+     # cloudsblend 1 0.2 0.33 0.8
+
+
+do
+ d1 
+   -- $ qtrigger 
+   $ stack[
+   slow 4 $ sometimes ((|*| speed 2).(# distort (0.05 * rand)).(|*| gain 1.2)) $ (n "<6 -1>" |+| n "[-12]" # s "superhammond") 
+   # gain 0.9 # lpf (1000 + 1000*sin(20)) # voice 7 # mu 1 # legato 1,
+   slow 4 $ sometimes (|*| speed 2) $ (striateBy 32 "[0.006 0.002]*8" $ jux (0.125~>) $ struct "t" $ sound "<lowtest:0 lowtest:1>" # cut 1 # crush 8) 
+     # mu (range 1 4 $ saw) # shape 0.6,
+   silence
+   ]
+ d2 $ fast 4 $ striateBy 16 "0.05 0.01"
+    $ sound "<ssk*4 ssk(3,8)>"
+    # crush 10 # gain 2 # speed "1 1.5 2 1.5" # lpf 50
+ d3 
+    -- $ qtrigger 
+    -- $ ply "[1|8]" 
+    -- $ ply "[1,8]" 
+    $ ply 8
+    -- $ jux (# squiz 2)
+    $ stack [
+     slow 8 $ n "[e7][[ds7 cs7 _ _ ][b6 a6 ~ ~][gs6 fs6 _ _][e6 ds6 ~ ~]][[cs6 b5 _ _ ][a5 gs5 ~ ~][fs5 e5 _ _][ds5 cs5 ~ a4]][b4]" # pan 0,
+     slow 8 $ n "[fs7][[e7 ds7 _ _ ][cs6 b6 ~ ~][a6 gs6 _ _][fs6 e6 ~ ~]][[ds6 cs5 _ _ ][b5 a5 ~ ~][gs5 fs5 _ _][e5 ds5 ~ gs4]][a4]"  |+| n "-12" # pan 1
+   ] # s "tides" # tidesshape 1 # nudge "[0 0.01]*8" # mu 2
+
+
+d2 $ silence
+
+
+
+    d2 $ stack[
+     slow 2 $ striateBy 128 0.03 $ sound "ssk" # end 0.125 # gain 1.8,
+     -- stutWith 8 0.0625 ((|*| speed 1.5).(|*| room 0.8).(|*| size 0.8).(|*| gain 0.9))
+     -- $ fast (8/5) $ n "9 11 13 6 ~"
+     -- # s "supervibe" # gain 0.8 # pan (rand) # orbit 2,
+     -- slow 8 $ slice 8 (run 8) $ sound "lowtest:2" # legato 1 # gain 1.2 # pan 0.3 # mu 3 # verb 0.9 0.8 0.3 0.3,
+     silence
+     ]

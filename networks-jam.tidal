@@ -1,0 +1,25 @@
+setcps(122/60/4)
+
+
+d1 $ sound "rytm:6!2 ~ sn:2 rytm:6!2 sn:2 <~ ~ ~ [~ sn:2]>" # shape 0.9 # coarse 0.8 # hpf 40
+
+d2 $ sound "808oh!7 808oh:1" # cut 1 # shape 0.8 # coarse 1 # pan 0.7 # mu 2
+
+
+d3 $ jux ((1/64)~>) $ struct "[t ~]!2" $ n "[d3,f3,c4]" |+| n "12" 
+   # s "supersaw" # voice 0 # legato 1
+   # shape 0.5 # mu 2
+   # hpf 100
+
+d4 $ jux ((1/64)~>) $ struct "[t ~]!2" $ n "[d3]" 
+   # s "braids" # model 1 # gain 1.3
+    -- # color (range 0.2 1 $ saw)
+    # timbre sine
+    # sustain 1
+    # legato 1
+    # lpf 100
+
+
+
+
+   d4 silence

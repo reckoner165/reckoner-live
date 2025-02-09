@@ -1,0 +1,72 @@
+setcps(150/60/5)
+
+
+
+d1 $ slow 2 $ n "<[-10,2, 5, 12][-5,2, 5, 9, 12][-12,0,4,11]>" 
+   # s "rhodes" # lpf 200
+   # hpf 100
+   # clouds 0.2 0.5 0.05 0.1
+   # cloudsblend 0.2 0.2 0.23 0.8
+   # gain 1.1
+
+d5 $ n "[24]*4" # s "supersaw" 
+   # lpf 2000 
+   # legato 3
+   # voice 0
+   # clouds 0.4 0.5 0.25 0.5
+    # cloudsblend 0.7 0.7 0.34 0.8
+    # verb 0.9 0.4 0.3 0.8
+    # gain 0.4
+
+d4 $ stutWith 2 0.5 ((# gain 0.6).(# pan 0.5)) $ n "12 13 [17 19] [~ 14] [~ 12]" # s "plaits" 
+   # engine 4 # harm 1 # timbre 0.4 # morph (range 0.3 0.8 perlin) #  mode 1
+   # verb 0.9 0.8 0.2 0.6 # gain 0.7
+   -- # hpf 1500 # lpf 7000 # hpq 0.9
+
+do
+  d2 $ fast 2 $ sound "[[hh ~ hh [~ rm:4] hh],[808bd:1 ~!4]]" # mu 3 
+    # lpf 1000 
+    # gain 1.2 
+    -- # shape 0.3
+    # lpf 400
+  d3 
+     -- $ rarely (# crush 2) 
+     $ fast 2
+     -- $ within (0.5,1) (striateBy 2 (slow 3.2 $ range 0.01 0.2 saw)) 
+     $ sound "<xm:4 ~> xm:8 noise2:6 ~!2" 
+     -- # legato 0.5
+     # verb 0.9 0.5 0.2 0.5 # speed "<[0.3,0.4] [0.3,0.5]>"
+     # mu 8
+     # hpf 40 # hpq 0.2
+     -- # lpf 1500 # lpq 0.2
+     -- # shape 0.3
+     -- # rings "[0,20]" rand 0.7 (slow 3 sine) 0.9
+     -- # ringsmodel 0
+     # lpf 100 # lpq 0
+     
+
+d4 $ trunc 0.5 $ chop "<10>" $ sound "sheffield" # legato 0.5 # mu 5 # crush 5 # speed 4 
+   -- # hpf (5000 + (3000 * sine))
+   -- # hpqbus 1 (segment 512 $ range 0.1 0.3 $ fast 5.7 sine)
+
+d4 silence
+
+d4 
+  -- $ chop 4
+  $ slow 2
+  $ n "<[-10,2, 5, 12][-5,2, 5, 9, 12][-12,0,4,11]>" # s "supersaw" 
+  # voice 0
+  # attack 0.8 # sustain 32 # decay 1 # hpf 1000 # hpq 0 # legato 0
+  # resonance 0 # pitch1 "<[1,2] 8>"
+  # clouds 0.1 0.3 0.05 0.1 # cloudsblend 0.8 0.2 0.34 0.8 # cloudspitch 0
+  # lfo 2 # rate 0.5
+  -- # hpf 3000 # hpq 0.2
+  -- # mu 2
+  # gain 0.9
+  -- # legato 0.5
+
+d3 silence
+d2 silence
+d4 silence
+
+d1 silence

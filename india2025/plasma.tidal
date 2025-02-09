@@ -1,0 +1,35 @@
+setcps(110/60/4)
+
+
+d1 $ every 32 (linger 0.25) 
+   $ jux (# speed "1 0.8") $ fast 2 $ sound "rytm:28!4 [realclaps, casio:2] ~!2 <[realclaps, casio:2]? ~>" 
+   # nudge "[0 0.016]*4" 
+   # shape "0 0.4" # coarse "0 0.3" # legato "0.9 0.6" 
+   # lpf "1000 10000" # speed "1 0.85"
+
+d4 $ trunc 0.5 $ degrade $ s "hh*16"  # nudge "[0 0.016]*8"
+
+
+d2
+   $ jux (((0.375)~>).(chop 1).(# clouds 0.2 0.1 0.15 0.05).(# cloudsblend 1 0.2 0.33 0.8).(|+| n "12"))
+   $ n "<[f4,a4,d5,f5][cs4,f4,gs4,ds5]>" 
+   -- # s "supersaw" 
+   # s "braids"
+   # model 15
+   # sustain 0.97 # lpf 700
+   # timbre (slow 4 $ sine) # color (saw)
+
+
+
+d3 $ fast 2 $ struct "<[t][t [~ ~ ~ t] ~ t? _]>" $ n "<f2 gs2>" # s "supersaw" 
+   # legato 1 # voice 0 # lpf 200 # lpq 0.1
+
+d5 $ fast 4 $ n "{f4 gs4 c5 ds5 f5}%4" # s "plaits" # nudge "[0 0.008]*2" 
+   # engine 2
+   # morph (range 0.5 1 $ fast 3 $ sine)
+   # mode "[1|0]"
+   # pan perlin
+   # timbre (range 0.2 0.6 $ slow 32 $ saw)
+
+   
+d6 $ jux (# verb 0.9 0.9 0.5 0.5) $ n "f7" # s "plaits" # gain 0.5

@@ -46,9 +46,9 @@ d2
    # s "supersaw"
    -- # mu 2 
    -- # s "ableton"
-   # lpf 400
-   -- # lpfbus 1 (segment 512 $ slow 4 $ range 800 8000 saw)
-   -- # lpq 0.5
+   -- # lpf 400
+   # lpfbus 1 (segment 512 $ slow 4 $ range 800 8000 saw)
+   # lpq 0.5
    # voice 0 
    # legato 1 
    -- # legato 0.2

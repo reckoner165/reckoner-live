@@ -11,12 +11,13 @@ SuperDirt.start
 
 ~dirt.loadSoundFiles("/Users/sumanth/Music/samples/*");
 
-// "/Users/sumanth/Music/reckoner-live/east_asia_2024/peripherals.scd".load()
-
-load("/Users/sumanth/Library/Application Support/SuperCollider/synthdefs/mi-ugens.scd");
 
 load("/Users/sumanth/Music/reckoner-live/synthdefs1.scd")
 
+
+load("/Users/sumanth/Music/reckoner-live/sidechain.scd")
+
+load("/Users/sumanth/Library/Application Support/SuperCollider/synthdefs/mi-ugens.scd");
 // define global effects for mutable instruments effects
 (
 ~dirt.orbits.do { |x|
@@ -30,11 +31,7 @@ load("/Users/sumanth/Music/reckoner-live/synthdefs1.scd")
 )
 
 ~looper = TidalLooper(~dirt);
-~looper.persistPath = "/Users/sumanth/Music/Loops/"
 
-load("/Users/sumanth/Music/reckoner-live/loop_buffer_viz.scd")
-
-load("/Users/sumanth/Music/reckoner-live/sidechain.scd")
 
 // VOCAL CHAIN
 (
@@ -100,37 +97,65 @@ MIDIClient.init;
 
 ~looper.listLoops.postln;
 
-PathName(~looper.persistPath).entries.do(_.postln);
 
-~looper.dump;
-
-// Manually create a buffer and save it
-b = Buffer.alloc(s, 44100, 1);  // Allocating a buffer with 1 channel and 44100 samples
-b.write("/Users/sumanth/Music/Loops/loop_0.wav", "wav", "int16");  // Save to the specified location
-
-~looper.persistPath = "/Users/sumanth/Music/Loops/".standardizePath;
-
-b = ~looper.numBuffers[0];  // Access the first buffer
-
-b.write("/Users/sumanth/Music/Loops/loop_0.wav", "wav", "int16");  // Explicitly write the buffer
-
-~dirt.soundLibrary.buffers[0]
-
-
-~dirt.soundLibrary.buffers.keys.do(_.postln);
-
+// ROGER THAT
 (
-~dirt.soundLibrary.buffers.keys
-  .select { |key| key.asString.contains("loop") } // or any condition you need
-  .do { |key| ("Buffer for " + key).postln;}
+SynthDef(\rogerThatFx, { |out, in=0, rogerThatFx=0, mix=0.5, drive=1.0, shift=0, filterFreq=1000, filterQ=1.0, noiseLevel=0.1, tune=440|
+    var input, modulated, noisyModulated, demodulated, distorted, wetSignal, output, noise;
+
+    // Get audio from input bus
+    input = In.ar(in, 2);  // Stereo input
+
+    // Only process if effect is enabled
+    input = Select.ar(rogerThatFx, [input, input * drive]);
+
+    // FM Modulation with positional arguments
+    modulated = PMOsc.ar(
+        tune + shift,          // Carrier frequency: base pitch + shift (tune knob controls base frequency)
+        input.abs * 1000,      // Modulating frequency based on input level
+        5,                     // Modulation index (increased for more effect)
+        0.5                    // Amplitude (adjust if necessary)
+    );
+
+    // Add noise to the modulated signal
+    noise = WhiteNoise.ar(0.05);  // Adjust the noise level here
+    noisyModulated = modulated + (noise * noiseLevel);  // Mix noise with the modulated signal
+
+    // FM Demodulation approximation
+    demodulated = HPF.ar(noisyModulated, 10);
+
+    // Apply distortion
+    distorted = tanh(demodulated * 10);  // Increased gain for stronger distortion
+
+    // Bandpass filter to shape the output
+    wetSignal = BPF.ar(distorted, filterFreq, filterQ);
+
+    // Mix wet and dry signals
+    output = XFade2.ar(input, wetSignal, mix * 2 - 1);  // XFade2 mixes dry/wet signals
+
+    // Output the processed signal
+    Out.ar(out, output);
+}).add;
 )
 
+
+
 (
-~dirt.soundLibrary.buffers.values
-  .select { |buffer| buffer.path.contains("loop") }
-  .do { |buffer|
-    ("Buffer path: " + buffer.path).postln;
-  }
+~dirt.addModule('rogerThatFx', { |dirtEvent|
+    dirtEvent.sendSynth('rogerThatFx',
+        [
+            rogerThatFx: ~rogerThatFx,      // Enable or disable the effect
+            mix: ~mix,                      // Wet/dry mix (parameter)
+            drive: ~drive,                  // Distortion drive (parameter)
+            shift: ~shift,                  // FM modulation shift (parameter)
+            filterFreq: ~filterFreq,        // Filter frequency (parameter)
+            filterQ: ~filterQ,              // Filter resonance (parameter)
+			tune: ~tune,                    // Carrier wave frequency (parameter)
+            out: ~out                       // Output bus (if necessary)
+        ]
+    );
+}, { ~rogerThatFx.notNil && ~mix.notNil });  // Play effect only if rogerThatFx and mix are defined
+
+~busses = ~dirt.orbits.collect { |x| x.dryBus };
 )
 
-~dirt.soundLibrary.buffers

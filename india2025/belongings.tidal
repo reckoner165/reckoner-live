@@ -1,17 +1,25 @@
 -- Belongings Thrown in a River (from Suspiria OST)
 
+setcps (110/60/4)
+
 let motif = n "g5 d6 g6 d6 ds6 fs6 c6 b6 gs5"
 
 d1 $ slow 4 $ n "g5 d6 g6 d6 ds6 fs6 c6 b6 gs5" # s "superpiano" # legato 1 
-   -- # lpf 4000 
-   # rings "[100|200]" (0.8*perlin) 0.5 rand 0.9
-   # verb 0.8 0.6 0.3 0.3
+   # lpf 2500 
+   -- # rings "[100|200]" (0.8*perlin) 0.5 rand 0.9
+   # verb 0.94 0.8 0.3 0.3
    -- # clouds "[0.3|0.9|0.5]" 0.01 0.05 0.6
    -- # cloudsblend 1 0.7 0.32 0.5 
 
 
 d2 $ slow 4 $ motif |+| n "[0|-24]" # s "braids" 
-   # model 8 # voice 0 # timbre 1 # color (perlin) # sustain 2.5 # gain 0.8 # lpf 8000 # attack 2
-   -- # model 13 # timbre 0.2 # color 0.2 # sustain 3 # attack 0.8
-   # verb 0.8 0.8 0.2 0.2
-   
+   -- # model 8 # voice 0 # timbre 1 # color (perlin) # sustain 2.5 # gain 0.8 # lpf 8000 # attack 2
+   # model 13 # timbre 0.2 # color 0.2 # sustain 3 # attack 0.8
+   # verb 0.7 0.8 0.2 0.2
+
+
+d3 $ slow 4.5 $ n "g2" # s "supersaw" # voice 0 # legato 1 # lpf 200 
+
+
+   d3 silence
+   d2 silence

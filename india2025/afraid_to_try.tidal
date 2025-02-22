@@ -1,6 +1,8 @@
 
 setcps(122/60/4)
 
+-- RESET MI UGENS!
+
 
 d1 
    $ slow 8 
@@ -11,31 +13,30 @@ d1
    # verb 0.8 0.6 0.3 0.3
    -- # verb 0.8 0.5 0.5 0.3
    -- # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.5 0.2 0.34 0.8 # cloudspitch 0
-   
+
+
+   d1 $ n "0" # s "loop" # legato 1
 
 free
 
 rec1 [7]
 
 
-rec 16 [4,5]
+rec 4 [6]
 
-
-d1 $ n "100" # s "xm"
 
 do
   d2 $ stack [
-      -- fast 2 $ sound "<eu_kick ~ ~ ~> eu_kick eu_sn <eu_kick ~ ~ [~ eu_sn?]>" # gain 1.1 # hpf 100 # lpf 150 # shape 0.5,
-      fast 2 $ (whenmod 4 3 (const $ sound "~ eu_kick [xm:97, noise2:3] [[eu_kick noise2:5], ~]" # lpf "[2000|10000]")
-      $ sound "<eu_kick ~  ~ ~> eu_kick [click,noise2:5] <eu_kick ~ ~ ~>") # gain 1.5 # hpf 100,
-      fast 2 $ sound "<808bd ~ ~ ~> 808bd ~ <808bd ~ ~ ~>" # n "9" # gain 1.1
-      # speed "<1.25!2 1.5!2 0.84!4>" |*| speed 2.2 # hpf 70 # hpq 0.3,
-      fast 2 $ sound "808:1*4" # gain 0.8 # end 0.2,
+      fast 2 $ sound "<eu_kick ~ ~ ~> eu_kick eu_sn <eu_kick ~ ~ [~ eu_sn?]>" # gain 1.1 # hpf 100 # lpf 150 # shape 0.5,
+      -- fast 2 $ (whenmod 4 3 (const $ sound "~ eu_kick [xm:97, noise2:3] [[eu_kick noise2:5], ~]" # lpf "[2000|10000]")
+      -- $ sound "<eu_kick ~  ~ ~> eu_kick [click,noise2:5] <eu_kick ~ ~ ~>") # gain 1.5 # hpf 100,
+      -- fast 2 $ sound "<808bd ~ ~ ~> 808bd ~ <808bd ~ ~ ~>" # n "9" # gain 1.1
+      -- # speed "<1.25!2 1.5!2 0.84!4>" |*| speed 2.2 # hpf 70 # hpq 0.3,
+      fast 2  $ sound "808:1*4" # gain 0.8 # end 0.2,
       -- degrade $ fast 2 $ "808:2*8" # speed (0.08 * 8) # gain 1 # triode 4,
       silence
    ]
   d3 $ stack [
-        -- ply 2 $
         -- ((1/8)<~) $ struct "t [~ t] [t? t] [t ~]" $ n "<[b2 g2 [b2 g3] a3] [b2 e2 [b2 e3] fs3]>" |+| n "[0]"
         -- # s "braids" # model 1 # mu 1 # gain 1
         -- # color (range 0.6 1 $ saw)
@@ -47,100 +48,102 @@ do
       # verb 0.9 0.9 0.2 0.4
       ,
       silence
-   ]
+   ] # sidechain 4 # sidechain_thresh (7/50) # sidechain_compression (2/3)
+   # sidechain_attack (1/4000) # sidechain_release (1/2000)
   d5
    -- $ every 4 (jux rev.(# speed (-1))) 
-   -- $ slow 2 $ ply 2
-   -- $ rarely (# speed (0.5))
+   -- $ every 4 (slow 8 . ply 8)
+   -- $ rarely (# speed (2))
    -- $ linger 0.5
+   -- $ every 2 ((# legato 1.2).(# pan (rand)))
    -- $ sometimes (# speed (-1))
-   -- $ slice 8 "[<1 [5 2]> [4*2 6?] [7 _] <2 3 4>*2]*2"
+   -- $ slow 1 $ slice 8 "[<1 [5 12]> [4*2 6?] [7 _] <5 3 4>*2]*2"
+   -- $ iter 8 
+   -- $ slice 8 "[<[0|1] [3 2]> [3*2 1?] <[4 _] [7!2]> <2 [1|6] 6>*2]*2"
    $ stack [
-     slow 2 $ struct "t" $ n "[0 1]" # s "loop" # gain 1.2 # pan 0 # begin 0.01,
-     (0.25~>) $ slow 2 $ struct "t" $ n "[2 3]" # s "loop" # gain 1.5 # pan 0.2 # begin 0.01,
-     slow 2 $ struct "t" $ n "[4 5]" # s "loop" # gain 1.5 # pan 0.5 # begin 0.01,
-     slow 4 $ struct "t" $ n "6" # s "loop" # gain 1.2 # pan 0.8,
-     silence
-   ] # verb 0.9 0.9 0.2 0.7
-   # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.7 0.2 0.3 0.8 # cloudspitch 0
-   # legato 1.2 |*| gain 0.9 # hpf 1000
-   -- # legato "[0.6|0.5|0.9]" # hpf 450 |*| gain 1.1 |*| pan (rand) # lpf 8000
-   -- # sidechain 7 # sidechain_thresh (7/50) # sidechain_compression (2/3)
-   -- # sidechain_attack (1/4000) # sidechain_release (1/2000)
+       -- palindrome $ chop 16 $
+       -- slice 8 ("<[7(5,8)]*2 [2 [4 6] 3 0]*2>") $
+       slow 2 $ struct "t" $ n "0" # s "loop" |*| gain 1.3 # pan 0,
+       -- chop 8 $
+       (0.25~>) $ slow 2 $ struct "t" $ n "1" # s "loop" |*| gain 1.3 # pan 0.2,
+       -- palindrome $ iter 8 $ chop 16 $ 
+       (0.25~>) $ slow 2 $ struct "t" $ n "2" # s "loop" # gain 1.3 # pan 0.8,
+       -- rev $ fast 2 $ slice 8 "0 2 [4 3] 5 1 3 7 <6 2!2>" $
+       -- slice 16 (run 16) $
+       slow 2 $ slice 8 (fast 2 $ "<[3(5,8)]*2 [2 [4 6] 3 0]*2>") $
+       -- n "3" # s "loop" # gain 1.3 # pan 0.6,
+       -- degrade $ chop 16 $ 
+       slow 2 $ struct "t" $ n "4" # s "loop" # gain 1.3 # pan 0.3,
+       -- rev $ iter 4 $ degrade $ chop 16 $
+       slow 2 $ struct "t" $ n "5" # s "loop" # gain 1.3 # pan 0.7,
+       -- degrade $ chop 16 $
+       slow 4 $ struct "t" $ n "6" # s "loop" # gain 1 # pan 0.8,
+       silence
+       ] 
+     # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.2 0.4 0.3 0.8 # cloudspitch 0 
+     # room 0.5 # size 0.8
+     # legato 1 # begin 0.01
+     # gain 1.2
+     # hpf 200 # lpf 8000
+   -- # legato "[0.8|0.9|1.1]" 
+   -- # hpf 450 |*| gain 1.2 |*| pan (rand) # lpf 8000
+   # sidechain 7 # sidechain_thresh (7/100) # sidechain_compression (1/5)
+   # sidechain_attack (1/4000) # sidechain_release (1/2000)
   d6 $ stack [
       slow 1 $ ply 2 $ every 4 (stutWith 4 0.5 (rev).(# pan 0))
-      $ n "[7]" # s "loop" # legato 1 # lpf 6000 # gain 1 # room 0.8 # size 0.8 # speed (ival "[0|2|7]") # hpf 400 # shape 0.3,
+      $ n "[7]" # s "loop" # legato 1 # lpf 6000 # gain 1.2 # room 0.8 # size 0.8 # speed (ival "[0|2|7]") # hpf 400 # shape 0.3,
       silence
    ] 
   d7
    $ every 2 (rev) $ within (0.75, 1) ((0.5<~).(density 1).(jux rev)) 
    $ stack [
-      n (( scale "dorian" $ fast 4 "[8*2? 7 6 5, [10 11]/2]") + "e6") # amp 0.2 # pan (range 0.1 0.4 perlin),
-      n (( scale "dorian" $ fastcat ["8(4, 8)", "[8 7 6 5, [10 11]/2]"]) + "e6"),
-      n ((scale "dorian" $ fast 2 $ "0 3 4 6") + "e6") # pan 0.8,
-      fast (8/5) $ n ("0 3 2 <5 -2> ~" + "e7") # pan 0,
+      -- n (( scale "dorian" $ fast 4 "[8*2? 7 6 5, [10 11]/2]") + "e6") # amp 0.2 # pan (range 0.1 0.4 perlin),
+      -- n (( scale "dorian" $ fastcat ["8(4, 8)", "[8 7 6 5, [10 11]/2]"]) + "e6"),
+      -- n ((scale "dorian" $ fast 2 $ "0 3 4 6") + "e6") # pan 0.8,
+      -- fast (8/5) $ n ("0 3 2 <5 -2> ~" + "e7") # pan 0,
       silence
     ] # s "plaits" 
       # engine 4
       # harm 3 # morph 1 # timbre 0.1
       # verb 0.6 0.5 0.3 0.3
-      # gain 0.78 
+      # gain 0.82 
       # hpf 1500
       # squiz 3 # lpf 2000
+      # clouds 0.1 0.2 0.05 0.1 # cloudsblend 0.7 0.2 0.2 0.8 # cloudspitch 0
 
 
 d8 $ stack [
       (every 128 (const $ fast 2 $ sound "sn:2*8") $
-      fast 2 $ sound "xm:2 sn:2" ) |*| gain 1.8 # lpf 10000 # hpf 50 # hpq 0.05 # shape 0.1,
-      slow 2 $ sound "808:1 ~ 808:1!13 808oh:2" # gain 1.2,
-      -- sound "[[jhh:2 jhh:3] [jhh:9,808oh:1?]]*4" |*| gain 1.4 # pan 0.2 # hpf 3000 # lpf (range 18000 20000 (slow 8 $ saw)) # shape (0.5 + 0.1*sine),
-        -- (chop 8 $ sound "sheffield*2") # legato 0.8 # lpf (1000 + 4000 * rand) # gain 1.4 # pan 1 # crush 4 
-        -- # shape 0.7 # hpf (4000 + 600*sine) # hpq (0.5*sine) |*| gain 0.9,
+      fast 2 $ sound "xm:2 [sn:2 ~ ~ sn]" {-add sn-} ) |*| gain 1.8 # lpf 10000 # hpf 50 # hpq 0.05 # shape 0.1,
+      -- slow 2 $ sound "808:1 ~ 808:1!13 808oh:2" # gain 1.2 # hpf 2000,
+      -- sound "[[jhh:2 jhh:3] [jhh:9,808oh:1?]]*4" |*| gain 1.2 # pan 0.2 # hpf 4000 # lpf (range 18000 20000 (slow 8 $ saw)) # shape (0.5 + 0.1*sine),
+      --   (chop 8 $ sound "sheffield*2") # legato 0.8 # lpf (1000 + 4000 * rand) # gain 1.4 # pan 1 # crush 4 
+      --   # shape 0.7 # hpf (4000 + 600*sine) # hpq (0.5*sine) |*| gain 0.9,
       silence
-    ] # nudge "[0 0.002]*8" |*| gain 0.9
+    ] # nudge "[0 0.002]*8" |*| gain 1
 
 d9 $ jux (# nudge 0.01) $ slow 4 $ n "<[e4,g5,[b5 a5]] [a4,cs6,e6,d7]>" # s "superhammond" # voice 5 
    # lpf 1000 # hpf 500 # hpq 0 # lpq 0.1
    # sidechain 7 # sidechain_thresh (1/16) # sidechain_compression (1/10)
    # sidechain_attack (1/2000) # sidechain_release (1/10)
-   # gain 1.25 
+   # gain 1.22 
+   # shape 0.3
+
+
+-- fin
 
 
 
+-- rec 4 [6]
 
-d3 $ stack [
-        ((1/8)<~) $ struct "t [~ t] [t? t] [t ~]" $ n "<[b2 g2 [b2 g3] a3] [b2 e2 [b2 e3] fs3]>" |+| n "[0]"
-        # s "plaits" # engine 1
-        # harm 2 # timbre 1 # color 1 # mode 1
-        # mu 4 # sustain 0.2 # lpf 2000 # hpf 80 # hpq 0.1
-        # sidechain 1 # sidechain_thresh (1/8) # sidechain_compression (1/10)
-        # sidechain_attack (1/50) # sidechain_release (1/100)
-        ,silence
-   ]
--- 
+--    d5 $ stack [
+--      slow 2 $ struct "t" $ n "[0,1]" # s "loop" |*| gain 1.3 # pan 0 # begin 0.01,
+--      (0.25~>) $ slow 2 $ struct "t" $ n "[2,3]" # s "loop" # gain 1.3 # pan 0.2 # begin 0.01,
+--      slow 2 $ struct "t" $ n "[4,5]" # s "loop" # gain 1.3 # pan 0.5 # begin 0.01,
+--      slow 4 $ struct "t" $ n "6" # s "loop" # gain 1 # pan 0.8,
+--      silence
+--      ] # verb 0.9 0.9 0.2 0.7
+--      # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.3 0.4 0.3 0.8 # cloudspitch 0
+--      # legato 1 
+--      # hpf 200 # lpf 8000
 
-  d3 $ stack [
-        -- ply 2 $
-        ((1/8)<~) $ struct "t [~ t] [t? t] [t ~]" $ n "<[b2 g2 [b2 g3] a3] [b2 e2 [b2 e3] fs3]>" |+| n "[0]"
-        # s "braids" # model 1 # mu 2 # gain 1
-        # hpf 40
-        # color (range 0.6 1 $ saw)
-        # timbre 0.7
-        # lpf 400 # lpq 0.1
-        # sidechain 1 # sidechain_thresh (1/8) # sidechain_compression (1/10)
-        # sidechain_attack (1/50) # sidechain_release (1/100)
-        ,silence
-   ]
-
-
-
-
-
-   d3 $ stack [
-        -- ply 2 $
-        ((1/8)<~) $ struct "t [~ t] [t? t] [t ~]" $ n "<[b2 g2 [b2 g3] a3] [b2 e2 [b2 e3] fs3]>" |+| n "[0]"
-        # s "supersaw" # voice 0
-        -- # sidechain 1 # sidechain_thresh (1/8) # sidechain_compression (1/10)
-        -- # sidechain_attack (1/50) # sidechain_release (1/100)
-        ,silence
-    ]

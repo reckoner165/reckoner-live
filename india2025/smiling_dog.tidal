@@ -1,0 +1,48 @@
+
+d1 $ sound "[xm:5 hh] [[sn:2,cp] hh] [xm:5 ~ hh ~ sn:2] [~ ~ ~ xm:5?]" # coarse 0.8 # shape 0.3 # gain 1.1
+
+d2 $ n "<d2 f2 g2 _>" # s "supersaw" # voice 0
+   # sidechain 0 # sidechain_thresh (1/20) # sidechain_compression (1/5)
+   # sidechain_attack (1/100) # sidechain_release (1/50)
+
+d3 $ degrade $ struct "t*16" $ n "[f5|a5]" # s "plaits" # engine 4 # mode 1 # morph (perlin) # pan (perlin)
+   # sidechain 0 # sidechain_thresh (1/20) # sidechain_compression (1/10)
+   # sidechain_attack (1/100) # sidechain_release (1/50)
+
+d4 $ chop 4 $ s "sheffield" # legato 1
+   # sidechain 0 # sidechain_thresh (1/200) # sidechain_compression (1/5)
+   # sidechain_attack (1/500) # sidechain_release (1/20)
+
+d5 $ sound "[ht lt 808lc 808sd]*4" # nudge "[0 0.016]*8" # pan "[0 1]*2"
+
+d6 $ fast 2 $ sound "{realclaps!2 ~ ~ ~}%4" # pan 0 # verb 0.2 0.1 0.2 0.2 
+
+d7 $ linger 0.5 $ iter 4 $ ply 2 $ bite 4 "0 3 1 2" $ n (scale "dorian" (every 2 (rev) $ "0..7")) 
+   # s "braids" # pan 0.8
+   # sidechain 0 # sidechain_thresh (1/100) # sidechain_compression (1/5)
+   # sidechain_attack (1/100) # sidechain_release (1/50)
+
+
+d3 $ jux (rev) $ fast 4 $ n (run 4) # sound "mouth" # nudge "[0 0.016]*8" # pan "[0 1]*2"
+
+d7 $ sound "fire" # legato 1 # pan 0.4 # gain 1.2
+   # sidechain 0 # sidechain_thresh (1/200) # sidechain_compression (1/5)
+   # sidechain_attack (1/500) # sidechain_release (1/20)
+
+d8 $ n "[<g5!3 c6> a5]*4" |+| n "12" # s "superpiano" # lpf 500 # verb 0.9 0.5 0.2 0.2
+
+
+d9 
+   $ slow 8 
+   -- $ stutWith 32 (1/128) (|*| gain 0.98)
+   $ n "0" # s "input" 
+   -- # gain 1 
+     # gain 1.4
+   # verb 0.8 0.6 0.3 0.3
+   -- # verb 0.8 0.5 0.5 0.3
+   -- # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.5 0.2 0.34 0.8 # cloudspitch 0
+
+
+do
+  d1 silence
+  d4 silence

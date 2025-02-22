@@ -30,9 +30,6 @@ load("/Users/sumanth/Library/Application Support/SuperCollider/synthdefs/mi-ugen
  };
 )
 
-
-
-
 ~looper = TidalLooper(~dirt);
 
 
@@ -72,7 +69,6 @@ SynthDef(\input, {
 
 s.record
 s.stopRecording
-
 
 
 

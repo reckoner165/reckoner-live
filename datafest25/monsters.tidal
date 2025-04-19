@@ -1,7 +1,6 @@
 setcps(150/60/5)
 
 
-
 d1 $ slow 2 $ n "<[-10,2, 5, 12][-5,2, 5, 9, 12][-12,0,4,11]>" 
    # s "rhodes" # lpf 200
    # hpf 100
@@ -40,12 +39,12 @@ do
      # hpf 40 # hpq 0.2
      # lpf 1500 # lpq 0.2
      # shape 0.3
+     -- # lpf 100 # lpq 0
      -- # rings "[0,20]" rand 0.7 (slow 3 sine) 0.9
      -- # ringsmodel 0
-     -- # lpf 100 # lpq 0
      
 
-d4 $ trunc 0.5 $ chop "<20>" $ sound "sheffield" # legato 0.5 # mu 5 # crush 5 # speed 4 
+d4 $ trunc 0.5 $ chop "<10 20>" $ sound "sheffield" # legato 0.5 # mu 5 # crush 5 # speed 4 
    # hpf (5000 + (3000 * sine))
    # hpqbus 1 (segment 512 $ range 0.1 0.3 $ fast 5.7 sine)
    # coarse 0.5 # shape 0.5
@@ -53,7 +52,7 @@ d4 $ trunc 0.5 $ chop "<20>" $ sound "sheffield" # legato 0.5 # mu 5 # crush 5 #
 d4 silence
 
 d4 
-  $ chop 2
+  $ chop 4
   $ slow 2
   $ n "<[-10,2, 5, 12][-5,2, 5, 9, 12][-12,0,4,11]>" # s "supersaw" 
   # voice 0
@@ -62,7 +61,7 @@ d4
   # clouds 0.1 0.3 0.05 0.1 # cloudsblend 0.8 0.2 0.34 0.8 # cloudspitch 0
   # lfo 2 # rate 0.5
   -- # hpf 3000 # hpq 0.2
-  # mu 2
+  -- # mu 2
   # gain 0.9
   -- # legato 0.5
 

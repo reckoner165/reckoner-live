@@ -69,3 +69,8 @@ MIDIClient.init;
 ~pro800 = MIDIOut.newByName("PRO 800", "PRO 800");
 ~dirt.soundLibrary.addMIDI(\pro800, ~pro800);
 ~pro800.latency = 0
+
+
+
+~vcv = MIDIOut.newByName("IAC Driver", "Bus 2");
+~dirt.soundLibrary.addMIDI(\vcv, ~vcv);

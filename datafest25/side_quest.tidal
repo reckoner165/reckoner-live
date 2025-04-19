@@ -1,0 +1,30 @@
+setcps(90/60/7)
+
+
+
+
+   d1 $ sound "bd:2*70" # gain 0.8 # hpf 200
+     # ringsfreq (587/2) # ringsdamp 1 
+     # ringsmodel 1 # ringsbright 0.8
+     # ringspoly 1 # ringspos 0.9
+     # ringsstruct (perlin)
+     # verb 0.8 0.5 0.5 0.3
+     # lpfbus 1 (segment 512 $ fast 2 $ range 400 10000 rand) # lpq 0.3
+     # clouds 0.1 0.5 0.05 0.1 # cloudsblend 0.4 0.2 0.2 0.8 # cloudspitch 0
+     # ringseasteregg 0
+     -- # mu 3
+     # lpf (396*8) # lpq 0.1
+     # gain 0.8
+
+d2 $ fast 2 $ sound "bd ~ cp ~ [~ bd] ~ cp:2" 
+   # crush 4 # coarse 0.8 # shape 0.8 # mu 7 # gain 0.8 # lpf 500
+   # verb 0.8 0.6 0.2 0.2
+
+d3 $ slow (7/4) $ n "d2" # s "supersaw" # voice 0 # legato 1 # gain 1.2 # lpf 300
+
+d4 $ fast 2 $ sound "[hh*7,xm]"
+
+
+
+
+   d2 silence

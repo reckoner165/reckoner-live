@@ -1,0 +1,35 @@
+setcps(87/60/4)
+
+
+d1 $ stack [
+    -- s "808:2*16" # shape 0.5 # coarse 0.5,
+    n "<[[e1|fs1]!4] [e1*2 f1 e1!2]>",
+    -- fast 2 $ bite 2 "1" $ 
+    -- sometimes (rev) $
+    -- n "<c1*2 [c1 ~ c1 d1]> <[d1 c1 ~ ds1] [~ c1 [d1, cs1] ~]> [~ ds1 c1 c1] [d1 c1 <~ a1> <ds1 as1>]",
+    silence
+  ] |+| n "24" # s "ableton" # midichan 3 # nudge "[0 0.008]*8" # amp 1
+
+d4 $ fast 2 $ n "c1*2? c1*2 d1*2 c1*2" |+| n "24" # s "ableton" # midichan 4
+d5 $ stack [
+  n (run 8) # s "mouth" # pan (rand),
+  degradeBy 0.6 $ sound "808:2*8" # speed (2* (perlin)) # verb 0.9 0.9 0.3 0.3 # pan (rand),
+  s "808:2*16" # speed 0.25,
+  silence
+  ]
+
+d2  $ n "~!8 ~ d2 _ <e2 b1> _ _ _ _" |+| n "12" # s "supersaw" 
+    # voice 0 # lpf 200 # legato 1 # sustain 0.8 # shape 0.8 # coarse 1
+    -- # s "[ableton]" # midichan 2 # amp 0.9
+
+    d2 silence
+
+
+d3  $ every 2 (const $ fast 2 $ linger "0.75" $ rev $ n (scale "dorian" (run 8)) |+| n "-1" # s "pro800") $ fast 4 $ n "~ <e3 d4 fs4 e4> <d4 e4 a4 e4> <e4 fs4 b4 fs4>" # s "pro800"
+
+d3 $ fast 2 $ every 2 (linger "[0.25|0.5]") $ sometimes (rev) $ degradeBy 0.2 $ n (scale "dorian" (run 8)) |+| n "-1" # s "pro800"
+
+
+   d3 silence
+   d1 silence
+   

@@ -1,0 +1,45 @@
+setcps(75/60/4)
+
+
+-- MAIN
+do
+  d2 $ fast 2 $ (0.5<~) $ n "<[d5 f5 d5 ~]!3 ~>" # s "ableton" # midichan 1 # amp 0.8
+  d3 $ fast 2 $ n "<[a3, f4][g3, d4][d3, a3] _>"   # s "ableton" # midichan 2 # amp 0.8
+  d1 silence
+  
+-- TRANSITION
+do
+  d2 silence
+  d3 silence
+  d1 $ fast 2 $ n "<[d5 a5]!4 [c5 a5]!4 [as4 g5]!4 [c5 a5]!2 [cs5 a5]!2>" |+| n "-12"
+   # s "ableton" # midichan 2 # amp 0.8 
+  
+-- "VERSE"
+do
+  d3 silence
+  d1 $ fast 2 $ n "<[d5 a5]!4 [c5 a5]!4 [as4 g5]!4 [c5 a5]!2 [cs5 a5]!2>" |+| n "-12"
+   # s "ableton" # midichan 2 # amp 0.8   
+  d2 $ 
+    -- sometimes (|+| n "[12|24]") $ degrade $
+    sometimes (ply "[2|4]") $ 
+    -- rev $ trunc 0.25 $
+    n "<[<e5 ~> d5 f5 d5 d5 _ _ <~ d5>]!2 [c5 d5 e5 ~ ~ ~ ~ ~]!2 [<e5 ~> d5 f5 d5 d5 _ _ <~ d5>]!2 [c5 d5 e5 ~ ~ ~ ~ ~] [cs5 d5 e5 ~ ~ ~ ~ ~]>" 
+    # s "pro800"
+
+
+-- VERSE 2??
+
+resetCycles
+
+do
+  d3 silence
+  d1 $ fast 2 $ n "<[d5 a5]!4 [c5 a5]!4 [as4 g5]!4 [c5 a5]!4 [cs5 a5]!2>" 
+   # s "ableton" # midichan 0 # amp 0.8   
+  d2 $ 
+  -- qtrigger $
+    -- sometimes (|+| n "12") $
+    -- sometimes (ply 2) $ 
+    -- fast 2 $
+    slow 2 $
+    n "<[d5 _ e5 f5 c6 _ _ as5 a5 ~!5 g5 a5] [g5 ~ g5 a5 g5 ~ ~ d5 f5 ~ ~!4 <~!2 [g5 a5]>]!2>" 
+    # s "ableton" # midichan 1 # amp 0.8

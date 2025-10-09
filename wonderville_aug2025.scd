@@ -12,25 +12,37 @@ SuperDirt.start
 ~dirt.loadSoundFiles("/Users/sumanth/Music/samples/*");
 
 
-load("/Users/sumanth/Music/reckoner-live/synthdefs1.scd")
-
-
-load("/Users/sumanth/Music/reckoner-live/sidechain.scd")
-
-load("/Users/sumanth/Library/Application Support/SuperCollider/synthdefs/mi-ugens.scd");
-// define global effects for mutable instruments effects
 (
-~dirt.orbits.do { |x|
-            var clouds = GlobalDirtEffect(\global_mi_clouds, [\cloudspitch, \cloudspos, \cloudssize, \cloudsdens, \cloudstex, \cloudswet, \cloudsgain, \cloudsspread, \cloudsrvb, \cloudsfb, \cloudsfreeze, \cloudsmode, \cloudslofi]);
-            var verb = GlobalDirtEffect(\global_mi_verb, [\verbwet, \verbtime, \verbdamp, \verbhp, \verbfreeze, \verbdiff, \verbgain]);
-	        var resonator = GlobalDirtEffect(\resonatorFX, [\freq, \decay, \mix, \gain]);
+~initSynths = {
+    // Load SynthDefs
+    load("/Users/sumanth/Music/reckoner-live/synthdefs1.scd");
+    load("/Users/sumanth/Music/reckoner-live/sidechain.scd");
+    load("/Users/sumanth/Library/Application Support/SuperCollider/synthdefs/mi-ugens.scd");
 
-            x.globalEffects = x.globalEffects
-              .addFirst(clouds)
-              .addFirst(verb);
-            x.initNodeTree;
- };
+    // Define global effects
+    ~dirt.orbits.do { |x|
+        var clouds = GlobalDirtEffect(\global_mi_clouds, [
+            \cloudspitch, \cloudspos, \cloudssize, \cloudsdens,
+            \cloudstex, \cloudswet, \cloudsgain, \cloudsspread,
+            \cloudsrvb, \cloudsfb, \cloudsfreeze, \cloudsmode, \cloudslofi
+        ]);
+        var verb = GlobalDirtEffect(\global_mi_verb, [
+            \verbwet, \verbtime, \verbdamp, \verbhp,
+            \verbfreeze, \verbdiff, \verbgain
+        ]);
+        var resonator = GlobalDirtEffect(\resonatorFX, [
+            \freq, \decay, \mix, \gain
+        ]);
+
+        x.globalEffects = x.globalEffects
+            .addFirst(clouds)
+            .addFirst(verb);
+        x.initNodeTree;
+    };
+};
 )
+
+~initSynths.();
 
 ~looper = TidalLooper(~dirt);
 

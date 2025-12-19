@@ -1,0 +1,2 @@
+let lydian p = n (scale "lydian" p)
+

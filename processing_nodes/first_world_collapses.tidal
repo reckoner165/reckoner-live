@@ -1,0 +1,67 @@
+setcps(127/60/4)
+
+--midichan 10 - pro800 goes to Touch Designer
+--midichan 11 - sueprsaw high synth goes to Touch Designer
+
+do
+  d1 $ n "<d5!3 c5> <a5 g5> <d5!3 c5> c6 <a5 b5>" |+| n "-12" # s "[pro800, ableton]" # midichan 10
+  d2 $ n "<d3 _ d3 c3>" # s "ableton" # midichan 2
+  
+  
+  
+  # amp 0.8
+
+
+do
+  d1 $ slow 4 $ n "{[d5!4,[e5 f5 g5 a5]]}%5" |+| n "-12" # s "[pro800, ableton]" # midichan 10
+  d2 $ slow 2 $ n "{as3 _ c4 _ _ as3 _ _ a3 _ as3 _ _ c4 _ _}%10" |+| n "[0,-12]" # s "ableton" # midichan 2 # amp 0.7
+
+
+
+-- resetCycles
+do
+  d1
+    $ qtrigger
+    $ sometimes ((ply 1 ). (|+| n "0")) $ stack [
+    n "<d5!3 c5> <a5 g5> <d5!3 c5> c6 <a5 b5>"
+    ] |+| n "-12" # s "ableton" # s "[pro800, ableton]" # midichan 10
+  -- # midichan 1 # amp 0.8
+  d2 $ n "<d3 _ d3 c3>" # s "ableton" # midichan 2 # amp 1
+  d3 
+    -- $ within (0.6, 1) (linger 0.1) 
+    -- $ ply 2 
+    -- $ degradeBy 0.6 
+    -- $ sometimes (rev)
+    -- $ linger 0.2
+    $ stack [
+    n "[e1|f1]*5",
+    n "[~ [ds1|b1]] c1*2 <[~ d1] d1*2> <c1*2 [as1 b1]> d1*2?",
+    silence
+    ] |+| n "24" # s "ableton" # midichan 3 # amp 1 # nudge "[0 0.01]*5"
+  d4 $ every 4 (ply 2) $ n "c1*2 d1*2 ~ c1*2 d1*2" |+| n "24" # s "ableton" # midichan 4 # amp 0.8
+  d5 
+    $ qtrigger 
+    $ n "g6 fs6 e6 d6 c5 b5 a5 g6 fs5 e5" |+| n "<0 -12>" # s "[braids, ableton]" # midichan 11 
+    # sustain 1 # pan 0 # verb 0.9 0.6 0.3 0.3 
+    # gain "[0.9|1|1.1]*16" 
+    # lpf 2000
+
+    d4 silence
+
+
+do
+  d1 $ slow 4 $ n "{[d5!4,[e5 f5 g5 a5]]}%5" |+| n "-12" # s "[pro800, ableton]" # midichan 10
+  d2 $ slow 2 $  n "{as3 _ c4 _ _ as3 _ _ a3 _ as3 _ _ c4 _ _}%10" |+| n "[0,-12]" # s "ableton" # midichan "[2]" # amp 0.8
+  d3 $ stack [
+    -- n "fs1 e1!4",
+    -- n "~ c1*2? <[~ ds1] c1> <c1 [as1 b1]> ~"
+    ] |+| n "24" # s "ableton" # midichan 3 # amp 0.9
+  d5 silence
+
+  d3 silence
+  d4 silence
+
+
+  d5 silence
+
+

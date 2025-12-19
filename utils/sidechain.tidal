@@ -4,3 +4,8 @@ let -- sidechain params
     sidechain_compression = pF "sidechain_compression" -- default (1/10)
     sidechain_attack = pF "sidechain_attack" -- default (1/100)
     sidechain_release = pF "sidechain_release" -- default (1/10)
+    sc = sidechain
+    sc_t = sidechain_thresh
+    sc_c = sidechain_compression
+    sc_a = sidechain_attack
+    sc_r = sidechain_release

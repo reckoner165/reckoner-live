@@ -1,0 +1,134 @@
+setcps(107/60/4)
+
+
+-- d1 $ every 32 (linger 0.25) 
+--    -- $ linger 0.25
+--    -- $ trunc 0.125
+--    $ jux (# speed "1 0.8") 
+--    $ fast 2 $ sound "rytm:28!4 [realclaps, casio:2] ~!2 <[realclaps, casio:2]? ~>" 
+--    # nudge "[0 0.032]*4" 
+--    # shape "0 0.4" # coarse "0 0.3" # legato "0.9 0.6" 
+--    # lpf "1000 10000" # speed "1 0.85"
+--    # gain 1.1
+
+
+d1 $ every 32 (linger 0.25) 
+   -- $ linger 0.25
+   -- $ trunc 0.125
+   -- $ jux (# speed "1 0.8") 
+   $ fast 2 $ stack [
+     sound "plasma!4 [plasma:2, plasma:1] ~!2 <plasma:2? ~>", 
+     sound "rytm ~ ~ xm ~!4" # lpf 100 # speed 0.8 |*| gain 1.1,
+     -- fast 2 $ s "~ 808:2*2?" # speed (rand) # verb 0.9 0.5 0.3 0.3 # mu 6 |*| gain 0.8,
+     silence
+     ]
+   # nudge "[0 0.032]*4" 
+   -- # shape "0 0.4" # coarse "0 0.3" # legato "0.9 0.6" 
+   -- # lpf "1000 10000" # speed "1 0.85"
+   # gain 1.7
+   # gate 0.2
+   # multiband_comp 0.02
+
+   d1 silence
+
+d4 $ trunc 0.5 $ degrade $ s "hh*16"  # nudge "[0 0.016]*8" # crush 3 # shape 0.8 # hpf 900
+
+
+d2
+   $ jux (((0.375)~>).(chop 1).(# clouds 0.2 0.1 0.15 0.05).(# cloudsblend 1 0.2 0.33 0.8).(|+| n "<12!3 ~>"))
+   -- $ n"<[e4,gs4,b5,ds5][c4,gs4,cs5,c6][f4,a4,c5,ds6][gs3,c4,gs4,ds5]>"
+   $ n "<[f2,f3,a3,c4][gs2,ds3,gs3,ds4][f2,f3,a3,c4][ds2,ds3,gs3,ds4]>"
+   |+| n "[12|24]"
+   # s "[braids, pro800]"
+   # real 0.8 
+   # model 15
+   # sustain 0.97 # lpf 700
+   # timbre (slow 4 $ sine) # color (saw)
+   # sidechain 0 # sidechain_thresh (1/8) # sidechain_compression (1/7)
+   # sidechain_attack (1/500) # sidechain_release (1/500) |*| gain 0.9
+
+d6 $ jux (# verb 0.9 0.9 0.5 0.5) 
+   $ struct "<[t(3,8)!2] t*<8 16>>" 
+   $ n "f7" # s "plaits" # gain 0.6
+
+
+do
+  d1 silence
+  d4 silence
+  d3 silence
+  d2
+   $ jux (((0.375)~>).(chop 1).(# clouds 0.2 0.1 0.15 0.05).(# cloudsblend 1 0.2 0.33 0.8).(|+| n "<12!3 ~>"))
+   $ n"<[e4,gs4,b5,ds5][c4,gs4,cs5,c6][f4,a4,c5,ds6][gs3,c4,gs4,ds5]>"
+   |+| n "[12|24|0]"
+   # s "[braids, pro800]"
+   # real 0.8 
+   # model 15
+   # sustain 0.97 # lpf 700
+   # timbre (slow 4 $ sine) # color (saw)
+   # sidechain 0 # sidechain_thresh (1/8) # sidechain_compression (1/7)
+   # sidechain_attack (1/500) # sidechain_release (1/500) |*| gain 0.9
+
+
+do
+  d1 $ every 32 (linger 0.25) 
+   -- $ linger 0.25
+   $ fast 2 $ stack [
+     sound "plasma!4 [plasma:2, plasma:1] ~!2 <plasma:2? ~>", 
+     sound "rytm ~ ~ xm ~!4" # lpf 100 # speed 0.8 |*| gain 1.1,
+     fast 2 $ s "~ 808:2*2?" # speed (rand) # verb 0.9 0.5 0.3 0.3 # mu 6 |*| gain 0.4,
+     silence
+     ]
+   # nudge "[0 0.032]*4" 
+   -- # shape "0 0.4" # coarse "0 0.3" # legato "0.9 0.6" 
+   -- # lpf "1000 10000" # speed "1 0.85"
+   # gain 1.7
+   # gate 0.2
+   # multiband_comp 0.02
+  d4 $ trunc 0.5 $ degrade $ s "hh*16"  # nudge "[0 0.016]*8" # crush 3 # shape 0.8 # hpf 900
+  d2
+   $ jux (((0.375)~>).(chop 1).(# clouds 0.2 0.1 0.15 0.05).(# cloudsblend 1 0.2 0.33 0.8).(|+| n "<12!3 ~>"))
+   $ n "<[f2,f3,a3,c4][gs2,ds3,gs3,ds4][f2,f3,a3,c4][ds2,ds3,gs3,ds4]>"
+   |+| n "[12|24]"
+   # s "[braids, pro800]"
+   # real 0.8 
+   # model 15
+   # sustain 0.97 # lpf 700
+   # timbre (slow 4 $ sine) # color (saw)
+   # sidechain 0 # sidechain_thresh (1/8) # sidechain_compression (1/7)
+   # sidechain_attack (1/500) # sidechain_release (1/500) |*| gain 0.9
+  d3 $ fast 2 $ struct "<[t][t [~ ~ ~ t] ~ t? _]>" $ n "<f2 gs2>" # s "supersaw" 
+   # legato 1 # voice 0 # lpf 200 # lpq 0.13
+
+
+d3 $ fast 2 $ struct "<[t][t [~ ~ ~ t] ~ t? _]>" $ n "<f2 gs2>" # s "supersaw" 
+   # legato 1 # voice 0 # lpf 200 # lpq 0.13
+
+d5 $ fast 4 
+   -- $ every 2 (|+| n "0")
+   $ n "{<ds4 f4> gs4 c5 ds5 <f5 ds7>}%4" |+| n "[0|12]"# s "plaits" # nudge "[0 0.016]*2" 
+   # engine 2
+   # morph (range 0.5 1 $ fast 3 $ sine)
+   # mode "[1|0]"
+   # pan perlin
+   # timbre (range 0.2 0.6 $ slow 32 $ saw)
+   # gain 0.8
+   -- # sustain 0.4
+   # hpf 50
+   # sustain (range 0.4 0.8 $ perlin) # mu 2 
+   # shape 0.5
+   # tape 0.4 # tape_drive 0.5
+   # verb 0.5 0.8 0.5 0.5
+   # sidechain 0 # sidechain_thresh (1/8) # sidechain_compression (1/9)
+   # sidechain_attack (1/500) # sidechain_release (1/500) |*| gain 1.1
+
+
+d7 $ degrade $ s "808:2*16" # nudge "[0 0.008]*2" # verb 0.8 0.8 0.3 0.3 # speed (perlin) # pan (rand)
+
+   d7 silence
+
+   d7 $ fast 2 $ s "808:2(3,8,1)" # verb 0.8 0.8 0.3 0.3  # pan 0 # speed 2
+
+   d1 $ silence
+
+d5 silence
+d1 silence

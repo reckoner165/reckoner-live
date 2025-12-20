@@ -6,14 +6,18 @@ free
 rec 1 [2]
 
 d2 $ slow 4 $ n "f2 _ _ _"
-  # s "supersaw" # voice 0 # shape 0.8 # coarse 0.8 # lpf 400 # gain 1 # legato 1 
+  # s "supersaw" # voice 0 # shape 0.8 # coarse 0.8 # lpf 400 # gain 1 # legato 1 # cut 1
 d7  $ n "[f4,c5,e5] _ _ _" # s "pro800"
+
+
+    d2 silence
 
 d6 
    $ sometimes (# speed (-1))  
-   $ iter 4 $ slice 7 (run 7)
-   $ n "[0]*2" # s "loop" 
-   # legato 1 # gain 1.4 # verb 0.4 0.4 0.2 0.2 # begin 0.01
+   -- $ slice 7 (run 7)
+   $ randslice 7
+   $ struct "t!7" $ n "[0]" # s "loop" 
+   # legato 1 # gain 1.4 # verb 0.4 0.4 0.2 0.2
 
 d2 silence
 
@@ -38,33 +42,39 @@ do
       silence
     ]
     # s "superhammond" # voice 5 # lpf (5000 * slow 4 saw) # gain "[1|0.95]"
+    # sidechain 0 # sidechain_thresh (1/20) # sidechain_compression (1/2)
+    # sidechain_attack (1/400) # sidechain_release (1/2000)
   d6 -- VOCAL SAMPLES
     $ stack [
-        fast 1 $ ply "[1|2]*7" $ sometimes (rev) $ sometimes (|*| speed 2) $ iter 9 $ slice 7 (run 7) $ 
-      n "0(6,7)*2" # s "loop" # gain 1.7 # legato 1 # speed (-1) # pan (rand),
-        often (# speed 2) $ degradeBy 0 $
-        -- sometimes (# speed (-1)) $
-        slice 7 "<[0 3 1 2] [5 6]>(5,7,1)" $ 
+        fast 1 $ ply "[1]*7" $ sometimes (rev) $ sometimes (|*| speed (-1)) $ iter 7 $ slice 7 (run 7) $ 
+        struct "[t(4,7)]*2" $ n "0" # s "loop" # gain 1.7 # legato 1 # pan (rand),
+        -- often (# speed 1) $ degradeBy 0 $
+        -- sometimes (# speed (-1)) $ linger (4/7) $ rev $
+        slice 7 "<[[1 3]*2 <3 2>]>*2" $ 
         -- fast 1 $ slice 14 "[0 6]!2 3*2? <5 1> 2(3,7) 4(2,7)" $
-      n "[1]" # s "loop" # gain 1.9 # legato 1 # pan (perlin) 
+      struct "[t]" $ n "1" # s "loop" # gain 1.9 # legato 1  # pan (perlin)
+      -- # pan (perlin) 
+      -- # pan 0
         -- # verb 0.6 0.6 0.2 0.2 
-        # lpf (3000 + 1000 * perlin),
-      iter 1 $ slow 2 $ slice 7 "<[4 6] [2 3]>(6,7)" $ n "2" # s "loop" # gain 1.8 # legato 1 # pan (rand) # speed 1,
+        ,
+        -- iter 1 $ slow 2 $ 
+      slice 7 (every 2 ((fast 2).(linger 0.25).(rev)) $ "<[4 5] [2 6]>*7") $ 
+      -- slice 7 (run 7) $ fast 2 $ 
+      struct "[t]" $ n "2" # s "loop" # gain 1.8 # legato 1 # pan (rand) # speed 2,
       silence
       ] # sidechain 0 # sidechain_thresh (1/100) # sidechain_compression (1/3)
        # sidechain_attack (1/400) # sidechain_release (1/2000)
   d7 $ stack [
-    struct "t [~ t] [~ t] [~ t] [~ t] [~ t] [~ t]" $ n "[f5,c5]" # s "pro800",
+    struct "t [~ t] [~ t] [~ t] [~ t] [~ t] [~ t]" $ n "[f5,c5]" |+| n "12" # s "pro800",
     silence
     ]
-  d4
-  -- $ stutWith 2 0.25 ((|+| n "12").(|*| room 0.4).(|-| pan 0.25))
+  d4 -- ARP
     $ stack [
       n "[~ ~ f4 ds4 f4 as3 c4]*2" |+| n "[0,12]",
       silence
     ]
     # s "superpwm" # sustain 0.5 # gain 1.2 # lpf (8000 * slow 4 saw) # attack 0.05 # pan 0.25 # distort 0.04
-  d5
+  d5 -- OUTRO PIANO
     $ (1<~) $ fast 2 
     $ stutWith 8 0.25 ((|*| pan 0.2). (|*| gain 0.8))
     $ stack [
